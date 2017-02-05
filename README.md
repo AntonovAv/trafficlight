@@ -14,7 +14,7 @@ Node.js version >= 7 (tested on)
 >  `lint`  -validate code styles  
 >  `build` -build development version to "public" path  
 >  `build:prod` -build production version with minif js  
->  `start < -- --port [port] >` -start server in develop mode with HMR  
->  `start:prod < -- --port [port] >` -start server in production mode with resources in "public path"  
+>  `start [-- --port <port>]` -start server in develop mode with HMR  
+>  `start:prod [-- --port <port>]` -start server in production mode with resources in "public path"  
 
 By default server available on <http://localhost:3000/>
