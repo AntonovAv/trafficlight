@@ -1,17 +1,21 @@
 const express = require('express')
+const bodyParser = require('body-parser')
 const useFrontendMiddleware = require('./middleware/frontendMiddleware')
+const useClientApi = require('./api/clientApi')
 const resolve = require('path').resolve
 const argv = require('minimist')(process.argv.slice(2))
 
+const port = argv.port || process.env.PORT || 3000
+
 const app = express()
+app.use(bodyParser.json())
+
+useClientApi(app)
 
 useFrontendMiddleware(app, {
   outputPath: resolve(process.cwd(), 'public/'),
   publicPath: '/'
 })
-
-console.log(argv)
-const port = argv.port || process.env.PORT || 3000
 
 app.listen(port, (err) => {
   if (err) {
