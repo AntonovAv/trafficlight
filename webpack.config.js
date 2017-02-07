@@ -70,6 +70,15 @@ module.exports = function(env) {
           exclude: /node_modules/,
           use: [
             'style-loader',
+            'css-loader?localIdentName=[local]__[path][name]__[hash:base64:5]&modules&importLoaders=1',
+            'postcss-loader'
+          ]
+        },
+        {
+          test: /\.css$/,
+          include: /node_modules/,
+          use: [
+            'style-loader',
             'css-loader'
           ]
         },
@@ -79,6 +88,26 @@ module.exports = function(env) {
           use: [
             'babel-loader'
           ]
+        },
+        {
+          test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
+          loader: 'url?limit=10000&mimetype=application/font-woff'
+        }, {
+          test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
+          loader: 'url?limit=10000&mimetype=application/font-woff'
+        }, {
+          test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+          loader: 'url?limit=10000&mimetype=application/octet-stream'
+        }, {
+          test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+          loader: 'file'
+        }, {
+          test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+          loader: 'url?limit=10000&mimetype=image/svg+xml'
+        },
+        {
+          test: /\.(png|jpg)$/,
+          loader: 'url?prefix=images/&name=[path][name].[hash:base64:5].[ext]&limit=8192'
         }
       ]
     },
@@ -95,6 +124,18 @@ module.exports = function(env) {
         'constants': path.join(__dirname, 'client/actions'),
         'reducers': path.join(__dirname, 'client/actions')
       }
+    },
+    postcss: function(webpack) {
+      return [
+        require('postcss-import')({addDependencyTo: webpack}),
+        require('postcss-url')(),
+        require('postcss-focus')(),
+        require('postcss-cssnext')(),
+        require('postcss-browser-reporter')(),
+        require('postcss-reporter')({
+          clearMessages: true
+        })
+      ]
     },
     plugins
   }
