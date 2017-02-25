@@ -54,7 +54,7 @@ const mapStateToProps = function(state) {
     isLoading: isBuildsLoading(state),
     buildsList: getBuildsList(state),
     buildServer: getBuildServer(state),
-    nUpdates: getNUpdates(state)
+    nUpdates: getNUpdates(state),
   }
 }
 
