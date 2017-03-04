@@ -1,0 +1,17 @@
+.nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: fixed;
+  left: 15px;
+  top: 25px;
+  width: 40px;
+  opacity: 0.2;
+  transition: opacity 300ms;
+  transition-delay: 2000ms;
+
+  &:hover {
+    transition-delay: 0ms;
+    opacity: 1;
+  }
+}

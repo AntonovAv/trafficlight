@@ -1,0 +1,28 @@
+@import url('font-awesome/css/font-awesome.css');
+
+.link {
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  color: #31909a;
+  font-size: 40px;
+  text-decoration: none;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.active {
+  color: #8966b5;
+}
+
+.home {
+  composes: fa fa-home;
+}
+
+.settings {
+  composes: fa fa-cog;
+}
+
+.audio {
+  composes: fa fa-music;
+}

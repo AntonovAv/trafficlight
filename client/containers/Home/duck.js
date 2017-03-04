@@ -1,6 +1,6 @@
-export const LOAD_BUILDS = 'app/LOAD_BUILDS'
-export const LOAD_BUILDS_SUCCESS = 'app/LOAD_BUILDS_SUCCESS'
-export const LOAD_BUILDS_FAILURE = 'app/LOAD_BUILDS_FAILURE'
+export const LOAD_BUILDS = 'home/LOAD_BUILDS'
+export const LOAD_BUILDS_SUCCESS = 'home/LOAD_BUILDS_SUCCESS'
+export const LOAD_BUILDS_FAILURE = 'home/LOAD_BUILDS_FAILURE'
 
 const initState = {
   buildServer: 'Fake Server Name',
