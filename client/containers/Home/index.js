@@ -40,7 +40,6 @@ export class Home extends PureComponent {
 }
 
 Home.propTypes = {
-  children: PropTypes.node.isRequired,
   isLoading: PropTypes.bool,
   buildsList: PropTypes.arrayOf(PropTypes.string),
   buildServer: PropTypes.string,

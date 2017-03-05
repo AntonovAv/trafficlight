@@ -34,7 +34,7 @@ export function loadBuilds() {
   return {
     types: [LOAD_BUILDS, LOAD_BUILDS_SUCCESS, LOAD_BUILDS_FAILURE],
     promise: (client) => {
-      return client.get('api/builds')
+      return client.get('api/buildTypes')
     }
   }
 }
