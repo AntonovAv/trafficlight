@@ -42,113 +42,111 @@
       }
     ]
   },
-  "builds": [
-    {
-      "id": "NetCommunityProjects_Femah_Commit",
-      "count": 2,
-      "href": "/guestAuth/app/rest/buildTypes/id:NetCommunityProjects_Femah_Commit/builds?locator=running:any,count:2",
-      "nextHref": "/guestAuth/app/rest/buildTypes/id:NetCommunityProjects_Femah_Commit/builds?locator=running:any,count:2,start:2",
-      "build": [
-        {
-          "id": 145897,
-          "buildTypeId": "NetCommunityProjects_Femah_Commit",
-          "number": "0.1.78.209",
-          "status": "SUCCESS",
-          "state": "finished",
-          "href": "/guestAuth/app/rest/builds/id:145897"
-        },
-        {
-          "id": 137748,
-          "buildTypeId": "NetCommunityProjects_Femah_Commit",
-          "number": "0.1.77.194",
-          "status": "SUCCESS",
-          "state": "finished",
-          "href": "/guestAuth/app/rest/builds/id:137748"
-        }
-      ]
-    },
-    {
-      "id": "NetCommunityProjects_Femah_Publish",
-      "count": 2,
-      "href": "/guestAuth/app/rest/buildTypes/id:NetCommunityProjects_Femah_Publish/builds?locator=running:any,count:2",
-      "nextHref": "/guestAuth/app/rest/buildTypes/id:NetCommunityProjects_Femah_Publish/builds?locator=running:any,count:2,start:2",
-      "build": [
-        {
-          "id": 129546,
-          "buildTypeId": "NetCommunityProjects_Femah_Publish",
-          "number": "0.1.70-beta",
-          "status": "SUCCESS",
-          "state": "finished",
-          "href": "/guestAuth/app/rest/builds/id:129546",
-          "webUrl": "https://teamcity.jetbrains.com/viewLog.html?buildId=129546&buildTypeId=NetCommunityProjects_Femah_Publish"
-        },
-        {
-          "id": 129545,
-          "buildTypeId": "NetCommunityProjects_Femah_Publish",
-          "number": "16",
-          "status": "SUCCESS",
-          "state": "finished",
-          "href": "/guestAuth/app/rest/builds/id:129545",
-          "webUrl": "https://teamcity.jetbrains.com/viewLog.html?buildId=129545&buildTypeId=NetCommunityProjects_Femah_Publish"
-        }
-      ]
-    },
-    {
-      "id": "NetProductsExtensions_Trunk_HeapViewer",
-      "count": 0,
-      "href": "/guestAuth/app/rest/buildTypes/id:NetProductsExtensions_Trunk_HeapViewer/builds?locator=running:any,count:2"
-    },
-    {
-      "id": "Checkstyle_ContributionIdeaInspectionsMaster",
-      "count": 2,
-      "href": "/guestAuth/app/rest/buildTypes/id:Checkstyle_ContributionIdeaInspectionsMaster/builds?locator=running:any,count:2",
-      "nextHref": "/guestAuth/app/rest/buildTypes/id:Checkstyle_ContributionIdeaInspectionsMaster/builds?locator=running:any,count:2,start:2",
-      "build": [
-        {
-          "id": 994276,
-          "buildTypeId": "Checkstyle_ContributionIdeaInspectionsMaster",
-          "number": "69",
-          "status": "SUCCESS",
-          "state": "running",
-          "href": "/guestAuth/app/rest/builds/id:994276",
-          "webUrl": "https://teamcity.jetbrains.com/viewLog.html?buildId=994276&buildTypeId=Checkstyle_ContributionIdeaInspectionsMaster"
-        },
-        {
-          "id": 994117,
-          "buildTypeId": "Checkstyle_ContributionIdeaInspectionsMaster",
-          "number": "68",
-          "status": "FAILURE",
-          "state": "finished",
-          "href": "/guestAuth/app/rest/builds/id:994117",
-          "webUrl": "https://teamcity.jetbrains.com/viewLog.html?buildId=994117&buildTypeId=Checkstyle_ContributionIdeaInspectionsMaster"
-        }
-      ]
-    },
-    {
-      "id": "Epigenome_Cmeth",
-      "count": 2,
-      "href": "/guestAuth/app/rest/buildTypes/id:Epigenome_Cmeth/builds?locator=running:any,count:2",
-      "nextHref": "/guestAuth/app/rest/buildTypes/id:Epigenome_Cmeth/builds?locator=running:any,count:2,start:2",
-      "build": [
-        {
-          "id": 994276,
-          "buildTypeId": "Epigenome_Cmeth",
-          "number": "69",
-          "status": "SUCCESS",
-          "state": "running",
-          "href": "/guestAuth/app/rest/builds/id:994276",
-          "webUrl": "https://teamcity.jetbrains.com/viewLog.html?buildId=994276&buildTypeId=Epigenome_Cmeth"
-        },
-        {
-          "id": 994117,
-          "buildTypeId": "Epigenome_Cmeth",
-          "number": "68",
-          "status": "SUCCESS",
-          "state": "finished",
-          "href": "/guestAuth/app/rest/builds/id:994117",
-          "webUrl": "https://teamcity.jetbrains.com/viewLog.html?buildId=994117&buildTypeId=Epigenome_Cmeth"
-        }
-      ]
-    }
-  ]
+  "NetCommunityProjects_Femah_Publish": {
+    "id": "NetCommunityProjects_Femah_Publish",
+    "count": 2,
+    "href": "/guestAuth/app/rest/buildTypes/id:NetCommunityProjects_Femah_Publish/builds?locator=running:any,count:2",
+    "nextHref": "/guestAuth/app/rest/buildTypes/id:NetCommunityProjects_Femah_Publish/builds?locator=running:any,count:2,start:2",
+    "build": [
+      {
+        "id": 129546,
+        "buildTypeId": "NetCommunityProjects_Femah_Publish",
+        "number": "0.1.70-beta",
+        "status": "SUCCESS",
+        "state": "finished",
+        "href": "/guestAuth/app/rest/builds/id:129546",
+        "webUrl": "https://teamcity.jetbrains.com/viewLog.html?buildId=129546&buildTypeId=NetCommunityProjects_Femah_Publish"
+      },
+      {
+        "id": 129545,
+        "buildTypeId": "NetCommunityProjects_Femah_Publish",
+        "number": "16",
+        "status": "SUCCESS",
+        "state": "finished",
+        "href": "/guestAuth/app/rest/builds/id:129545",
+        "webUrl": "https://teamcity.jetbrains.com/viewLog.html?buildId=129545&buildTypeId=NetCommunityProjects_Femah_Publish"
+      }
+    ]
+  },
+  "NetCommunityProjects_Femah_Commit": {
+    "id": "NetCommunityProjects_Femah_Commit",
+    "count": 2,
+    "href": "/guestAuth/app/rest/buildTypes/id:NetCommunityProjects_Femah_Commit/builds?locator=running:any,count:2",
+    "nextHref": "/guestAuth/app/rest/buildTypes/id:NetCommunityProjects_Femah_Commit/builds?locator=running:any,count:2,start:2",
+    "build": [
+      {
+        "id": 145897,
+        "buildTypeId": "NetCommunityProjects_Femah_Commit",
+        "number": "0.1.78.209",
+        "status": "SUCCESS",
+        "state": "finished",
+        "href": "/guestAuth/app/rest/builds/id:145897"
+      },
+      {
+        "id": 137748,
+        "buildTypeId": "NetCommunityProjects_Femah_Commit",
+        "number": "0.1.77.194",
+        "status": "SUCCESS",
+        "state": "finished",
+        "href": "/guestAuth/app/rest/builds/id:137748"
+      }
+    ]
+  },
+  "NetProductsExtensions_Trunk_HeapViewer": {
+    "id": "NetProductsExtensions_Trunk_HeapViewer",
+    "count": 0,
+    "href": "/guestAuth/app/rest/buildTypes/id:NetProductsExtensions_Trunk_HeapViewer/builds?locator=running:any,count:2"
+  },
+  "Checkstyle_ContributionIdeaInspectionsMaster": {
+    "id": "Checkstyle_ContributionIdeaInspectionsMaster",
+    "count": 2,
+    "href": "/guestAuth/app/rest/buildTypes/id:Checkstyle_ContributionIdeaInspectionsMaster/builds?locator=running:any,count:2",
+    "nextHref": "/guestAuth/app/rest/buildTypes/id:Checkstyle_ContributionIdeaInspectionsMaster/builds?locator=running:any,count:2,start:2",
+    "build": [
+      {
+        "id": 994276,
+        "buildTypeId": "Checkstyle_ContributionIdeaInspectionsMaster",
+        "number": "69",
+        "status": "SUCCESS",
+        "state": "running",
+        "href": "/guestAuth/app/rest/builds/id:994276",
+        "webUrl": "https://teamcity.jetbrains.com/viewLog.html?buildId=994276&buildTypeId=Checkstyle_ContributionIdeaInspectionsMaster"
+      },
+      {
+        "id": 994117,
+        "buildTypeId": "Checkstyle_ContributionIdeaInspectionsMaster",
+        "number": "68",
+        "status": "FAILURE",
+        "state": "finished",
+        "href": "/guestAuth/app/rest/builds/id:994117",
+        "webUrl": "https://teamcity.jetbrains.com/viewLog.html?buildId=994117&buildTypeId=Checkstyle_ContributionIdeaInspectionsMaster"
+      }
+    ]
+  },
+  "Epigenome_Cmeth": {
+    "id": "Epigenome_Cmeth",
+    "count": 2,
+    "href": "/guestAuth/app/rest/buildTypes/id:Epigenome_Cmeth/builds?locator=running:any,count:2",
+    "nextHref": "/guestAuth/app/rest/buildTypes/id:Epigenome_Cmeth/builds?locator=running:any,count:2,start:2",
+    "build": [
+      {
+        "id": 994276,
+        "buildTypeId": "Epigenome_Cmeth",
+        "number": "69",
+        "status": "SUCCESS",
+        "state": "running",
+        "href": "/guestAuth/app/rest/builds/id:994276",
+        "webUrl": "https://teamcity.jetbrains.com/viewLog.html?buildId=994276&buildTypeId=Epigenome_Cmeth"
+      },
+      {
+        "id": 994117,
+        "buildTypeId": "Epigenome_Cmeth",
+        "number": "68",
+        "status": "SUCCESS",
+        "state": "finished",
+        "href": "/guestAuth/app/rest/builds/id:994117",
+        "webUrl": "https://teamcity.jetbrains.com/viewLog.html?buildId=994117&buildTypeId=Epigenome_Cmeth"
+      }
+    ]
+  }
 }
