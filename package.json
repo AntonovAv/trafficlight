@@ -17,6 +17,7 @@
     "classnames": "^2.2.5",
     "express": "^4.14.1",
     "font-awesome": "^4.7.0",
+    "player": "^0.6.1",
     "ramda": "^0.23.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
