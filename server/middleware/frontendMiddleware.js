@@ -1,6 +1,6 @@
-/* eslint-disable global-require */
 const express = require('express')
 const path = require('path')
+const favicon = require('serve-favicon')
 
 // Dev middleware
 const addDevMiddlewares = (app, webpackConfig) => {
@@ -36,6 +36,9 @@ const addProdMiddlewares = (app, options) => {
   const publicPath = options.publicPath || '/'
   const outputPath = options.outputPath || path.resolve(process.cwd(), 'build')
 
+  // add favicon
+  app.use(favicon(path.join(outputPath, 'favicon.png'), {maxAge: 100}))
+  // static files
   app.use(publicPath, express.static(outputPath))
 
   app.get('*', (req, res) => res.sendFile(path.resolve(outputPath, 'index.html')))

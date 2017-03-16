@@ -1,8 +1,8 @@
 const webpack = require('webpack')
 const path = require('path')
 
-module.exports = function(env) {
-  const nodeEnv = env && env.prod ? 'production' : 'development'
+module.exports = function() {
+  const nodeEnv = process.env.NODE_ENV || 'development'
   const isProd = nodeEnv === 'production'
 
   const plugins = [
