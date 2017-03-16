@@ -17,6 +17,9 @@
     "classnames": "^2.2.5",
     "express": "^4.14.1",
     "font-awesome": "^4.7.0",
+    "lame": "^1.2.4",
+    "node-mpg123-util": "0.0.3",
+    "player": "^0.6.1",
     "ramda": "^0.23.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
@@ -26,7 +29,8 @@
     "redux": "^3.6.0",
     "redux-logger": "^2.8.1",
     "redux-thunk": "^2.2.0",
-    "reselect": "^2.5.4"
+    "reselect": "^2.5.4",
+    "speaker": "^0.3.0"
   },
   "devDependencies": {
     "babel-core": "^6.22.1",
@@ -61,7 +65,7 @@
     "postcss-url": "^5.1.2",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
-    "webpack": "^2.2.1",
+    "webpack": "2.2.1",
     "webpack-dev-server": "^1.16.3",
     "webpack-hot-middleware": "^2.16.1"
   },
