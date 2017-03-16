@@ -5,35 +5,32 @@ class SoundManager {
 
   constructor() {
     this.player = new Player()
-    this.isPlaying = false
   }
 
   play() {
-    if (this.isPlaying) {
-      return
+    const play = () => {
+      this.player.play(path.join(__dirname, 'test.mp3'))
     }
-    this.isPlaying = true
-    this.player.play(path.join(__dirname, 'test.mp3'))
+
+    if (this.player.isPlaying()) {
+      this.player.stop().then(play)
+    } else {
+      play()
+    }
   }
 
   stop() {
-    if (!this.isPlaying) {
-      return
+    if (this.player.isPlaying()) {
+      this.player.stop()
     }
-    this.isPlaying = false
-    this.player.stop()
   }
 
   pause() {
-    if (this.isPlaying) {
-      this.player.pause()
-    }
+    this.player.pause()
   }
 
   resume() {
-    if (this.isPlaying) {
-      this.player.resume()
-    }
+    this.player.resume()
   }
 }
 
