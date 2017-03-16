@@ -18,6 +18,7 @@
     "express": "^4.14.1",
     "font-awesome": "^4.7.0",
     "lame": "^1.2.4",
+    "node-mpg123-util": "0.0.3",
     "player": "^0.6.1",
     "ramda": "^0.23.0",
     "react": "^15.4.2",

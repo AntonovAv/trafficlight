@@ -5,6 +5,7 @@ class SoundManager {
 
   constructor() {
     this.player = new Player()
+    this.player.setVolume(90)
   }
 
   play() {

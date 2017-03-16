@@ -2,6 +2,7 @@ const EventEmitter = require('events')
 const fs = require('fs')
 const lame = require('lame')
 const Speaker = require('speaker')
+const mpg123Util = require('node-mpg123-util')
 
 const EVENT_PLAY = 'play'
 const EVENT_STOP = 'stop'
@@ -134,6 +135,19 @@ class Player extends EventEmitter {
 
   isPlaying() {
     return this._isPlaying
+  }
+
+  setVolume(percents) {
+    return new Promise((resolve, reject) => {
+      if (this._isPlaying) {
+        if (this._decoder) {
+          mpg123Util.setVolume(this._decoder.mh, percents / 100)
+          resolve()
+        }
+      } else {
+        reject()
+      }
+    })
   }
 }
 
