@@ -1,23 +1,28 @@
 import {createSelector} from 'reselect'
 
-export const selectBuilds = (store) => store.builds
+export const selectHome = (store) => store.home
 
 export const isBuildsLoading = createSelector(
-  [selectBuilds],
-  (builds) => builds.isLoading
+  [selectHome],
+  (home) => home.isLoading
 )
 
 export const getBuildServer = createSelector(
-  [selectBuilds],
-  (builds) => builds.buildServer
+  [selectHome],
+  (home) => home.buildServer
 )
 
 export const getBuildsList = createSelector(
-  [selectBuilds],
-  (builds) => builds.buildsList
+  [selectHome],
+  (home) => home.buildsList
 )
 
 export const getNUpdates = createSelector(
-  [selectBuilds],
-  (builds) => builds.nUpdates
+  [selectHome],
+  (home) => home.nUpdates
+)
+
+export const getLight = createSelector(
+  [selectHome],
+  (home) => home.light
 )

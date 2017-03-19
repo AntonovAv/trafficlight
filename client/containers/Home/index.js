@@ -1,9 +1,11 @@
 import React, {PureComponent, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import {getBuildServer, getBuildsList, isBuildsLoading, getNUpdates} from './selectors'
+import {getBuildServer, getBuildsList, isBuildsLoading, getNUpdates, getLight} from './selectors'
 import * as buildsActions from './duck'
 import styles from './styles.css'
+
+import Trafficlight from './components/Trafficlight'
 
 export class Home extends PureComponent {
 
@@ -34,6 +36,7 @@ export class Home extends PureComponent {
           <button onClick={this.handleButtonClick}>Refresh</button>
           <div>{this.props.isLoading ? 'Loading...' : ''}</div>
         </div>
+        <Trafficlight light={this.props.light}/>
       </div>
     )
   }
@@ -46,7 +49,8 @@ Home.propTypes = {
   buildsActions: PropTypes.shape({
     loadBuilds: PropTypes.func.isRequired
   }),
-  nUpdates: PropTypes.number
+  nUpdates: PropTypes.number,
+  light: PropTypes.object,
 }
 
 const mapStateToProps = function(state) {
@@ -55,6 +59,7 @@ const mapStateToProps = function(state) {
     buildsList: getBuildsList(state),
     buildServer: getBuildServer(state),
     nUpdates: getNUpdates(state),
+    light: getLight(state)
   }
 }
 
