@@ -6,7 +6,8 @@
     "lint": "eslint --ext .js --ext .jsx \"client/\" ",
     "build": "cross-env NODE_ENV=development webpack --color --progress",
     "build:prod": "cross-env NODE_ENV=production webpack --color --progress",
-    "start": "cross-env NODE_ENV=development node %NODE_DEBUG_OPTION% server/server",
+    "start": "cross-env NODE_ENV=development node server/server",
+    "start:debug": "cross-env NODE_ENV=development node %NODE_DEBUG_OPTION% server/server",
     "start:prod": "cross-env NODE_ENV=production node server/server",
     "fake-teamcity": "json-server --routes fakeTeamcity/routes.json --watch fakeTeamcity/teamcity.json --port 3001"
   },
