@@ -1,9 +1,16 @@
 import React, {PureComponent, PropTypes} from 'react'
 import styles from './styles.css'
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
+import {startListenState} from './actions'
 
 import Navigation from 'components/Navigation'
 
 export class App extends PureComponent {
+
+  componentWillMount() {
+    this.props.stateListener()
+  }
 
   render() {
     return (
@@ -16,7 +23,15 @@ export class App extends PureComponent {
 }
 
 App.propTypes = {
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
+  stateListener: PropTypes.func
 }
 
-export default App
+export default connect(
+  false,
+  (dispatch) => {
+    return {
+      stateListener: bindActionCreators(startListenState, dispatch)
+    }
+  }
+)(App)

@@ -1,4 +1,5 @@
 import {SUCCESS_BUILDS} from './constants'
+import {STATE_UPDATE_SUCCESS} from '../App/constants'
 
 export const LOAD_BUILDS = 'home/LOAD_BUILDS'
 export const LOAD_BUILDS_SUCCESS = 'home/LOAD_BUILDS_SUCCESS'
@@ -40,6 +41,10 @@ export default function reducer(state = initState, action = {}) {
     case LOAD_BUILDS_FAILURE:
       return Object.assign({}, state, {
         isLoading: false
+      })
+    case STATE_UPDATE_SUCCESS:
+      return Object.assign({}, state, {
+        light: action.data
       })
     default:
       return state
