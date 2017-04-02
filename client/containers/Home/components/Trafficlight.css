@@ -1,0 +1,14 @@
+.trafficlight {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+
+  background: #222;
+  background-image: linear-gradient(transparent 2%, #111 2%, transparent 3%, #111 30%);
+  width: 140px;
+  height: 460px;
+  position: relative;
+  border: solid 4px #333;
+  border-radius: 10px;
+}
