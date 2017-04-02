@@ -15,6 +15,7 @@ export class App extends PureComponent {
   render() {
     return (
       <div className={styles.container}>
+        <div className={styles.background}/>
         <Navigation/>
         {this.props.children}
       </div>

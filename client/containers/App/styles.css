@@ -1,8 +1,26 @@
 .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-    width: 500px;
-    margin: 20px auto 0;
+  min-width: 500px;
+  height: 100%;
+  margin: 0 auto;
+}
+
+.background {
+  position: fixed;
+  z-index: -1;
+  height: 200%;
+  width: 200%;
+  top: -50%;
+  left: -50%;
+
+  background:
+    radial-gradient(black 15%, transparent 16%) 0 0,
+    radial-gradient(black 15%, transparent 16%) 8px 8px,
+    radial-gradient(rgba(255, 255, 255, 0.1) 15%, transparent 20%) 0 1px,
+    radial-gradient(rgba(255, 255, 255, 0.1) 15%, transparent 20%) 8px 9px;
+  background-color: #282828;
+  background-size: 16px 16px;
 }

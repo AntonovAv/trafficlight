@@ -1,9 +1,11 @@
 .light {
-  opacity: 0.3;
-
-  width: 40px;
-  height: 40px;
-  border-radius: 20px;
+  background-size: 5px 5px !important;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  opacity: 0.4;
+  cursor: pointer;
+  margin-top: 25px;
 }
 
 .active {
@@ -11,13 +13,22 @@
 }
 
 .red {
-  background-color: red;
+  background: red radial-gradient(brown, transparent);
+  box-shadow:
+    0 0 20px #111 inset,
+    0 0 10px red;
 }
 
 .yellow {
-  background-color: yellow;
+  background: yellow radial-gradient(orange, transparent);
+  box-shadow:
+    0 0 20px #111 inset,
+    0 0 10px yellow;
 }
 
 .green {
-  background-color: green;
+  background: green radial-gradient(lime, transparent);
+  box-shadow:
+    0 0 20px #111 inset,
+    0 0 10px lime;
 }
