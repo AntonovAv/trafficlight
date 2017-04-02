@@ -3,6 +3,7 @@ const SoundManger = require('../audio/manager')
 
 const R = require('ramda')
 const sManager = new SoundManger()
+const State = require('../state')
 
 module.exports = (app) => {
   app.all('/api/', function(request, response, next) {
@@ -48,35 +49,13 @@ module.exports = (app) => {
     response.status(200)
     response.set('Content-Type', 'text/event-stream;charset=utf-8')
 
-    const lightGen = function * () {
-      while (true) {
-        yield {
-          red: true,
-          yellow: false,
-          green: false
-        }
-        yield {
-          red: false,
-          yellow: true,
-          green: false
-        }
-        yield {
-          red: false,
-          yellow: false,
-          green: true
-        }
-      }
+    let fn = (data) => {
+      response.write(`data: ${JSON.stringify(data)}\n\n`)
     }
 
-    const gen = lightGen()
+    State.get().on(State.LIGHT_CHANGED_EVENT, fn)
 
-    let fn = () => {
-      response.write(`data: ${JSON.stringify(gen.next().value)}\n\n`)
-    }
-
-    const interval = setInterval(fn, 1000)
-
-    request.connection.on('close', () => clearInterval(interval))
+    request.connection.on('close', () => State.get().removeListener(State.LIGHT_CHANGED_EVENT, fn))
   })
 
   return app
