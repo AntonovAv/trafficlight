@@ -19,7 +19,26 @@ class LightManager {
       this._prevLightValue = nextValue
       State.get().lightState = this._generator.next().value
     }
+  }
 
+  lightOnBuildFailure() {
+    this._generator = generators.failure()
+  }
+
+  lightOnBuildsSuccess() {
+    this._generator = generators.allSuccess()
+  }
+
+  lightOnBuildFailureButRunning() {
+    this._generator = generators.failureAndRunning()
+  }
+
+  lightOnTeamcityError() {
+    this._generator = generators.teamcityError()
+  }
+
+  lightOnTeamcityUnavailable() {
+    this._generator = generators.teamcityUnavailable()
   }
 }
 

@@ -49,13 +49,13 @@ module.exports = (app) => {
     response.status(200)
     response.set('Content-Type', 'text/event-stream;charset=utf-8')
 
-    let fn = (data) => {
-      response.write(`data: ${JSON.stringify(data)}\n\n`)
+    let onLightChange = () => {
+      response.write(`data: ${JSON.stringify(State.get().lightState)}\n\n`)
     }
+    onLightChange() // send status on connect
 
-    State.get().on(State.LIGHT_CHANGED_EVENT, fn)
-
-    request.connection.on('close', () => State.get().removeListener(State.LIGHT_CHANGED_EVENT, fn))
+    State.get().on(State.LIGHT_CHANGED_EVENT, onLightChange)
+    request.connection.on('close', () => State.get().removeListener(State.LIGHT_CHANGED_EVENT, onLightChange))
   })
 
   return app

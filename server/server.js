@@ -5,11 +5,10 @@ const useClientApi = require('./api/clientApi')
 const resolve = require('path').resolve
 const argv = require('minimist')(process.argv.slice(2))
 const State = require('./state')
-const LightManager = require('./light/light_manager')
+const Processor = require('./core/processor')
 
 State.init({}, {}, {})
-// noinspection Eslint
-const lightManager = new LightManager() // TODO get job and run via scheduler
+new Processor().run()
 
 const port = argv.port || process.env.PORT || 3000
 
