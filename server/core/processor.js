@@ -1,6 +1,6 @@
-const LightManager = require('../light/light_manager')
-const BuildsManager = require('../teamcity/builds_manager')
-const BUILD_TYPE_STATUS = require('../constants').BUILD_TYPE_STATUS
+const LightManager = require('../light/LightManager')
+const BuildsManager = require('../teamcity/BuildsManager')
+const BUILD_TYPE_STATUS = require('../models/BuildTypeStatus').STATUS_TYPE
 const TEAMCITY_STATUS = require('../constants').TEAM_CITY_STATUS
 // const State = require('../state')
 // const REFRESH_BUILDS_MS = require('../constants').REFRESH_BUILDS_MS
@@ -20,9 +20,11 @@ class Processor {
   updateBuildStatuses() {
     this._buildsManager.getBuildStatuses()
       .then((statuses) => {
-        if (R.any(R.propEq('status', BUILD_TYPE_STATUS.FAILURE), statuses)) {
+        if (R.any((buildTypeStatus) => buildTypeStatus.type === BUILD_TYPE_STATUS.FAILURE, statuses)) {
           this._lightManager.lightOnBuildFailure()
-        } else if (R.any(R.propEq('status', BUILD_TYPE_STATUS.FAILURE_AND_RUNNING), statuses)) {
+        } else if (
+          R.any((buildTypeStatus) => buildTypeStatus.type === BUILD_TYPE_STATUS.FAILURE_AND_RUNNING, statuses)
+        ) {
           this._lightManager.lightOnBuildFailureButRunning()
         } else {
           this._lightManager.lightOnBuildsSuccess()

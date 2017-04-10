@@ -1,5 +1,6 @@
-const resource = require('./resource')
-const BUILD_TYPE_STATUS = require('../constants').BUILD_TYPE_STATUS
+const resource = require('./httpResource')
+const BUILD_TYPE_STATUS = require('../models/BuildTypeStatus').STATUS_TYPE
+const BuildTypeStatus = require('../models/BuildTypeStatus')
 const TEAMCITY_STATUS = require('../constants').TEAM_CITY_STATUS
 const R = require('ramda')
 
@@ -23,16 +24,13 @@ class BuildsStatusManager {
         const promises = R.map((buildType) => {
           return resource.getBuildStatus(this._teamcityURL, buildType.id)
             .then((builds) => {
-              return {
-                id: buildType.id,
-                status: this._getBuildTypeStatus(builds)
-              }
+              return new BuildTypeStatus(buildType.id, this._getBuildTypeStatus(builds))
             })
         }, buildTypes)
         return Promise.all(promises)
       })
       .catch((e) => {
-        if (e.code === 'ENOTFOUND') {
+        if (e.code === 'ENOTFOUND' || e.code === 'ECONNREFUSED') {
           return Promise.reject(TEAMCITY_STATUS.NOT_AVAILABLE)
         }
         return Promise.reject(TEAMCITY_STATUS.INTERNAL_ERROR)
@@ -41,15 +39,13 @@ class BuildsStatusManager {
 
   _getBuildTypeStatus(builds) {
     const getStatusForOneBuild = (build) => {
-      const status = build.status
-      const state = build.state
-      if (state === 'running') {
+      if (build.isRunning) {
         return BUILD_TYPE_STATUS.RUNNING
       }
-      if (status === 'SUCCESS') {
+      if (!build.isFailure) {
         return BUILD_TYPE_STATUS.SUCCESS
       }
-      if (status === 'FAILURE') {
+      if (build.isFailure) {
         return BUILD_TYPE_STATUS.FAILURE
       }
     }
@@ -63,7 +59,7 @@ class BuildsStatusManager {
       const lastBuild = builds[0]
       const preLastBuild = builds[1]
 
-      if (preLastBuild.status === 'FAILURE' && lastBuild.state === 'running') {
+      if (preLastBuild.isFailure && lastBuild.isRunning) {
         return BUILD_TYPE_STATUS.FAILURE_AND_RUNNING
       } else {
         return getStatusForOneBuild(lastBuild)

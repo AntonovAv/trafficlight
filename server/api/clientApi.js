@@ -1,4 +1,4 @@
-const temcityResource = require('../teamcity/resource')
+const temcityResource = require('../teamcity/httpResource')
 const SoundManger = require('../audio/manager')
 
 const R = require('ramda')
@@ -48,6 +48,7 @@ module.exports = (app) => {
   app.get('/api/state', function(request, response) {
     response.status(200)
     response.set('Content-Type', 'text/event-stream;charset=utf-8')
+    response.connection.setTimeout(0)
 
     let onLightChange = () => {
       response.write(`data: ${JSON.stringify(State.get().lightState)}\n\n`)
