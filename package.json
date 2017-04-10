@@ -9,6 +9,8 @@
     "build": "cross-env NODE_ENV=development webpack --color --progress",
     "build:prod": "cross-env NODE_ENV=production webpack --color --progress",
     "start": "cross-env NODE_ENV=development node server/server",
+    "start:reload": "cross-env NODE_ENV=development nodemon -w ./server/ --delay 1000 start",
+    "start:debug:reload": "cross-env NODE_ENV=development nodemon -w ./server/ --delay 1000 start:debug",
     "start:debug": "cross-env NODE_ENV=development node %NODE_DEBUG_OPTION% server/server",
     "start:prod": "cross-env NODE_ENV=production node server/server",
     "fake-teamcity": "json-server --routes fakeTeamcity/routes.json --watch fakeTeamcity/teamcity.json --port 3001"
@@ -58,6 +60,7 @@
     "file-loader": "^0.10.0",
     "json-server": "^0.9.5",
     "minimist": "^1.2.0",
+    "nodemon": "^1.11.0",
     "npm-run-all": "^4.0.2",
     "postcss": "^5.2.12",
     "postcss-browser-reporter": "^0.5.0",
