@@ -1,5 +1,5 @@
 const generators = require('./LightGenerators')
-const State = require('../state')
+const State = require('../State')
 const R = require('ramda')
 const LIGHT_TICK_MS = require('../constants').LIGHT_TICK_MS
 

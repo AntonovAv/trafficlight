@@ -1,9 +1,9 @@
 const temcityResource = require('../teamcity/httpResource')
-const SoundManger = require('../audio/manager')
+const SoundManger = require('../audio/PlayerManager')
 
 const R = require('ramda')
 const sManager = new SoundManger()
-const State = require('../state')
+const State = require('../State')
 
 module.exports = (app) => {
   app.all('/api/', function(request, response, next) {
@@ -48,15 +48,35 @@ module.exports = (app) => {
   app.get('/api/state', function(request, response) {
     response.status(200)
     response.set('Content-Type', 'text/event-stream;charset=utf-8')
-    response.connection.setTimeout(0)
+    response.connection.setTimeout(0) // keep alive connection
 
     let onLightChange = () => {
-      response.write(`data: ${JSON.stringify(State.get().lightState)}\n\n`)
+      response.write('event: lightChange\n')
+      response.write(`data: ${JSON.stringify(State.get().lightState.toJSON())}\n\n`)
     }
-    onLightChange() // send status on connect
+
+    let onSoundChange = () => {
+      response.write('event: playerChange\n')
+      response.write(`data: ${JSON.stringify(State.get().playerState.toJSON())}\n\n`)
+    }
+    let onBuildsStatusChange = () => {
+      response.write('event: buildsChange\n')
+      response.write(`data: ${JSON.stringify(State.get().buildsState)}\n\n`)
+    }
+
+    // send status on connect
+    onLightChange()
+    onSoundChange()
+    onBuildsStatusChange()
 
     State.get().on(State.LIGHT_CHANGED_EVENT, onLightChange)
-    request.connection.on('close', () => State.get().removeListener(State.LIGHT_CHANGED_EVENT, onLightChange))
+    State.get().on(State.PLAYER_CHANGED_EVENT, onSoundChange)
+    State.get().on(State.BUILDS_CHANGED_EVENT, onBuildsStatusChange)
+    request.connection.on('close', () => {
+      State.get().removeListener(State.LIGHT_CHANGED_EVENT, onLightChange)
+      State.get().removeListener(State.PLAYER_CHANGED_EVENT, onSoundChange)
+      State.get().removeListener(State.BUILDS_CHANGED_EVENT, onBuildsStatusChange)
+    })
   })
 
   return app

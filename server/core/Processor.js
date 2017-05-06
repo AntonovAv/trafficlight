@@ -14,7 +14,8 @@ class Processor {
   }
 
   run() {
-    setInterval(this.updateBuildStatuses.bind(this), REFRESH_STATUS_MS)
+    // TODO need to replace by timer and wait while previous task was performed
+    this.updateStatusesInterval = setInterval(this.updateBuildStatuses.bind(this), REFRESH_STATUS_MS)
   }
 
   updateBuildStatuses() {
