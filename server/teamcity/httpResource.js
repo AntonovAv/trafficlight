@@ -53,7 +53,7 @@ module.exports.getBuildStatus = (host, buildTypeId, count = 2) => {
         } else {
           resolve(R.map((build) => {
             const {buildTypeId, status, state} = build
-            return new Build(buildTypeId, status === 'running', state === 'FAILURE')
+            return new Build(buildTypeId, state === 'running', status === 'FAILURE')
           }, build))
         }
       })

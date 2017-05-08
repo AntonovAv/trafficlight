@@ -1,5 +1,6 @@
 const PlayerState = require('./models/PlayerState')
 const Light = require('./models/Light')
+const BuildState = require('./models/BuildsState')
 
 const EventEmitter = require('events').EventEmitter
 
@@ -23,7 +24,7 @@ class State extends EventEmitter {
     instance = new State(
       new Light(false, false, false),
       new PlayerState(false, false, null),
-      buildsState
+      new BuildState([])
     )
   }
 

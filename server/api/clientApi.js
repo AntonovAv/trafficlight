@@ -61,7 +61,7 @@ module.exports = (app) => {
     }
     let onBuildsStatusChange = () => {
       response.write('event: buildsChange\n')
-      response.write(`data: ${JSON.stringify(State.get().buildsState)}\n\n`)
+      response.write(`data: ${JSON.stringify(State.get().buildsState.toJSON())}\n\n`)
     }
 
     // send status on connect

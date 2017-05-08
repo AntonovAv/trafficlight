@@ -6,11 +6,15 @@ const TEAMCITY_STATUS = require('../constants').TEAM_CITY_STATUS
 // const REFRESH_BUILDS_MS = require('../constants').REFRESH_BUILDS_MS
 const REFRESH_STATUS_MS = require('../constants').REFRESH_STATUS_MS
 const R = require('ramda')
+const State = require('../State')
+const BuildState = require('../models/BuildsState')
 
 class Processor {
   constructor() {
     this._lightManager = new LightManager()
     this._buildsManager = new BuildsManager()
+
+    this._prevBuildStatuses = null
   }
 
   run() {
@@ -21,14 +25,19 @@ class Processor {
   updateBuildStatuses() {
     this._buildsManager.getBuildStatuses()
       .then((statuses) => {
-        if (R.any((buildTypeStatus) => buildTypeStatus.type === BUILD_TYPE_STATUS.FAILURE, statuses)) {
+        if (R.any((buildTypeStatus) => buildTypeStatus.status === BUILD_TYPE_STATUS.FAILURE, statuses)) {
           this._lightManager.lightOnBuildFailure()
         } else if (
-          R.any((buildTypeStatus) => buildTypeStatus.type === BUILD_TYPE_STATUS.FAILURE_AND_RUNNING, statuses)
+          R.any((buildTypeStatus) => buildTypeStatus.status === BUILD_TYPE_STATUS.FAILURE_AND_RUNNING, statuses)
         ) {
           this._lightManager.lightOnBuildFailureButRunning()
         } else {
           this._lightManager.lightOnBuildsSuccess()
+        }
+
+        if (!R.equals(this._prevBuildStatuses, statuses)) {
+          this._prevBuildStatuses = statuses
+          State.get().buildsState = new BuildState(statuses)
         }
       })
       .catch((teamcityError) => {
