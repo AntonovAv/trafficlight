@@ -1,5 +1,7 @@
 const axios = require('axios')
 const R = require('ramda')
+const Build = require('../models/Build')
+const BuildType = require('../models/BuildType')
 
 const BUILD_TYPES_URL = '/guestAuth/app/rest/buildTypes'
 
@@ -19,10 +21,7 @@ module.exports.getBuildTypes = (host) => {
       .then(({data}) => {
         const result = R.map((buildType) => {
           const {id, projectId} = buildType
-          return {
-            id,
-            projectId,
-          }
+          return new BuildType(id, projectId)
         }, data.buildType)
         resolve(result)
       })
@@ -54,11 +53,7 @@ module.exports.getBuildStatus = (host, buildTypeId, count = 2) => {
         } else {
           resolve(R.map((build) => {
             const {buildTypeId, status, state} = build
-            return {
-              id: buildTypeId,
-              state,
-              status
-            }
+            return new Build(buildTypeId, state === 'running', status === 'FAILURE')
           }, build))
         }
       })
