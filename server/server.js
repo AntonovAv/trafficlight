@@ -1,7 +1,9 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const methodOverride = require('method-override')
 const useFrontendMiddleware = require('./middleware/frontendMiddleware')
 const useClientApi = require('./api/clientApi')
+const useAudioApi = require('./audio/api')
 const resolve = require('path').resolve
 const argv = require('minimist')(process.argv.slice(2))
 
@@ -15,9 +17,12 @@ new Processor().run()
 const port = argv.port || process.env.PORT || 3000
 
 const app = express()
+app.use(methodOverride())
 app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended: true}))
 
 useClientApi(app)
+useAudioApi(app)
 
 useFrontendMiddleware(app, {
   outputPath: resolve(process.cwd(), 'public/'),

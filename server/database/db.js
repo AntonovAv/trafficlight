@@ -28,4 +28,4 @@ process.on('SIGINT', function() {
   })
 })
 
-require('./initModels')
+require('./models')
