@@ -33,3 +33,25 @@ export const resumeAudio = () => {
     }
   }
 }
+
+export function uploadSoundAction(sound) {
+  let data = new FormData()
+  data.append('sound', sound)
+
+  const config = {
+    onUploadProgress: function(progressEvent) {
+      let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
+      console.log(percentCompleted)
+    }
+  }
+  return {
+    types: ['upload', 'ok', 'err'],
+    promise: (client) => {
+      return client.post(
+        'api/audio/sounds',
+        data,
+        config
+      )
+    }
+  }
+}
