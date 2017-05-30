@@ -2,6 +2,7 @@ const Player = require('./Player')
 const path = require('path')
 const State = require('../State')
 const PlayerState = require('../models/PlayerState')
+const Sound = require('../database/models.js').Sound
 
 class SoundManager {
 
@@ -16,6 +17,15 @@ class SoundManager {
 
       State.get().playerState = new PlayerState(true, false, 'test.mp3')
     }
+
+    Sound
+      .find({
+        name: '1'
+      })
+      .limit(1)
+      .exec((err, data) => {
+        console.log(data)
+      })
 
     if (this.player.isPlaying()) {
       this.player.stop().then(play)

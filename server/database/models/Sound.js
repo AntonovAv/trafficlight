@@ -3,7 +3,10 @@ const Schema = mongoose.Schema
 
 const soundSchema = new Schema({
   id: mongoose.SchemaTypes.ObjectId,
-  name: String,
+  name: {
+    type: String,
+    required: true,
+  },
   format: {
     type: String,
     default: 'mp3',

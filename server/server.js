@@ -2,8 +2,8 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 const useFrontendMiddleware = require('./middleware/frontendMiddleware')
-const useClientApi = require('./api/clientApi')
-const useAudioApi = require('./audio/api')
+const clientApi = require('./api/clientApi')
+const audioApi = require('./audio/api')
 const resolve = require('path').resolve
 const argv = require('minimist')(process.argv.slice(2))
 
@@ -21,8 +21,14 @@ app.use(methodOverride())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 
-useClientApi(app)
-useAudioApi(app)
+app.all('/api', function(request, response, next) {
+  response.contentType('json')
+  response.set('Cache-Control', 'no-cache')
+  next()
+})
+
+app.use('/api', clientApi)
+app.use('/api/audio', audioApi)
 
 useFrontendMiddleware(app, {
   outputPath: resolve(process.cwd(), 'public/'),
