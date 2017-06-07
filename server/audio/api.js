@@ -1,8 +1,6 @@
 const SoundManger = require('../audio/PlayerManager')
 const sManager = new SoundManger()
 const Sound = require('../database/models').Sound
-const fs = require('fs')
-const path = require('path')
 const audio = require('express').Router()
 
 audio.get('/sounds', function(request, response) {
@@ -14,21 +12,24 @@ audio.get('/sounds/:id', function(request, response) {
 })
 
 audio.post('/sounds', function(request, response) {
-  // todo create sound
-  console.log(request.files)
-  response.status(200).end()
-  /* const newSound = new Sound({
-   name: '1',
-   content: fs.readFileSync(path.join(__dirname, 'test.mp3'))
-   })
-   newSound.save((err, sound) => {
-   if (err) {
-   response.status(500).end()
-   response.write(err)
-   } else {
-   response.status(200).end()
-   }
-   })*/
+  const file = request.files.sound
+  if (!file) {
+    response.status(401).end()
+    return
+  }
+
+  const newSound = new Sound({
+    name: file.name,
+    content: file.data
+  })
+  newSound.save((err, sound) => {
+    if (err) {
+      response.status(500).end()
+      response.write(err)
+    } else {
+      response.status(200).end()
+    }
+  })
 })
 
 audio.delete('/sounds/:id', function(request, response) {
