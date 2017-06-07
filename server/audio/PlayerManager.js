@@ -1,8 +1,8 @@
 const Player = require('./Player')
-const path = require('path')
 const State = require('../State')
 const PlayerState = require('../models/PlayerState')
 const Sound = require('../database/models.js').Sound
+const streamifier = require('streamifier')
 
 class SoundManager {
 
@@ -13,19 +13,16 @@ class SoundManager {
 
   play() {
     const play = () => {
-      this.player.play(path.join(__dirname, 'test.mp3'))
-
-      State.get().playerState = new PlayerState(true, false, 'test.mp3')
+      Sound
+        .find({})
+        .limit(1)
+        .exec((err, [sound, rest]) => {
+          if (!err) {
+            this.player.play(streamifier.createReadStream(sound.content))
+            State.get().playerState = new PlayerState(true, false, sound._id.toString())
+          }
+        })
     }
-
-    Sound
-      .find({
-        name: '1'
-      })
-      .limit(1)
-      .exec((err, data) => {
-        console.log(data)
-      })
 
     if (this.player.isPlaying()) {
       this.player.stop().then(play)

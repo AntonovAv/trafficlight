@@ -24,12 +24,12 @@ class Player extends EventEmitter {
     this._lameFormat = {}
   }
 
-  play(filePath) {
+  play(soundStream) {
     if (!this._isPlaying) {
       this._isPlaying = true
 
       return new Promise((resolve, reject) => {
-        this._stream = fs.createReadStream(filePath)
+        this._stream = soundStream//fs.createReadStream(filePath)
 
         let that = this
         this._stream
