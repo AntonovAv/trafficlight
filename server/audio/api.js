@@ -2,13 +2,42 @@ const SoundManger = require('../audio/PlayerManager')
 const sManager = new SoundManger()
 const Sound = require('../database/models').Sound
 const audio = require('express').Router()
+const ObjectId = require('mongodb').ObjectId
 
 audio.get('/sounds', function(request, response) {
-  // todo audio list
+  Sound.find({}).exec((err, sounds) => {
+    if (err) {
+      response.status(500).end()
+    } else {
+      const wrappers = sounds.map((sound) => {
+        return createSoundWrapper(sound)
+      })
+      response.status(200).send(wrappers).end()
+    }
+  })
 })
 
+function createSoundWrapper(model) {
+  return {
+    id: model._id.toString(),
+    name: model.name,
+  }
+}
+
 audio.get('/sounds/:id', function(request, response) {
-  // todo one audio
+  Sound.find({
+    _id: new ObjectId(request.params.id)
+  }).exec((err, sounds) => {
+    if (err) {
+      response.status(500).end()
+    } else {
+      if (sounds.length === 0) {
+        response.status(404).end()
+      } else {
+        response.status(200).send(createSoundWrapper(sounds[0])).end()
+      }
+    }
+  })
 })
 
 audio.post('/sounds', function(request, response) {
@@ -36,10 +65,21 @@ audio.delete('/sounds/:id', function(request, response) {
   // todo remove sound
 })
 
-audio.get('/play', function(request, response) {
-  console.log('play')
-  sManager.play()
-  response.status(200).end()
+audio.get('/play/:id', function(request, response) {
+  Sound.find({
+    _id: new ObjectId(request.params.id)
+  }).exec((err, [sound]) => {
+    if (err) {
+      response.status(500).end()
+    } else {
+      if (sound) {
+        sManager.play(sound)
+        response.status(200).end()
+      } else {
+        response.status(404).end()
+      }
+    }
+  })
 })
 
 audio.get('/stop', function(request, response) {
