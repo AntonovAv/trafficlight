@@ -1,3 +1,7 @@
+import {
+  LOAD_SOUNDS, LOAD_SOUNDS_SUCCESS, LOAD_SOUNDS_FAILURE,
+} from './constants'
+
 export const playAudio = () => {
   return {
     types: ['start', 'ok', 'err'],
@@ -51,6 +55,17 @@ export function uploadSoundAction(sound) {
         'api/audio/sounds',
         data,
         config
+      )
+    }
+  }
+}
+
+export function loadSoundsAction() {
+  return {
+    types: [LOAD_SOUNDS, LOAD_SOUNDS_SUCCESS, LOAD_SOUNDS_FAILURE],
+    promise: (client) => {
+      return client.get(
+        'api/audio/sounds',
       )
     }
   }

@@ -6,6 +6,10 @@ import Dropzone from 'react-dropzone'
 
 export class Audio extends PureComponent {
 
+  componentDidMount() {
+    this.props.loadSounds()
+  }
+
   onDrop = (files) => {
     console.log(files)
     this.props.upload(files[0])
@@ -33,6 +37,7 @@ Audio.propTypes = {
   pause: PropTypes.func,
   resume: PropTypes.func,
   upload: PropTypes.func,
+  loadSounds: PropTypes.func,
 }
 
 export default connect(false, (dispatch) => {
@@ -42,5 +47,6 @@ export default connect(false, (dispatch) => {
     pause: bindActionCreators(audioActions.pauseAudio, dispatch),
     resume: bindActionCreators(audioActions.resumeAudio, dispatch),
     upload: bindActionCreators(audioActions.uploadSoundAction, dispatch),
+    loadSounds: bindActionCreators(audioActions.loadSoundsAction, dispatch),
   }
 })(Audio)
