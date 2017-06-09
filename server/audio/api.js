@@ -19,14 +19,14 @@ audio.get('/sounds', function(request, response) {
 
 function createSoundWrapper(model) {
   return {
-    id: model._id.toString(),
+    id: model.id,
     name: model.name,
   }
 }
 
 audio.get('/sounds/:id', function(request, response) {
   Sound.find({
-    _id: new ObjectId(request.params.id)
+    id: request.params.id
   }).exec((err, sounds) => {
     if (err) {
       response.status(500).end()
@@ -62,24 +62,38 @@ audio.post('/sounds', function(request, response) {
 })
 
 audio.delete('/sounds/:id', function(request, response) {
-  // todo remove sound
-})
-
-audio.get('/play/:id', function(request, response) {
-  Sound.find({
+  Sound.deleteOne({
     _id: new ObjectId(request.params.id)
-  }).exec((err, [sound]) => {
+  }).exec((err) => {
     if (err) {
       response.status(500).end()
     } else {
-      if (sound) {
-        sManager.play(sound)
-        response.status(200).end()
-      } else {
-        response.status(404).end()
-      }
+      response.status(200).end()
     }
   })
+})
+
+audio.get('/play/:id', function(request, response) {
+  Sound
+    .findById(request.params.id)
+    .exec((err, sound) => {
+      if (err) {
+        response.status(500).end()
+      } else {
+        if (sound) {
+          sManager
+            .play(sound)
+            .then(() => {
+              response.status(200).end()
+            })
+            .catch(() => {
+              response.status(500).end()
+            })
+        } else {
+          response.status(404).end()
+        }
+      }
+    })
 })
 
 audio.get('/stop', function(request, response) {

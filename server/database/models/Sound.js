@@ -2,7 +2,6 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const soundSchema = new Schema({
-  id: mongoose.SchemaTypes.ObjectId,
   name: {
     type: String,
     required: true,

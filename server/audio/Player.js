@@ -1,5 +1,4 @@
 const EventEmitter = require('events')
-const fs = require('fs')
 const lame = require('lame')
 const Speaker = require('speaker')
 const mpg123Util = require('node-mpg123-util')
@@ -19,7 +18,7 @@ class Player extends EventEmitter {
     this._isPaused = false
 
     this._decoder = null
-    this._stream = null
+    this._soundStream = null
     this._sreaker = null
     this._lameFormat = {}
   }
@@ -29,22 +28,21 @@ class Player extends EventEmitter {
       this._isPlaying = true
 
       return new Promise((resolve, reject) => {
-        this._stream = soundStream//fs.createReadStream(filePath)
+        this._soundStream = soundStream
 
         let that = this
-        this._stream
+        this._soundStream
           .pipe(new lame.Decoder())
           .on('format', function(format) {
             that._lameFormat = format
             that._decoder = this
             that._speak(this, format)
 
+            resolve()
             that.emit(EVENT_PLAY)
           })
           .on('close', () => {
-            resolve()
             this.stop()
-            this.emit(EVENT_STOP)
           })
           .on('error', (e) => {
             reject(e)
@@ -73,8 +71,8 @@ class Player extends EventEmitter {
     if (this._isPlaying && !this._isPaused) {
       this._isPaused = true
 
-      if (this._stream) {
-        this._stream.pause()
+      if (this._soundStream) {
+        this._soundStream.pause()
       }
       if (this._decoder) {
         this._decoder.unpipe()
@@ -88,8 +86,8 @@ class Player extends EventEmitter {
     if (this._isPlaying && this._isPaused) {
       this._isPaused = false
 
-      if (this._stream) {
-        this._stream.resume()
+      if (this._soundStream) {
+        this._soundStream.resume()
       }
       if (this._decoder) {
         this._speak(this._decoder, this._lameFormat)
@@ -113,11 +111,10 @@ class Player extends EventEmitter {
       this._sreaker.close(true)
       this._sreaker = null
     }
-    if (this._stream) {
-      this._stream.removeAllListeners('close')
-      this._stream.destroy()
-      this._stream.removeAllListeners('error')
-      this._stream = null
+    if (this._soundStream) {
+      this._soundStream.removeAllListeners('close')
+      this._soundStream.removeAllListeners('error')
+      this._soundStream = null
     }
 
     if (this._decoder) {
@@ -152,3 +149,10 @@ class Player extends EventEmitter {
 }
 
 module.exports = Player
+Player.Events = {
+  EVENT_PLAY,
+  EVENT_STOP,
+  EVENT_ERROR,
+  EVENT_PAUSE,
+  EVENT_RESUME,
+}
