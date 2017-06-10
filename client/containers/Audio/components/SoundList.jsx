@@ -28,7 +28,7 @@ SoundList.propTypes = {
     id: PropTypes.string,
     name: PropTypes.string,
   })),
-  playingSoundId: PropTypes.func,
+  playingSoundId: PropTypes.string,
   onPlayFunc: PropTypes.func,
   onStopFunc: PropTypes.func,
   onRemoveFunc: PropTypes.func,

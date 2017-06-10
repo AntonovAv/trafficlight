@@ -9,6 +9,7 @@ const initState = {
   sounds: [],
   soundsLoading: false,
   playingId: null,
+  uploadedFile: null,
 }
 
 export default function reducer(state = initState, {type, data}) {

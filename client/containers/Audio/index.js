@@ -3,8 +3,8 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import * as audioActions from './actions'
 import {selectSounds, selectPlayingId} from './selectors'
-import Dropzone from 'react-dropzone'
 import SoundList from './components/SoundList'
+import SoundDropzone from './components/SoundDropzone'
 
 export class Audio extends PureComponent {
 
@@ -12,18 +12,14 @@ export class Audio extends PureComponent {
     this.props.loadSounds()
   }
 
-  onDrop = (files) => {
-    console.log(files)
-    this.props.upload(files[0])
-  }
-
   render() {
     return (
       <div>
         <span>Audio</span>
-        <Dropzone onDrop={this.onDrop}>
-          Put files
-        </Dropzone>
+        <SoundDropzone
+          onFileDrop={this.props.upload}
+          uploadedSound={null}
+        />
         <SoundList
           sounds={this.props.sounds}
           onPlayFunc={this.props.play}

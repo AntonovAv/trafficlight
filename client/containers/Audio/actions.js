@@ -40,24 +40,30 @@ export const resumeSoundAction = () => {
 }
 
 export function uploadSoundAction(sound) {
-  let data = new FormData()
-  data.append('sound', sound)
+  return dispatch => {
+    let data = new FormData()
+    data.append('sound', sound)
 
-  const config = {
-    onUploadProgress: function(progressEvent) {
-      let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
-      console.log(percentCompleted)
+    const config = {
+      onUploadProgress: function(progressEvent) {
+        let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
+        console.log(percentCompleted)
+      }
     }
-  }
-  return {
-    types: ['upload', 'ok', 'err'],
-    promise: (client) => {
-      return client.post(
-        'api/audio/sounds',
-        data,
-        config
-      )
-    }
+
+    dispatch({
+      types: ['upload', 'ok', 'err'],
+      promise: (client) => {
+        return client.post(
+          'api/audio/sounds',
+          data,
+          config
+        )
+      },
+      successCb: () => {
+        dispatch(loadSoundsAction())
+      }
+    })
   }
 }
 
