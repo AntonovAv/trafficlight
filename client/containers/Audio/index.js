@@ -2,7 +2,7 @@ import React, {PureComponent, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import * as audioActions from './actions'
-import {selectSounds} from './selectors'
+import {selectSounds, selectPlayingId} from './selectors'
 import Dropzone from 'react-dropzone'
 import SoundList from './components/SoundList'
 
@@ -28,6 +28,7 @@ export class Audio extends PureComponent {
           sounds={this.props.sounds}
           onPlayFunc={this.props.play}
           onStopFunc={this.props.stop}
+          playingSoundId={this.props.playingId}
         />
       </div>
     )
@@ -42,12 +43,14 @@ Audio.propTypes = {
   upload: PropTypes.func,
   loadSounds: PropTypes.func,
   sounds: PropTypes.array,
+  playingId: PropTypes.string,
 }
 
 export default connect(
   (state) => {
     return {
-      sounds: selectSounds(state)
+      sounds: selectSounds(state),
+      playingId: selectPlayingId(state),
     }
   },
   (dispatch) => {

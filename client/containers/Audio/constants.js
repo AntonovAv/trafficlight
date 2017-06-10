@@ -1,3 +1,5 @@
 export const LOAD_SOUNDS = 'audio/LOAD_SOUNDS'
 export const LOAD_SOUNDS_SUCCESS = 'audio/LOAD_SOUNDS_SUCCESS'
 export const LOAD_SOUNDS_FAILURE = 'audio/LOAD_SOUNDS_FAILURE'
+
+export const PLAYER_STATE_CHANGE = 'audio/PLAYER_STATE_CHANGE'

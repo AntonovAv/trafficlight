@@ -12,3 +12,7 @@ export const soundsLoading = createSelector(
   (audio) => audio.soundsLoading
 )
 
+export const selectPlayingId = createSelector(
+  [selectAudio],
+  (audio) => audio.playingId
+)

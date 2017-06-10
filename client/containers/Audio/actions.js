@@ -1,5 +1,6 @@
 import {
   LOAD_SOUNDS, LOAD_SOUNDS_SUCCESS, LOAD_SOUNDS_FAILURE,
+  PLAYER_STATE_CHANGE,
 } from './constants'
 
 export const playSoundAction = (id) => {
@@ -68,5 +69,16 @@ export function loadSoundsAction() {
         'api/audio/sounds',
       )
     }
+  }
+}
+
+export function playerStateChangeAction(data) {
+  return dispatch => {
+    dispatch({
+      type: PLAYER_STATE_CHANGE,
+      data: {
+        playingId: (data.playing ? data.soundId : null)
+      },
+    })
   }
 }

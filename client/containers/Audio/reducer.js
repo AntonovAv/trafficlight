@@ -2,12 +2,13 @@ import {
   LOAD_SOUNDS,
   LOAD_SOUNDS_SUCCESS,
   LOAD_SOUNDS_FAILURE,
+  PLAYER_STATE_CHANGE,
 } from './constants'
 
 const initState = {
   sounds: [],
   soundsLoading: false,
-
+  playingId: null,
 }
 
 export default function reducer(state = initState, {type, data}) {
@@ -27,6 +28,11 @@ export default function reducer(state = initState, {type, data}) {
       return {
         ...state,
         soundsLoading: false
+      }
+    case PLAYER_STATE_CHANGE:
+      return {
+        ...state,
+        ...data,
       }
     default:
       return state

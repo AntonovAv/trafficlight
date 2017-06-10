@@ -2,7 +2,15 @@ const mongoose = require('mongoose')
 const dbURI = 'mongodb://localhost/trafficlight'
 
 // Create the database connection
-mongoose.connect(dbURI)
+mongoose.connect(
+  dbURI,
+  {
+    server: {
+      reconnectInterval: 5000,
+      reconnectTries: 100,
+    }
+  }
+)
 
 // CONNECTION EVENTS
 // When successfully connected
