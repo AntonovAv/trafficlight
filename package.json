@@ -75,6 +75,7 @@
     "postcss-loader": "^1.2.2",
     "postcss-reporter": "^3.0.0",
     "postcss-url": "^5.1.2",
+    "prop-types": "^15.5.10",
     "style-loader": "^0.13.1",
     "stylelint": "^7.10.1",
     "stylelint-config-css-modules": "^0.1.0",
@@ -127,7 +128,8 @@
       "react/jsx-boolean-value": [
         "error",
         "always"
-      ]
+      ],
+      "react/no-unused-prop-types": 0
     }
   },
   "stylelint": {

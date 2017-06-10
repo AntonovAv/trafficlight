@@ -2,16 +2,16 @@ import {
   LOAD_SOUNDS, LOAD_SOUNDS_SUCCESS, LOAD_SOUNDS_FAILURE,
 } from './constants'
 
-export const playAudio = () => {
+export const playSoundAction = (id) => {
   return {
     types: ['start', 'ok', 'err'],
     promise: (client) => {
-      return client.get('api/audio/play')
+      return client.get(`api/audio/play/${id}`)
     }
   }
 }
 
-export const stopAudio = () => {
+export const stopSoundAction = () => {
   return {
     types: [null, null, null],
     promise: (client) => {
@@ -20,7 +20,7 @@ export const stopAudio = () => {
   }
 }
 
-export const pauseAudio = () => {
+export const pauseSoundAction = () => {
   return {
     types: ['start', 'ok', 'err'],
     promise: (client) => {
@@ -29,7 +29,7 @@ export const pauseAudio = () => {
   }
 }
 
-export const resumeAudio = () => {
+export const resumeSoundAction = () => {
   return {
     types: ['start', 'ok', 'err'],
     promise: (client) => {

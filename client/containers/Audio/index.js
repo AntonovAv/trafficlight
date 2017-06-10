@@ -2,7 +2,9 @@ import React, {PureComponent, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import * as audioActions from './actions'
+import {selectSounds} from './selectors'
 import Dropzone from 'react-dropzone'
+import SoundList from './components/SoundList'
 
 export class Audio extends PureComponent {
 
@@ -19,13 +21,14 @@ export class Audio extends PureComponent {
     return (
       <div>
         <span>Audio</span>
-        <button onClick={this.props.play}>Play</button>
-        <button onClick={this.props.stop}>Stop</button>
-        <button onClick={this.props.pause}>Pause</button>
-        <button onClick={this.props.resume}>Resume</button>
         <Dropzone onDrop={this.onDrop}>
           Put files
         </Dropzone>
+        <SoundList
+          sounds={this.props.sounds}
+          onPlayFunc={this.props.play}
+          onStopFunc={this.props.stop}
+        />
       </div>
     )
   }
@@ -38,15 +41,22 @@ Audio.propTypes = {
   resume: PropTypes.func,
   upload: PropTypes.func,
   loadSounds: PropTypes.func,
+  sounds: PropTypes.array,
 }
 
-export default connect(false, (dispatch) => {
-  return {
-    play: bindActionCreators(audioActions.playAudio, dispatch),
-    stop: bindActionCreators(audioActions.stopAudio, dispatch),
-    pause: bindActionCreators(audioActions.pauseAudio, dispatch),
-    resume: bindActionCreators(audioActions.resumeAudio, dispatch),
-    upload: bindActionCreators(audioActions.uploadSoundAction, dispatch),
-    loadSounds: bindActionCreators(audioActions.loadSoundsAction, dispatch),
-  }
-})(Audio)
+export default connect(
+  (state) => {
+    return {
+      sounds: selectSounds(state)
+    }
+  },
+  (dispatch) => {
+    return {
+      play: bindActionCreators(audioActions.playSoundAction, dispatch),
+      stop: bindActionCreators(audioActions.stopSoundAction, dispatch),
+      pause: bindActionCreators(audioActions.pauseSoundAction, dispatch),
+      resume: bindActionCreators(audioActions.resumeSoundAction, dispatch),
+      upload: bindActionCreators(audioActions.uploadSoundAction, dispatch),
+      loadSounds: bindActionCreators(audioActions.loadSoundsAction, dispatch),
+    }
+  })(Audio)
