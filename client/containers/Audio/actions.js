@@ -105,3 +105,19 @@ export function dropSoundAction(file) {
     dispatch(uploadSoundAction(file))
   }
 }
+
+export function removeSoundAction(id) {
+  return dispatch => {
+    dispatch({
+      types: ['', '', ''],
+      promise: (client) => {
+        return client.delete(
+          `api/audio/sounds/${id}`,
+        )
+      },
+      successCb: () => {
+        dispatch(loadSoundsAction())
+      }
+    })
+  }
+}

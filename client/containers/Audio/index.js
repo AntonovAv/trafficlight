@@ -26,8 +26,9 @@ export class Audio extends PureComponent {
         />
         <SoundList
           sounds={this.props.sounds}
-          onPlayFunc={this.props.play}
-          onStopFunc={this.props.stop}
+          onPlayFunc={this.props.playAction}
+          onStopFunc={this.props.stopAction}
+          onRemoveFunc={this.props.removeAction}
           playingSoundId={this.props.playingId}
         />
       </div>
@@ -36,10 +37,9 @@ export class Audio extends PureComponent {
 }
 
 Audio.propTypes = {
-  play: PropTypes.func,
-  stop: PropTypes.func,
-  pause: PropTypes.func,
-  resume: PropTypes.func,
+  playAction: PropTypes.func,
+  stopAction: PropTypes.func,
+  removeAction: PropTypes.func,
   dropSound: PropTypes.func,
   loadSounds: PropTypes.func,
   sounds: PropTypes.array,
@@ -57,10 +57,9 @@ export default connect(
   },
   (dispatch) => {
     return {
-      play: bindActionCreators(audioActions.playSoundAction, dispatch),
-      stop: bindActionCreators(audioActions.stopSoundAction, dispatch),
-      pause: bindActionCreators(audioActions.pauseSoundAction, dispatch),
-      resume: bindActionCreators(audioActions.resumeSoundAction, dispatch),
+      playAction: bindActionCreators(audioActions.playSoundAction, dispatch),
+      stopAction: bindActionCreators(audioActions.stopSoundAction, dispatch),
+      removeAction: bindActionCreators(audioActions.removeSoundAction, dispatch),
       dropSound: bindActionCreators(audioActions.dropSoundAction, dispatch),
       loadSounds: bindActionCreators(audioActions.loadSoundsAction, dispatch),
     }

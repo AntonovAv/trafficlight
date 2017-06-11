@@ -14,6 +14,10 @@ export class Sound extends PureComponent {
     this.props.onStop(this.props.id)
   }
 
+  onDelete = () => {
+    this.props.onDelete(this.props.id)
+  }
+
   render() {
     return (
       <div className={styles.sound}>
@@ -22,7 +26,8 @@ export class Sound extends PureComponent {
           onPlayClick={this.onPlayClick}
           onStopClick={this.onStopClick}
         />
-        {this.props.name}
+        <div className={styles.name}>{this.props.name}</div>
+        <div className={styles.delete} onClick={this.onDelete}/>
       </div>
     )
   }
@@ -34,6 +39,7 @@ Sound.propTypes = {
   playing: PropTypes.bool,
   onPlay: PropTypes.func,
   onStop: PropTypes.func,
+  onDelete: PropTypes.func,
 }
 
 export default Sound

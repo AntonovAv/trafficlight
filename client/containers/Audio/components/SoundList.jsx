@@ -14,6 +14,7 @@ export class SoundList extends PureComponent {
               key={ind}
               onPlay={this.props.onPlayFunc}
               onStop={this.props.onStopFunc}
+              onDelete={this.props.onRemoveFunc}
               playing={this.props.playingSoundId === sound.id}
             />
           )

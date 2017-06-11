@@ -4,5 +4,36 @@
   align-items: center;
   font-size: 15px;
   height: 40px;
+  padding-right: 10px;
   color: white;
+
+  &:hover {
+    & .delete {
+      visibility: visible;
+    }
+  }
+}
+
+.delete {
+  height: 30px;
+  width: 30px;
+
+  display: flex;
+  visibility: hidden;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #ffcb33;
+  font-size: 20px;
+  border-radius: 3px;
+
+  composes: fa fa-times from 'font-awesome/css/font-awesome.css';
+
+  &:hover {
+    background-color: #4f4571;
+  }
+}
+
+.name {
+  flex-grow: 1;
 }
