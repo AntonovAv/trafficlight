@@ -6,7 +6,9 @@ import styles from './SoundDropzone.css'
 export class SoundDropzone extends PureComponent {
 
   onDropFile = (files) => {
-    this.props.onFileDrop(files[0])
+    if (files.length > 0) {
+      this.props.onFileDrop(files[0])
+    }
   }
 
   render() {
@@ -15,6 +17,7 @@ export class SoundDropzone extends PureComponent {
     return (
       <div className={styles.container}>
         <Dropzone
+          accept='audio/mp3'
           className={styles.dropzone}
           multiple={false}
           onDrop={this.onDropFile}
