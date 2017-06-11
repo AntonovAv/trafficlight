@@ -1,6 +1,9 @@
 import {
   LOAD_SOUNDS, LOAD_SOUNDS_SUCCESS, LOAD_SOUNDS_FAILURE,
   PLAYER_STATE_CHANGE,
+  DROP_UPLOADED_SOUND,
+  UPLOAD_SOUND, UPLOAD_SOUND_SUCCESS, UPLOAD_SOUND_FAILURE,
+  UPLOAD_PROGRESS_CHANGE,
 } from './constants'
 
 export const playSoundAction = (id) => {
@@ -47,12 +50,15 @@ export function uploadSoundAction(sound) {
     const config = {
       onUploadProgress: function(progressEvent) {
         let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
-        console.log(percentCompleted)
+        dispatch({
+          type: UPLOAD_PROGRESS_CHANGE,
+          data: percentCompleted,
+        })
       }
     }
 
     dispatch({
-      types: ['upload', 'ok', 'err'],
+      types: [UPLOAD_SOUND, UPLOAD_SOUND_SUCCESS, UPLOAD_SOUND_FAILURE],
       promise: (client) => {
         return client.post(
           'api/audio/sounds',
@@ -86,5 +92,16 @@ export function playerStateChangeAction(data) {
         playingId: (data.playing ? data.soundId : null)
       },
     })
+  }
+}
+
+export function dropSoundAction(file) {
+  return dispatch => {
+    dispatch({
+      type: DROP_UPLOADED_SOUND,
+      data: file,
+    })
+
+    dispatch(uploadSoundAction(file))
   }
 }

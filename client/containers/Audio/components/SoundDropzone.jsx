@@ -10,7 +10,8 @@ export class SoundDropzone extends PureComponent {
   }
 
   render() {
-    const thereAreUploadedFile = this.props.uploadedSound !== null
+    const thereAreUploadedFile = this.props.uploadedSound.file !== null
+    const uploading = this.props.uploadedSound.uploading
     return (
       <div className={styles.container}>
         <Dropzone
@@ -18,14 +19,17 @@ export class SoundDropzone extends PureComponent {
           multiple={false}
           onDrop={this.onDropFile}
         />
-        {thereAreUploadedFile && (
+        {uploading && (
           <div
             className={styles.progress}
             style={{
               width: this.props.uploadedSound.percents + '%',
             }}
-          >
-            {this.props.uploadedSound.name}
+          />
+        )}
+        {thereAreUploadedFile && (
+          <div className={styles.name}>
+            {this.props.uploadedSound.file.name}
           </div>
         )}
         {!thereAreUploadedFile && (
@@ -42,9 +46,11 @@ export class SoundDropzone extends PureComponent {
 SoundDropzone.propTypes = {
   onFileDrop: PropTypes.func,
   uploadedSound: PropTypes.shape({
-    name: PropTypes.string,
     percents: PropTypes.number,
     uploading: PropTypes.bool,
+    file: PropTypes.shape({
+      name: PropTypes.string,
+    }),
   }),
 }
 

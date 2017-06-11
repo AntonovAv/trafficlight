@@ -6,8 +6,8 @@ mongoose.connect(
   dbURI,
   {
     server: {
-      reconnectInterval: 5000,
-      reconnectTries: 100,
+      reconnectInterval: 1000,
+      reconnectTries: 10,
     }
   }
 )

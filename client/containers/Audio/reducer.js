@@ -3,13 +3,22 @@ import {
   LOAD_SOUNDS_SUCCESS,
   LOAD_SOUNDS_FAILURE,
   PLAYER_STATE_CHANGE,
+  DROP_UPLOADED_SOUND,
+  UPLOAD_SOUND, UPLOAD_SOUND_SUCCESS, UPLOAD_SOUND_FAILURE,
+  UPLOAD_PROGRESS_CHANGE,
 } from './constants'
+
+const uploadedSoundInitState = {
+  percents: 0,
+  uploading: false,
+  file: null,
+}
 
 const initState = {
   sounds: [],
   soundsLoading: false,
   playingId: null,
-  uploadedFile: null,
+  uploadedSound: uploadedSoundInitState,
 }
 
 export default function reducer(state = initState, {type, data}) {
@@ -34,6 +43,41 @@ export default function reducer(state = initState, {type, data}) {
       return {
         ...state,
         ...data,
+      }
+    case DROP_UPLOADED_SOUND:
+      const uploaded = {
+        ...uploadedSoundInitState,
+        file: data,
+      }
+      return {
+        ...state,
+        uploadedSound: uploaded,
+      }
+    case UPLOAD_PROGRESS_CHANGE: {
+      const uploaded = {
+        ...state.uploadedSound,
+        percents: data,
+      }
+      return {
+        ...state,
+        uploadedSound: uploaded,
+      }
+    }
+    case UPLOAD_SOUND: {
+      const uploaded = {
+        ...state.uploadedSound,
+        uploading: true,
+      }
+      return {
+        ...state,
+        uploadedSound: uploaded,
+      }
+    }
+    case UPLOAD_SOUND_SUCCESS:
+    case UPLOAD_SOUND_FAILURE:
+      return {
+        ...state,
+        uploadedSound: uploadedSoundInitState,
       }
     default:
       return state

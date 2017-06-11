@@ -2,7 +2,11 @@ import React, {PureComponent, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import * as audioActions from './actions'
-import {selectSounds, selectPlayingId} from './selectors'
+import {
+  selectSounds,
+  selectPlayingId,
+  selectUploadedSound,
+} from './selectors'
 import SoundList from './components/SoundList'
 import SoundDropzone from './components/SoundDropzone'
 
@@ -17,8 +21,8 @@ export class Audio extends PureComponent {
       <div>
         <span>Audio</span>
         <SoundDropzone
-          onFileDrop={this.props.upload}
-          uploadedSound={null}
+          onFileDrop={this.props.dropSound}
+          uploadedSound={this.props.uploadedSound}
         />
         <SoundList
           sounds={this.props.sounds}
@@ -36,10 +40,11 @@ Audio.propTypes = {
   stop: PropTypes.func,
   pause: PropTypes.func,
   resume: PropTypes.func,
-  upload: PropTypes.func,
+  dropSound: PropTypes.func,
   loadSounds: PropTypes.func,
   sounds: PropTypes.array,
   playingId: PropTypes.string,
+  uploadedSound: PropTypes.object,
 }
 
 export default connect(
@@ -47,6 +52,7 @@ export default connect(
     return {
       sounds: selectSounds(state),
       playingId: selectPlayingId(state),
+      uploadedSound: selectUploadedSound(state),
     }
   },
   (dispatch) => {
@@ -55,7 +61,7 @@ export default connect(
       stop: bindActionCreators(audioActions.stopSoundAction, dispatch),
       pause: bindActionCreators(audioActions.pauseSoundAction, dispatch),
       resume: bindActionCreators(audioActions.resumeSoundAction, dispatch),
-      upload: bindActionCreators(audioActions.uploadSoundAction, dispatch),
+      dropSound: bindActionCreators(audioActions.dropSoundAction, dispatch),
       loadSounds: bindActionCreators(audioActions.loadSoundsAction, dispatch),
     }
   })(Audio)
