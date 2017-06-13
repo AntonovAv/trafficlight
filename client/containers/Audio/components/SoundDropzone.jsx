@@ -38,7 +38,7 @@ export class SoundDropzone extends PureComponent {
         {!thereAreUploadedFile && (
           <div className={styles.addSound}>
             <i className={styles.plusIcon}/>
-            Add more sounds
+            Drop or select new sound
           </div>
         )}
       </div>
