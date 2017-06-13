@@ -5,13 +5,15 @@ import {
   PLAYER_STATE_CHANGE,
   DROP_UPLOADED_SOUND,
   UPLOAD_SOUND, UPLOAD_SOUND_SUCCESS, UPLOAD_SOUND_FAILURE,
-  UPLOAD_PROGRESS_CHANGE,
+  UPLOAD_PROGRESS_CHANGE, CLEAR_UPLOADED_SOUND, CHANGE_SOUND_NAME,
 } from './constants'
 
 const uploadedSoundInitState = {
   percents: 0,
   uploading: false,
   file: null,
+  name: '',
+  existsName: false,
 }
 
 const initState = {
@@ -75,10 +77,22 @@ export default function reducer(state = initState, {type, data}) {
     }
     case UPLOAD_SOUND_SUCCESS:
     case UPLOAD_SOUND_FAILURE:
+    case CLEAR_UPLOADED_SOUND:
       return {
         ...state,
         uploadedSound: uploadedSoundInitState,
       }
+    case CHANGE_SOUND_NAME: {
+      const uploaded = {
+        ...state.uploadedSound,
+        name: data.name,
+        existsName: data.existsName,
+      }
+      return {
+        ...state,
+        uploadedSound: uploaded,
+      }
+    }
     default:
       return state
   }

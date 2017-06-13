@@ -7,6 +7,7 @@ import {
   selectSounds,
   selectPlayingId,
   selectUploadedSound,
+  soundsLoading,
 } from './selectors'
 import SoundList from './components/SoundList'
 import SoundDropzone from './components/SoundDropzone'
@@ -31,6 +32,7 @@ export class Audio extends PureComponent {
           onStopFunc={this.props.stopAction}
           onRemoveFunc={this.props.removeAction}
           playingSoundId={this.props.playingId}
+          soundsLoading={this.props.soundsLoading}
         />
       </div>
     )
@@ -46,6 +48,7 @@ Audio.propTypes = {
   sounds: PropTypes.array,
   playingId: PropTypes.string,
   uploadedSound: PropTypes.object,
+  soundsLoading: PropTypes.bool,
 }
 
 export default connect(
@@ -54,6 +57,7 @@ export default connect(
       sounds: selectSounds(state),
       playingId: selectPlayingId(state),
       uploadedSound: selectUploadedSound(state),
+      soundsLoading: soundsLoading(state),
     }
   },
   (dispatch) => {

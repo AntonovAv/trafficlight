@@ -32,13 +32,13 @@ export class SoundDropzone extends PureComponent {
         )}
         {thereAreUploadedFile && (
           <div className={styles.name}>
-            {this.props.uploadedSound.file.name}
+            {this.props.uploadedSound.name}
           </div>
         )}
         {!thereAreUploadedFile && (
           <div className={styles.addSound}>
             <i className={styles.plusIcon}/>
-            Add more sounds
+            Drop or select new sound
           </div>
         )}
       </div>
@@ -47,13 +47,16 @@ export class SoundDropzone extends PureComponent {
 }
 
 SoundDropzone.propTypes = {
+  onChangeName: PropTypes.func,
   onFileDrop: PropTypes.func,
+  onRemoveFile: PropTypes.func,
+  onStartUpload: PropTypes.func,
   uploadedSound: PropTypes.shape({
     percents: PropTypes.number,
     uploading: PropTypes.bool,
-    file: PropTypes.shape({
-      name: PropTypes.string,
-    }),
+    name: PropTypes.string,
+    existsName: PropTypes.bool,
+    file: PropTypes.object,
   }),
 }
 

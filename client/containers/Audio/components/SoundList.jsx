@@ -19,6 +19,9 @@ export class SoundList extends PureComponent {
             />
           )
         })}
+        {this.props.soundsLoading && (
+          <div className={styles.moire}/>
+        )}
       </div>
     )
   }
@@ -29,6 +32,7 @@ SoundList.propTypes = {
     id: PropTypes.string,
     name: PropTypes.string,
   })),
+  soundsLoading: PropTypes.bool,
   playingSoundId: PropTypes.string,
   onPlayFunc: PropTypes.func,
   onStopFunc: PropTypes.func,

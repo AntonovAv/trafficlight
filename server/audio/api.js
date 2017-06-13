@@ -1,21 +1,20 @@
 const SoundManger = require('../audio/PlayerManager')
 const sManager = new SoundManger()
-const Sound = require('../database/models').Sound
 const audio = require('express').Router()
 const State = require('../State')
+const audioResource = require('./resource')
 
 audio.get('/sounds', function(request, response) {
-  Sound.find({})
-    .select('id name')
-    .exec((err, sounds) => {
-      if (err) {
-        response.status(500).end()
-      } else {
-        const wrappers = sounds.map((sound) => {
-          return createSoundWrapper(sound)
-        })
-        response.status(200).send(wrappers).end()
-      }
+  audioResource
+    .getAllSounds()
+    .then((sounds) => {
+      const wrappers = sounds.map((sound) => {
+        return createSoundWrapper(sound)
+      })
+      response.status(200).send(wrappers).end()
+    })
+    .catch((err) => {
+      response.write(err).status(500).end()
     })
 })
 
@@ -27,21 +26,17 @@ function createSoundWrapper(model) {
 }
 
 audio.get('/sounds/:id', function(request, response) {
-  Sound
-    .find({
-      id: request.params.id
-    })
-    .select('id name')
-    .exec((err, sounds) => {
-      if (err) {
-        response.status(500).end()
+  audioResource
+    .getSound(request.params.id)
+    .then((sound) => {
+      if (sound) {
+        response.status(200).send(createSoundWrapper(sound)).end()
       } else {
-        if (sounds.length === 0) {
-          response.status(404).end()
-        } else {
-          response.status(200).send(createSoundWrapper(sounds[0])).end()
-        }
+        response.status(404).end()
       }
+    })
+    .catch((err) => {
+      response.write(err).status(500).end()
     })
 })
 
@@ -52,60 +47,57 @@ audio.post('/sounds', function(request, response) {
     return
   }
 
-  const newSound = new Sound({
-    name: file.name,
-    content: file.data
-  })
-  newSound.save((err, sound) => {
-    if (err) {
-      response.status(500).end()
-      response.write(err)
-    } else {
+  audioResource
+    .saveSound({
+      name: file.name,
+      content: file.data
+    })
+    .then(() => {
       response.status(200).end()
-    }
-  })
+    })
+    .catch((err) => {
+      response.write(err)
+      response.status(500).end()
+    })
 })
 
 audio.delete('/sounds/:id', function(request, response) {
-  Sound
-    .findById(request.params.id)
-    .select('id')
-    .exec((err, sound) => {
-      if (err) {
-        response.status(500).end()
-      } else if (sound) {
+  audioResource
+    .getSound(request.params.id)
+    .then((sound) => {
+      if (sound) {
         const id = sound.id
         if (State.get().playerState.currentSoundId === id) {
           sManager.stop()
         }
         sound.remove()
-        response.status(200).end()
-      } else {
-        response.status(200).end()
       }
+      response.status(200).end()
+    })
+    .catch((err) => {
+      response.write(err).status(500).end()
     })
 })
 
 audio.get('/play/:id', function(request, response) {
-  Sound
-    .findById(request.params.id)
-    .exec((err, sound) => {
-      if (err) {
-        response.status(500).end()
+  audioResource
+    .getSoundWithContent(request.params.id)
+    .then((sound) => {
+      if (sound) {
+        sManager
+          .play(sound)
+          .then(() => {
+            response.status(200).end()
+          })
+          .catch((err) => {
+            response.write(err).status(500).end()
+          })
       } else {
-        if (sound) {
-          sManager
-            .play(sound)
-            .then(() => {
-              response.status(200).end()
-            })
-            .catch(() => {
-              response.status(500).end()
-            })
-        } else {
-          response.status(404).end()
-        }
+        response.status(404).end()
       }
+    })
+    .catch((err) => {
+      response.write(err).status(500).end()
     })
 })
 

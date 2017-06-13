@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const dbURI = 'mongodb://localhost/trafficlight'
 
+mongoose.Promise = global.Promise
 // Create the database connection
 mongoose.connect(
   dbURI,
