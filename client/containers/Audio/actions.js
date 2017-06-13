@@ -4,7 +4,14 @@ import {
   DROP_UPLOADED_SOUND,
   UPLOAD_SOUND, UPLOAD_SOUND_SUCCESS, UPLOAD_SOUND_FAILURE,
   UPLOAD_PROGRESS_CHANGE,
+  CLEAR_UPLOADED_SOUND,
+  CHANGE_SOUND_NAME,
 } from './constants'
+import {
+  selectSounds,
+  selectUploadedSound,
+} from './selectors'
+import R from 'ramda'
 
 export const playSoundAction = (id) => {
   return {
@@ -42,8 +49,10 @@ export const resumeSoundAction = () => {
   }
 }
 
-export function uploadSoundAction(sound) {
-  return dispatch => {
+export function uploadSoundAction() {
+  return (dispatch, getState) => {
+    const uploadedSound = selectUploadedSound(getState())
+    const sound = uploadedSound.file
     let data = new FormData()
     data.append('sound', sound)
 
@@ -101,8 +110,31 @@ export function dropSoundAction(file) {
       type: DROP_UPLOADED_SOUND,
       data: file,
     })
+    dispatch(changeSoundNameAction(file.name))
+  }
+}
 
-    dispatch(uploadSoundAction(file))
+export function clearUploadedSoundAction() {
+  return {
+    type: CLEAR_UPLOADED_SOUND,
+  }
+}
+
+export function changeSoundNameAction(newName) {
+  return (dispatch, getState) => {
+    let existsName = false
+    const existsSounds = selectSounds(getState())
+    if (R.any(R.propEq('name', newName), existsSounds)) {
+      existsName = true
+    }
+
+    dispatch({
+      type: CHANGE_SOUND_NAME,
+      data: {
+        name: newName,
+        existsName: existsName,
+      }
+    })
   }
 }
 

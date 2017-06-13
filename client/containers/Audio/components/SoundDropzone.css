@@ -16,6 +16,10 @@
   cursor: pointer;
   user-select: none;
   margin-bottom: 20px;
+
+  &:hover {
+    background-color: rgba(215, 232, 111, 0.6);
+  }
 }
 
 .progress {
