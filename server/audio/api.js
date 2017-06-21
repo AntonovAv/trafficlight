@@ -40,25 +40,30 @@ audio.get('/sounds/:id', function(request, response) {
     })
 })
 
-audio.post('/sounds', function(request, response) {
+audio.post('/sounds', async (request, response) => {
   const file = request.files.sound
   if (!file) {
-    response.status(401).end()
+    response.status(400).end()
     return
   }
 
-  audioResource
-    .saveSound({
+  try {
+    const name = file.name
+    const founded = await audioResource.findByName(name)
+    if (founded.length !== null) {
+      response.status(400).end()
+      return
+    }
+
+    await audioResource.saveSound({
       name: file.name,
       content: file.data
     })
-    .then(() => {
-      response.status(200).end()
-    })
-    .catch((err) => {
-      response.write(err)
-      response.status(500).end()
-    })
+    response.status(200).end()
+  } catch (err) {
+    response.write(err)
+    response.status(500).end()
+  }
 })
 
 audio.delete('/sounds/:id', function(request, response) {
@@ -70,9 +75,17 @@ audio.delete('/sounds/:id', function(request, response) {
         if (State.get().playerState.currentSoundId === id) {
           sManager.stop()
         }
-        sound.remove()
+        sound
+          .remove()
+          .then(() => {
+            response.status(200).end()
+          })
+          .catch((err) => {
+            response.write(err).status(500).end()
+          })
+      } else {
+        response.status(200).end()
       }
-      response.status(200).end()
     })
     .catch((err) => {
       response.write(err).status(500).end()

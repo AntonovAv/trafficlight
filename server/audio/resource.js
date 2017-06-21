@@ -20,3 +20,9 @@ module.exports.saveSound = function({name, content}) {
     content: content,
   }).save()
 }
+
+module.exports.findByName = function(name) {
+  return Sound.find({
+    name: name
+  }).select('id')
+}
