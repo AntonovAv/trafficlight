@@ -1,0 +1,11 @@
+.cross {
+  composes: fa fa-times from 'font-awesome/css/font-awesome.css';
+}
+
+.play {
+  composes: fa fa-play from 'font-awesome/css/font-awesome.css';
+}
+
+.stop {
+  composes: fa fa-stop from 'font-awesome/css/font-awesome.css';
+}

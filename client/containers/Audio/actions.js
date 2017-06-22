@@ -111,6 +111,8 @@ export function dropSoundAction(file) {
       data: file,
     })
     dispatch(changeSoundNameAction(file.name))
+    // TODO temporary
+    dispatch(uploadSoundAction())
   }
 }
 

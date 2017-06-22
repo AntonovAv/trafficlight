@@ -21,8 +21,8 @@ module.exports.saveSound = function({name, content}) {
   }).save()
 }
 
-module.exports.findByName = function(name) {
-  return Sound.find({
+module.exports.countWithSameName = function(name) {
+  return Sound.count({
     name: name
-  }).select('id')
+  })
 }

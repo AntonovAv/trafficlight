@@ -67,35 +67,10 @@ module.exports = function() {
         },
         {
           test: /\.css$/,
-          exclude: /node_modules/,
           use: [
             'style-loader',
             'css-loader?localIdentName=[local]__[path][name]__[hash:base64:5]&modules&importLoaders=1',
-            {
-              loader: 'postcss-loader',
-              options: {
-                plugins: function() {
-                  return [
-                    require('postcss-import')(),
-                    require('postcss-url')(),
-                    require('postcss-focus')(),
-                    require('postcss-cssnext')(),
-                    require('postcss-browser-reporter')(),
-                    require('postcss-reporter')({
-                      clearMessages: true
-                    })
-                  ]
-                }
-              }
-            }
-          ]
-        },
-        {
-          test: /\.css$/,
-          include: /node_modules/,
-          use: [
-            'style-loader',
-            'css-loader'
+            'postcss-loader'
           ]
         },
         {

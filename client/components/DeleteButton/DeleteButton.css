@@ -1,0 +1,12 @@
+@import url('../../../node_modules/react-toolbox/lib/button/theme.css');
+
+.button {
+  font-size: 20px !important;
+  border-radius: 50%;
+}
+
+.accent {
+  &:hover {
+    background-color: var(--button-accent-color-hover);
+  }
+}

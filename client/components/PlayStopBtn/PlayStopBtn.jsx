@@ -1,35 +1,28 @@
 import React, {PureComponent} from 'react'
 import PropTypes from 'prop-types'
 import styles from './styles.css'
-import cx from 'classnames'
+import Icon from 'components/Icon'
+import {IconButton} from 'react-toolbox/lib/button'
 
 export class PlayStopBtn extends PureComponent {
-  onBtnClick = () => {
-    if (this.props.playing) {
-      this.props.onStopClick()
-    } else {
-      this.props.onPlayClick()
-    }
-  }
-
   render() {
-    const clazz = cx(
-      styles.container,
-      {
-        [styles.stop]: this.props.playing,
-        [styles.play]: !this.props.playing,
-      }
-    )
     return (
-      <div className={clazz} onClick={this.onBtnClick}/>
+      <IconButton
+        className={styles.button}
+        accent={true}
+      >
+        {this.props.playing
+          ? <Icon name={'stop'}/>
+          : <Icon name={'play'}/>
+        }
+      </IconButton>
     )
   }
 }
 
 PlayStopBtn.propTypes = {
-  onPlayClick: PropTypes.func,
-  onStopClick: PropTypes.func,
   playing: PropTypes.bool,
+  onClick: PropTypes.func,
 }
 
 export default PlayStopBtn

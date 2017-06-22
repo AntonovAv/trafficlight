@@ -49,8 +49,8 @@ audio.post('/sounds', async (request, response) => {
 
   try {
     const name = file.name
-    const founded = await audioResource.findByName(name)
-    if (founded.length !== null) {
+    const founded = await audioResource.countWithSameName(name)
+    if (founded !== 0) {
       response.status(400).end()
       return
     }
