@@ -1,9 +1,19 @@
 .container {
   width: 700px;
-  background-color: rgba(49, 144, 154, 0.7);
   border-radius: 4px;
-  border: 1px solid color(#31909a l(40%));
   position: relative;
+}
+
+.primary {
+  color: white !important;
+}
+
+.item {
+  &:hover {
+    & .itemText {
+      color: rgb(33, 33, 33) !important;
+    }
+  }
 }
 
 .moire {

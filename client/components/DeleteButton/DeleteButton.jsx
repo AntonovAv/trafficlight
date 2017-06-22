@@ -8,6 +8,7 @@ export class DeleteButton extends PureComponent {
   render() {
     return (
       <IconButton
+        disabled={this.props.disabled}
         className={styles.button}
         accent={true}
         theme={styles}
@@ -21,6 +22,7 @@ export class DeleteButton extends PureComponent {
 
 DeleteButton.propTypes = {
   onClick: PropTypes.func,
+  disabled: PropTypes.bool,
 }
 
 export default DeleteButton

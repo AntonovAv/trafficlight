@@ -28,6 +28,7 @@ export class SoundList extends PureComponent {
             return (
               <ListItem
                 key={ind}
+                theme={styles}
                 leftIcon={
                   <PlayStopBtn
                     playing={this.props.playingSoundId === sound.id}

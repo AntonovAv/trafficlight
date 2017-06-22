@@ -21,7 +21,6 @@ export class Audio extends PureComponent {
   render() {
     return (
       <div>
-        <span>Audio</span>
         <SoundDropzone
           onFileDrop={this.props.dropSound}
           uploadedSound={this.props.uploadedSound}
