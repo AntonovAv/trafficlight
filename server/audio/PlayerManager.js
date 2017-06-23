@@ -26,24 +26,22 @@ class SoundManager {
 
   stop() {
     if (this.player.isPlaying()) {
-      this.player.stop()
-
       State.get().playerState = new PlayerState(false, false, null)
+      return this.player.stop()
     }
   }
 
   pause() {
     if (this.player.isPlaying()) {
-      this.player.pause()
-
       State.get().playerState = new PlayerState(true, true, State.get().playerState.currentSoundId)
+      return this.player.pause()
     }
   }
 
   resume() {
     if (this.player.isPlaying() && this.player.isPaused()) {
-      this.player.resume()
       State.get().playerState = new PlayerState(true, false, State.get().playerState.currentSoundId)
+      return this.player.resume()
     }
   }
 }
