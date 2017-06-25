@@ -63,7 +63,6 @@ class Player extends EventEmitter {
       })
       .on('close', () => {
         this.stop()
-        this.emit(EVENT_STOP)
       })
   }
 

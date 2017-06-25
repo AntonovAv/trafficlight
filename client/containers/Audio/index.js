@@ -11,6 +11,7 @@ import {
 } from './selectors'
 import SoundList from './components/SoundList'
 import SoundDropzone from './components/SoundDropzone'
+import styles from './styles.css'
 
 export class Audio extends PureComponent {
 
@@ -20,10 +21,13 @@ export class Audio extends PureComponent {
 
   render() {
     return (
-      <div>
+      <div className={styles.content}>
         <SoundDropzone
           onFileDrop={this.props.dropSound}
           uploadedSound={this.props.uploadedSound}
+          onClearFile={this.props.clearUpload}
+          onStartUpload={this.props.startUpload}
+          onChangeName={this.props.changeName}
         />
         <SoundList
           sounds={this.props.sounds}
@@ -48,6 +52,10 @@ Audio.propTypes = {
   playingId: PropTypes.string,
   uploadedSound: PropTypes.object,
   soundsLoading: PropTypes.bool,
+
+  changeName: PropTypes.func,
+  clearUpload: PropTypes.func,
+  startUpload: PropTypes.func,
 }
 
 export default connect(
@@ -66,5 +74,8 @@ export default connect(
       removeAction: bindActionCreators(audioActions.removeSoundAction, dispatch),
       dropSound: bindActionCreators(audioActions.dropSoundAction, dispatch),
       loadSounds: bindActionCreators(audioActions.loadSoundsAction, dispatch),
+      changeName: bindActionCreators(audioActions.changeSoundNameAction, dispatch),
+      clearUpload: bindActionCreators(audioActions.clearUploadedSoundAction, dispatch),
+      startUpload: bindActionCreators(audioActions.uploadSoundAction, dispatch),
     }
   })(Audio)

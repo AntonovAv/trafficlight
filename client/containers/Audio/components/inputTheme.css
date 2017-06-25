@@ -1,0 +1,20 @@
+.bar {
+  &::before,
+  &::after {
+    background-color: white;
+  }
+}
+
+.inputElement {
+  color: white;
+}
+
+.hint {
+  color: rgba(248, 248, 255, 0.7);
+  top: 12px;
+}
+
+.input {
+  padding-top: 0;
+  width: 400px;
+}

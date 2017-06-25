@@ -9,6 +9,10 @@ class SoundManager {
   constructor() {
     this.player = new Player()
     this.player.setVolume(90)
+
+    this.player.on(PlayerEvents.EVENT_STOP, () => {
+      State.get().playerState = new PlayerState(false, false, null)
+    })
   }
 
   play(sound) {
@@ -26,7 +30,6 @@ class SoundManager {
 
   stop() {
     if (this.player.isPlaying()) {
-      State.get().playerState = new PlayerState(false, false, null)
       return this.player.stop()
     }
   }

@@ -9,3 +9,7 @@
 .stop {
   composes: fa fa-stop from 'font-awesome/css/font-awesome.css';
 }
+
+.plusCircle {
+  composes: fa fa-plus-circle from 'font-awesome/css/font-awesome.css';
+}

@@ -6,6 +6,7 @@ import cx from 'classnames'
 export const Icon = (props) => {
   return (
     <i
+      {...props}
       className={cx(styles[props.name], props.className)}
     />
   )
