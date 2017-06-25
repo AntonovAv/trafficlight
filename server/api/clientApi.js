@@ -2,6 +2,7 @@ const teamcityResource = require('../teamcity/httpResource')
 const router = require('express').Router()
 const R = require('ramda')
 const State = require('../State')
+const EventStreamEvents = require('../../common/StateEvents')
 
 router.get('/buildTypes', function(request, response) {
   teamcityResource.getBuildTypes('http://localhost:3001')
@@ -18,16 +19,16 @@ router.get('/state', function(request, response) {
   response.connection.setTimeout(0) // keep alive connection
 
   let onLightChange = () => {
-    response.write('event: lightChange\n')
+    response.write(`event: ${EventStreamEvents.LIGHT_CHANGE}\n`)
     response.write(`data: ${JSON.stringify(State.get().lightState.toJSON())}\n\n`)
   }
 
   let onSoundChange = () => {
-    response.write('event: playerChange\n')
+    response.write(`event: ${EventStreamEvents.PLAYER_CHANGE}\n`)
     response.write(`data: ${JSON.stringify(State.get().playerState.toJSON())}\n\n`)
   }
   let onBuildsStatusChange = () => {
-    response.write('event: buildsChange\n')
+    response.write(`event: ${EventStreamEvents.BUILDS_CHANGE}\n`)
     response.write(`data: ${JSON.stringify(State.get().buildsState.toJSON())}\n\n`)
   }
 

@@ -7,6 +7,7 @@ import {
   CLEAR_UPLOADED_SOUND,
   CHANGE_SOUND_NAME,
 } from './constants'
+import Limits from 'common/Limits'
 import {
   selectSounds,
   selectUploadedSound,
@@ -111,7 +112,7 @@ export function dropSoundAction(file) {
       type: DROP_UPLOADED_SOUND,
       data: {
         file,
-        bigFile: file.size > 16777216
+        bigFile: file.size > Limits.MAX_SOUND_SIZE
       },
     })
     dispatch(changeSoundNameAction(file.name))
@@ -130,7 +131,6 @@ export function changeSoundNameAction(newName) {
     const existsSounds = selectSounds(getState())
     if (R.any(
         (sound) => {
-          console.log(sound)
           return sound.name.toLowerCase() === newName.toLowerCase()
         },
         existsSounds)

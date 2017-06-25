@@ -1,8 +1,8 @@
 import {
   STATE_UPDATE_SUCCESS,
   STATE_UPDATE_FAILURE,
-  APP_STATE_EVENTS,
 } from './constants'
+import APP_STATE_EVENTS from 'common/StateEvents'
 import {playerStateChangeAction} from '../Audio/actions'
 
 export function startListenState() {

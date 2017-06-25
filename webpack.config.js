@@ -112,9 +112,8 @@ module.exports = function() {
       alias: {
         'containers': path.join(__dirname, 'client/containers'),
         'components': path.join(__dirname, 'client/components'),
-        'actions': path.join(__dirname, 'client/actions'),
-        'constants': path.join(__dirname, 'client/actions'),
-        'reducers': path.join(__dirname, 'client/actions')
+        'constants': path.join(__dirname, 'client/constants'),
+        'common': path.join(__dirname, 'common'),
       }
     },
     plugins

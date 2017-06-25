@@ -7,6 +7,7 @@ import {Input} from 'react-toolbox/lib/input'
 import inputTheme from './inputTheme.css'
 import UploadBtn from './UploadBtn'
 import DeleteBtn from 'components/DeleteButton'
+import {MAX_LEN_SOUND_NAME} from 'common/Limits'
 
 export class SoundDropzone extends PureComponent {
 
@@ -39,7 +40,7 @@ export class SoundDropzone extends PureComponent {
     }
 
     if (uploadedFileBig) {
-      inputError = 'File very big'
+      inputError = 'File is large than maximum size (16MB)'
     }
     return (
       <div className={styles.container}>
@@ -68,7 +69,7 @@ export class SoundDropzone extends PureComponent {
               hint={'Sound name'}
               theme={inputTheme}
               error={inputError}
-              maxLength={100}
+              maxLength={MAX_LEN_SOUND_NAME}
             />
             <UploadBtn
               onClick={this.onStartUpload}
