@@ -1,0 +1,30 @@
+.container {
+  width: 700px;
+  border-radius: 4px;
+  position: relative;
+  min-height: 400px;
+}
+
+.primary {
+  color: white !important;
+}
+
+.item {
+  &:hover {
+    & .itemText {
+      color: rgb(33, 33, 33) !important;
+    }
+  }
+}
+
+.moire {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  background-color: rgba(68, 54, 84, 0.6);
+
+  transition: opacity 300ms;
+}
