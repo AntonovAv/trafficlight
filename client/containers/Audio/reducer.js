@@ -14,6 +14,7 @@ const uploadedSoundInitState = {
   file: null,
   name: '',
   existsName: false,
+  bigFile: false,
 }
 
 const initState = {
@@ -49,7 +50,7 @@ export default function reducer(state = initState, {type, data}) {
     case DROP_UPLOADED_SOUND:
       const uploaded = {
         ...uploadedSoundInitState,
-        file: data,
+        ...data,
       }
       return {
         ...state,

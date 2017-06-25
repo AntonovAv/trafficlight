@@ -44,7 +44,7 @@ audio.post('/sounds', async (request, response) => {
   }
 
   try {
-    const name = file.name
+    const name = request.body.name
     const founded = await audioResource.countWithSameName(name)
     if (founded !== 0) {
       response.status(400).end()
@@ -52,7 +52,7 @@ audio.post('/sounds', async (request, response) => {
     }
 
     await audioResource.saveSound({
-      name: file.name,
+      name: name,
       content: file.data
     })
     response.status(200).end()

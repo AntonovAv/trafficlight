@@ -13,3 +13,7 @@
 .plusCircle {
   composes: fa fa-plus-circle from 'font-awesome/css/font-awesome.css';
 }
+
+.cloudUpload {
+  composes: fa fa-cloud-upload from 'font-awesome/css/font-awesome.css';
+}

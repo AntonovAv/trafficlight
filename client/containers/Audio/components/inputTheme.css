@@ -5,7 +5,8 @@
   }
 }
 
-.inputElement {
+.inputElement,
+.counter {
   color: white;
 }
 
@@ -16,5 +17,5 @@
 
 .input {
   padding-top: 0;
-  width: 400px;
+  width: 350px;
 }

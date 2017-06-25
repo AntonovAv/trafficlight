@@ -55,6 +55,7 @@ export function uploadSoundAction() {
     const sound = uploadedSound.file
     let data = new FormData()
     data.append('sound', sound)
+    data.append('name', uploadedSound.name)
 
     const config = {
       onUploadProgress: function(progressEvent) {
@@ -108,7 +109,10 @@ export function dropSoundAction(file) {
   return dispatch => {
     dispatch({
       type: DROP_UPLOADED_SOUND,
-      data: file,
+      data: {
+        file,
+        bigFile: file.size > 16777216
+      },
     })
     dispatch(changeSoundNameAction(file.name))
   }
@@ -124,7 +128,13 @@ export function changeSoundNameAction(newName) {
   return (dispatch, getState) => {
     let existsName = false
     const existsSounds = selectSounds(getState())
-    if (R.any(R.propEq('name', newName), existsSounds)) {
+    if (R.any(
+        (sound) => {
+          console.log(sound)
+          return sound.name.toLowerCase() === newName.toLowerCase()
+        },
+        existsSounds)
+    ) {
       existsName = true
     }
 

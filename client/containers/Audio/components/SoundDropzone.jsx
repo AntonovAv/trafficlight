@@ -5,6 +5,8 @@ import styles from './SoundDropzone.css'
 import Icon from 'components/Icon'
 import {Input} from 'react-toolbox/lib/input'
 import inputTheme from './inputTheme.css'
+import UploadBtn from './UploadBtn'
+import DeleteBtn from 'components/DeleteButton'
 
 export class SoundDropzone extends PureComponent {
 
@@ -14,9 +16,31 @@ export class SoundDropzone extends PureComponent {
     }
   }
 
+  onStartUpload = () => {
+    const {existsName, bigFile} = this.props.uploadedSound
+    if (!existsName && !bigFile) {
+      this.props.onStartUpload()
+    }
+  }
+
   render() {
     const thereAreUploadedFile = this.props.uploadedSound.file !== null
     const uploading = this.props.uploadedSound.uploading
+    const uploadedNameExists = this.props.uploadedSound.existsName
+    const uploadedFileBig = this.props.uploadedSound.bigFile
+    const uploadBtnDisabled =
+      uploadedNameExists ||
+      this.props.uploadedSound.name === '' ||
+      uploadedFileBig
+
+    let inputError = null
+    if (uploadedNameExists) {
+      inputError = 'Sound with this name exists'
+    }
+
+    if (uploadedFileBig) {
+      inputError = 'File very big'
+    }
     return (
       <div className={styles.container}>
         {!thereAreUploadedFile && (
@@ -35,7 +59,7 @@ export class SoundDropzone extends PureComponent {
             }}
           />
         )}
-        {thereAreUploadedFile && (
+        {(thereAreUploadedFile && !uploading) && (
           <div className={styles.uploaded}>
             <Input
               type='text'
@@ -43,7 +67,15 @@ export class SoundDropzone extends PureComponent {
               onChange={this.props.onChangeName}
               hint={'Sound name'}
               theme={inputTheme}
-              error={<span>This name already exists</span>}
+              error={inputError}
+              maxLength={100}
+            />
+            <UploadBtn
+              onClick={this.onStartUpload}
+              disabled={uploadBtnDisabled}
+            />
+            <DeleteBtn
+              onClick={this.props.onClearFile}
             />
           </div>
         )}
@@ -67,8 +99,10 @@ SoundDropzone.propTypes = {
     percents: PropTypes.number,
     uploading: PropTypes.bool,
     name: PropTypes.string,
-    existsName: PropTypes.bool,
     file: PropTypes.object,
+
+    existsName: PropTypes.bool,
+    bigFile: PropTypes.bool,
   }),
 }
 
