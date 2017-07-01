@@ -8,11 +8,11 @@
     "lint:js": "eslint --ext .js --ext .jsx \"+(server|client)/**/*+(.js|.jsx)\" ",
     "build": "cross-env NODE_ENV=development webpack --color --progress",
     "build:prod": "cross-env NODE_ENV=production webpack --color --progress",
-    "start": "cross-env NODE_ENV=development node --harmony-async-await server/server",
+    "start": "cross-env NODE_ENV=development node server/server",
     "start:reload": "cross-env NODE_ENV=development nodemon -w ./server/ --delay 1000 start",
     "start:debug:reload": "cross-env NODE_ENV=development nodemon -w ./server/ --delay 1000 start:debug",
-    "start:debug": "cross-env NODE_ENV=development node --harmony-async-await %NODE_DEBUG_OPTION% server/server",
-    "start:prod": "cross-env NODE_ENV=production node --harmony-async-await server/server",
+    "start:debug": "cross-env NODE_ENV=development node $NODE_DEBUG_OPTION ./server/server",
+    "start:prod": "cross-env NODE_ENV=production node server/server",
     "fake-teamcity": "json-server --routes fakeTeamcity/routes.json --watch fakeTeamcity/teamcity.json --port 3001"
   },
   "dependencies": {
