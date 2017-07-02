@@ -19,23 +19,22 @@ class Player extends EventEmitter {
 
     this._decoder = null
     this._soundStream = null
-    this._sreaker = null
+    this._speaker = null
     this._lameFormat = {}
   }
 
   play(soundStream) {
     if (!this._isPlaying) {
       this._isPlaying = true
+      this._soundStream = soundStream
+      this._decoder = new lame.Decoder()
 
       return new Promise((resolve, reject) => {
-        this._soundStream = soundStream
-
         let that = this
         this._soundStream
-          .pipe(new lame.Decoder())
+          .pipe(this._decoder)
           .on('format', function(format) {
             that._lameFormat = format
-            that._decoder = this
             that._speak(this, format)
 
             resolve()
@@ -54,10 +53,10 @@ class Player extends EventEmitter {
   }
 
   _speak(decoder, format) {
-    this._sreaker = new Speaker(format)
+    this._speaker = new Speaker(format)
     decoder
-      .pipe(this._sreaker)
-      .on('error', () => {
+      .pipe(this._speaker)
+      .on('error', (e) => {
         this.emit(EVENT_ERROR)
         this._cleanUp()
       })
@@ -106,14 +105,9 @@ class Player extends EventEmitter {
   }
 
   _cleanUp() {
-    if (this._sreaker) {
-      this._sreaker.close(true)
-      this._sreaker = null
-    }
-    if (this._soundStream) {
-      this._soundStream.removeAllListeners('close')
-      this._soundStream.removeAllListeners('error')
-      this._soundStream = null
+    if (this._speaker) {
+      this._speaker.close(false)
+      this._speaker = null
     }
 
     if (this._decoder) {
@@ -122,6 +116,13 @@ class Player extends EventEmitter {
       this._decoder.unpipe()
       this._decoder = null
     }
+
+    if (this._soundStream) {
+      this._soundStream.removeAllListeners('close')
+      this._soundStream.removeAllListeners('error')
+      this._soundStream = null
+    }
+
     this._lameFormat = {}
   }
 
