@@ -1,5 +1,6 @@
 import {
-  BRIGHTNESS_CHANGE
+  BRIGHTNESS_CHANGE,
+  SOUND_CHANGE,
 } from './constants'
 
 const initState = {
@@ -11,6 +12,7 @@ const initState = {
   volume: 0,
   hosts: [],
   buildTypes: [],
+  changed: false,
 }
 
 export default function reducer(state = initState, {type, data}) {
@@ -18,8 +20,16 @@ export default function reducer(state = initState, {type, data}) {
     case BRIGHTNESS_CHANGE:
       return {
         ...state,
-        brightness: data
+        brightness: data,
+        changed: true,
       }
+    case SOUND_CHANGE: {
+      return {
+        ...state,
+        volume: data,
+        changed: true,
+      }
+    }
     default:
       return state
   }

@@ -29,6 +29,7 @@ export class BrightnessRow extends PureComponent {
   render() {
     return (
       <ListItem
+        ripple={false}
         itemContent={
           <Slider
             editable={false}
