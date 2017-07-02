@@ -1,0 +1,1 @@
+export const BRIGHTNESS_CHANGE = 'settings/BRIGHTNESS_CHANGE'
