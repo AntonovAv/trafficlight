@@ -4,11 +4,10 @@ const State = require('../State')
 const PlayerState = require('../models/PlayerState')
 const streamifier = require('streamifier')
 
-class SoundManager {
+class PlayerManager {
 
   constructor() {
     this.player = new Player()
-    this.player.setVolume(90)
 
     this.player.on(PlayerEvents.EVENT_STOP, () => {
       State.get().playerState = new PlayerState(false, false, null)
@@ -47,6 +46,10 @@ class SoundManager {
       return this.player.resume()
     }
   }
+
+  changeVolume(val) {
+    return this.player.setVolume(val)
+  }
 }
 
-module.exports = SoundManager
+module.exports = PlayerManager

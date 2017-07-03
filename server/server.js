@@ -5,6 +5,7 @@ const fileUpload = require('express-fileupload')
 const useFrontendMiddleware = require('./middleware/frontendMiddleware')
 const clientApi = require('./api/clientApi')
 const audioApi = require('./audio/api')
+const settingsApi = require('./settings/api')
 const resolve = require('path').resolve
 const argv = require('minimist')(process.argv.slice(2))
 
@@ -31,6 +32,7 @@ app.all('/api', function(request, response, next) {
 
 app.use('/api', clientApi)
 app.use('/api/audio', audioApi)
+app.use('/api/settings', settingsApi)
 
 useFrontendMiddleware(app, {
   outputPath: resolve(process.cwd(), 'public/'),

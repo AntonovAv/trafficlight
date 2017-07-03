@@ -1,8 +1,11 @@
-const SoundManger = require('../audio/PlayerManager')
-const sManager = new SoundManger()
+const PlayerManager = require('../audio/PlayerManager')
+const registry = require('./PlayerManagerRegistry')
 const audio = require('express').Router()
 const State = require('../State')
 const audioResource = require('./resource')
+
+const playerManager = new PlayerManager()
+registry.register(playerManager)
 
 audio.get('/sounds', async function(request, response) {
   try {
@@ -12,7 +15,7 @@ audio.get('/sounds', async function(request, response) {
     })
     response.status(200).send(wrappers).end()
   } catch (err) {
-    response.write(err).status(500).end()
+    response.send(err).status(500).end()
   }
 })
 
@@ -32,7 +35,7 @@ audio.get('/sounds/:id', async function(request, response) {
       response.status(404).end()
     }
   } catch (err) {
-    response.write(err).status(500).end()
+    response.send(err).status(500).end()
   }
 })
 
@@ -57,7 +60,7 @@ audio.post('/sounds', async (request, response) => {
     })
     response.status(200).end()
   } catch (err) {
-    response.write(err)
+    response.send(err)
     response.status(500).end()
   }
 })
@@ -69,13 +72,13 @@ audio.delete('/sounds/:id', async function(request, response) {
     if (deleted) {
       const id = deleted.id
       if (State.get().playerState.currentSoundId === id) {
-        await sManager.stop()
+        await playerManager.stop()
       }
       await deleted.remove()
     }
     response.status(200).end()
   } catch (err) {
-    response.write(err).status(500).end()
+    response.send(err).status(500).end()
   }
 })
 
@@ -83,40 +86,40 @@ audio.get('/play/:id', async function(request, response) {
   try {
     const sound = await audioResource.getSoundWithContent(request.params.id)
     if (sound) {
-      await sManager.play(sound)
+      await playerManager.play(sound)
       response.status(200).end()
     } else {
       response.status(404).end()
     }
   } catch (err) {
-    response.write(err).status(500).end()
+    response.send(err).status(500).end()
   }
 })
 
 audio.get('/stop', async function(request, response) {
   try {
-    await sManager.stop()
+    await playerManager.stop()
     response.status(200).end()
   } catch (e) {
-    response.write(e).status(500).end()
+    response.send(e).status(500).end()
   }
 })
 
 audio.get('/pause', async function(request, response) {
   try {
-    await sManager.pause()
+    await playerManager.pause()
     response.status(200).end()
   } catch (e) {
-    response.write(e).status(500).end()
+    response.send(e).status(500).end()
   }
 })
 
 audio.get('/resume', async function(request, response) {
   try {
-    await sManager.resume()
+    await playerManager.resume()
     response.status(200).end()
   } catch (e) {
-    response.write(e).status(500).end()
+    response.send(e).status(500).end()
   }
 })
 

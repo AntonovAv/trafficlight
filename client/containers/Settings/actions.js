@@ -1,7 +1,14 @@
 import {
   BRIGHTNESS_CHANGE,
   SOUND_CHANGE,
+  SAVE_SETTINGS,
+  SAVE_SETTINGS_SUCCESS,
+  SAVE_SETTINGS_FAILURE,
+  LOAD_SETTINGS,
+  LOAD_SETTINGS_SUCCESS,
+  LOAD_SETTINGS_FAILURE,
 } from './constants'
+import {selectSettings} from './selectors'
 
 export function onBrightnessChangeAction(newBr) {
   return {
@@ -14,5 +21,34 @@ export function onSoundChangeAction(newVal) {
   return {
     type: SOUND_CHANGE,
     data: newVal,
+  }
+}
+
+export function saveSettingsAction() {
+  return (dispatch, getState) => {
+    const settings = selectSettings(getState())
+    const data = {
+      brightness: settings.brightness,
+      volume: settings.volume,
+      hosts: [],
+    }
+    dispatch({
+      types: [SAVE_SETTINGS, SAVE_SETTINGS_SUCCESS, SAVE_SETTINGS_FAILURE],
+      promise: (client) => {
+        return client.post(
+          '/api/settings',
+          data
+        )
+      }
+    })
+  }
+}
+
+export function loadSettings() {
+  return {
+    types: [LOAD_SETTINGS, LOAD_SETTINGS_SUCCESS, LOAD_SETTINGS_FAILURE],
+    promise: (client) => {
+      return client.get('/api/settings')
+    }
   }
 }

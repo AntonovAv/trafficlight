@@ -1,2 +1,10 @@
 export const BRIGHTNESS_CHANGE = 'settings/BRIGHTNESS_CHANGE'
 export const SOUND_CHANGE = 'settings/SOUND_CHANGE'
+
+export const SAVE_SETTINGS = 'settings/SAVE_SETTINGS'
+export const SAVE_SETTINGS_SUCCESS = 'settings/SAVE_SETTINGS_SUCCESS'
+export const SAVE_SETTINGS_FAILURE = 'settings/SAVE_SETTINGS_FAILURE'
+
+export const LOAD_SETTINGS = 'settings/LOAD_SETTINGS'
+export const LOAD_SETTINGS_SUCCESS = 'settings/LOAD_SETTINGS_SUCCESS'
+export const LOAD_SETTINGS_FAILURE = 'settings/LOAD_SETTINGS_FAILURE'

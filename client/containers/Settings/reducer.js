@@ -1,6 +1,10 @@
 import {
   BRIGHTNESS_CHANGE,
   SOUND_CHANGE,
+  SAVE_SETTINGS,
+  SAVE_SETTINGS_SUCCESS,
+  SAVE_SETTINGS_FAILURE,
+  LOAD_SETTINGS_SUCCESS,
 } from './constants'
 
 const initState = {
@@ -13,6 +17,7 @@ const initState = {
   hosts: [],
   buildTypes: [],
   changed: false,
+  saving: false,
 }
 
 export default function reducer(state = initState, {type, data}) {
@@ -28,6 +33,32 @@ export default function reducer(state = initState, {type, data}) {
         ...state,
         volume: data,
         changed: true,
+      }
+    }
+    case SAVE_SETTINGS: {
+      return {
+        ...state,
+        saving: true,
+      }
+    }
+    case SAVE_SETTINGS_SUCCESS: {
+      return {
+        ...state,
+        saving: false,
+        changed: false,
+      }
+    }
+    case SAVE_SETTINGS_FAILURE: {
+      return {
+        ...state,
+        saving: false,
+      }
+    }
+    case LOAD_SETTINGS_SUCCESS: {
+      return {
+        ...state,
+        brightness: data.brightness,
+        volume: data.volume,
       }
     }
     default:

@@ -10,6 +10,8 @@ import {
 import {
   onBrightnessChangeAction,
   onSoundChangeAction,
+  saveSettingsAction,
+  loadSettings,
 } from './actions'
 
 import {List, ListSubHeader} from 'react-toolbox/lib/list'
@@ -20,6 +22,10 @@ import BrightnessList from './components/BrightnessList'
 import SoundSlider from './components/SoundSlider'
 
 export class Settings extends PureComponent {
+  componentWillMount() {
+    this.props.loadSettingsAction()
+  }
+
   render() {
     return (
       <div className={styles.container}>
@@ -41,6 +47,7 @@ export class Settings extends PureComponent {
           type='accept'
           action='Save'
           label='Settings have been changed'
+          onClick={this.props.saveSettingsAction}
         />
       </div>
     )
@@ -54,6 +61,8 @@ Settings.propTypes = {
 
   onBrightnessChangeAction: PropTypes.func,
   onSoundChangeAction: PropTypes.func,
+  saveSettingsAction: PropTypes.func,
+  loadSettingsAction: PropTypes.func,
 }
 
 export default connect(
@@ -68,6 +77,8 @@ export default connect(
     return {
       onBrightnessChangeAction: bindActionCreators(onBrightnessChangeAction, dispatch),
       onSoundChangeAction: bindActionCreators(onSoundChangeAction, dispatch),
+      saveSettingsAction: bindActionCreators(saveSettingsAction, dispatch),
+      loadSettingsAction: bindActionCreators(loadSettings, dispatch),
     }
   }
 )(Settings)
