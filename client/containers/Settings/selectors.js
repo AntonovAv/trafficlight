@@ -4,17 +4,12 @@ export function selectSettings(state) {
   return state.settings
 }
 
-export const selectBrightness = createSelector(
-  [selectSettings],
-  (settings) => settings.brightness
-)
-
 export const selectIsSettingsChanged = createSelector(
   [selectSettings],
   (settings) => settings.changed
 )
 
-export const selectSoundVolume = createSelector(
+export const selectParemeters = createSelector(
   [selectSettings],
-  (settings) => settings.volume
+  (settings) => settings.parameters
 )

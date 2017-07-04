@@ -8,7 +8,7 @@ import {
   LOAD_SETTINGS_SUCCESS,
   LOAD_SETTINGS_FAILURE,
 } from './constants'
-import {selectSettings} from './selectors'
+import {selectParemeters} from './selectors'
 
 export function onBrightnessChangeAction(newBr) {
   return {
@@ -26,10 +26,10 @@ export function onSoundChangeAction(newVal) {
 
 export function saveSettingsAction() {
   return (dispatch, getState) => {
-    const settings = selectSettings(getState())
+    const parameters = selectParemeters(getState())
     const data = {
-      brightness: settings.brightness,
-      volume: settings.volume,
+      brightness: parameters.brightness,
+      volume: parameters.volume,
       hosts: [],
     }
     dispatch({

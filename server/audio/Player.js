@@ -149,7 +149,9 @@ class Player extends EventEmitter {
   }
 
   setVolume(percents) {
-    this._volume.setVolume(percents / 100)
+    if (this._volume) {
+      this._volume.setVolume(percents / 100)
+    }
   }
 }
 

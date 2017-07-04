@@ -3,9 +3,8 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {
-  selectBrightness,
+  selectParemeters,
   selectIsSettingsChanged,
-  selectSoundVolume,
 } from './selectors'
 import {
   onBrightnessChangeAction,
@@ -32,12 +31,12 @@ export class Settings extends PureComponent {
         <List>
           <ListSubHeader caption='Brightness'/>
           <BrightnessList
-            brightness={this.props.brightness}
+            brightness={this.props.parameters.brightness}
             onChange={this.props.onBrightnessChangeAction}
           />
           <ListSubHeader caption='Sound'/>
           <SoundSlider
-            percents={this.props.volume}
+            percents={this.props.parameters.volume}
             onChange={this.props.onSoundChangeAction}
           />
           <ListSubHeader caption='Teamcity'/>
@@ -55,9 +54,11 @@ export class Settings extends PureComponent {
 }
 
 Settings.propTypes = {
-  brightness: PropTypes.object,
   settingsChanged: PropTypes.bool,
-  volume: PropTypes.number,
+  parameters: PropTypes.shape({
+    brightness: PropTypes.object,
+    volume: PropTypes.number,
+  }),
 
   onBrightnessChangeAction: PropTypes.func,
   onSoundChangeAction: PropTypes.func,
@@ -68,9 +69,8 @@ Settings.propTypes = {
 export default connect(
   (state) => {
     return {
-      brightness: selectBrightness(state),
       settingsChanged: selectIsSettingsChanged(state),
-      volume: selectSoundVolume(state),
+      parameters: selectParemeters(state),
     }
   },
   (dispatch) => {

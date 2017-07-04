@@ -8,12 +8,14 @@ import {
 } from './constants'
 
 const initState = {
-  brightness: {
-    r: 0,
-    y: 0,
-    g: 0,
+  parameters: {
+    brightness: {
+      r: 0,
+      y: 0,
+      g: 0,
+    },
+    volume: 0,
   },
-  volume: 0,
   hosts: [],
   buildTypes: [],
   changed: false,
@@ -25,13 +27,19 @@ export default function reducer(state = initState, {type, data}) {
     case BRIGHTNESS_CHANGE:
       return {
         ...state,
-        brightness: data,
+        parameters: {
+          ...state.parameters,
+          brightness: data
+        },
         changed: true,
       }
     case SOUND_CHANGE: {
       return {
         ...state,
-        volume: data,
+        parameters: {
+          ...state.parameters,
+          volume: data,
+        },
         changed: true,
       }
     }
@@ -57,8 +65,11 @@ export default function reducer(state = initState, {type, data}) {
     case LOAD_SETTINGS_SUCCESS: {
       return {
         ...state,
-        brightness: data.brightness,
-        volume: data.volume,
+        changed: false,
+        parameters: {
+          brightness: data.brightness,
+          volume: data.volume,
+        }
       }
     }
     default:
