@@ -1,7 +1,7 @@
 const EventEmitter = require('events')
 const lame = require('lame')
 const Speaker = require('speaker')
-const mpg123Util = require('node-mpg123-util')
+const volume = require('pcm-volume')
 
 const EVENT_PLAY = 'play'
 const EVENT_STOP = 'stop'
@@ -21,6 +21,7 @@ class Player extends EventEmitter {
     this._soundStream = null
     this._speaker = null
     this._lameFormat = {}
+    this._volume = null
   }
 
   play(soundStream) {
@@ -28,6 +29,7 @@ class Player extends EventEmitter {
       this._isPlaying = true
       this._soundStream = soundStream
       this._decoder = new lame.Decoder()
+      this._volume = volume(0.1) // TODO init volume, for example
 
       return new Promise((resolve, reject) => {
         let that = this
@@ -41,6 +43,7 @@ class Player extends EventEmitter {
             that.emit(EVENT_PLAY)
           })
           .on('close', () => {
+            // TODO not working
             this.stop()
           })
           .on('error', (e) => {
@@ -54,13 +57,20 @@ class Player extends EventEmitter {
 
   _speak(decoder, format) {
     this._speaker = new Speaker(format)
-    decoder
+    this._volume
       .pipe(this._speaker)
+      .on('close', () => {
+        this.stop()
+      })
+
+    decoder
+      .pipe(this._volume)
       .on('error', (e) => {
         this.emit(EVENT_ERROR)
         this._cleanUp()
       })
       .on('close', () => {
+        // TODO not working
         this.stop()
       })
   }
@@ -110,6 +120,10 @@ class Player extends EventEmitter {
       this._speaker = null
     }
 
+    if (this._volume) {
+      this._volume.unpipe()
+    }
+
     if (this._decoder) {
       this._decoder.removeAllListeners('close')
       this._decoder.removeAllListeners('error')
@@ -135,16 +149,7 @@ class Player extends EventEmitter {
   }
 
   setVolume(percents) {
-    return new Promise((resolve, reject) => {
-      if (this._isPlaying) {
-        if (this._decoder) {
-          mpg123Util.setVolume(this._decoder.mh, percents / 100)
-          resolve()
-        }
-      } else {
-        reject()
-      }
-    })
+    this._volume.setVolume(percents / 100)
   }
 }
 
