@@ -1,3 +1,5 @@
+import {combineReducers} from 'redux'
+import editDialog from './EditTeamcityDialog/reducer'
 import {
   BRIGHTNESS_CHANGE,
   SOUND_CHANGE,
@@ -16,13 +18,12 @@ const initState = {
     },
     volume: 0,
   },
-  hosts: [],
-  buildTypes: [],
+  teamcityList: [],
   changed: false,
   saving: false,
 }
 
-export default function reducer(state = initState, {type, data}) {
+function reducer(state = initState, {type, data}) {
   switch (type) {
     case BRIGHTNESS_CHANGE:
       return {
@@ -76,3 +77,8 @@ export default function reducer(state = initState, {type, data}) {
       return state
   }
 }
+
+export default combineReducers({
+  page: reducer,
+  editDialog,
+})

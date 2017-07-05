@@ -4,12 +4,17 @@ export function selectSettings(state) {
   return state.settings
 }
 
-export const selectIsSettingsChanged = createSelector(
+export const selectPage = createSelector(
   [selectSettings],
-  (settings) => settings.changed
+  (s) => s.page
 )
 
-export const selectParemeters = createSelector(
-  [selectSettings],
-  (settings) => settings.parameters
+export const selectIsSettingsChanged = createSelector(
+  [selectPage],
+  (p) => p.changed
+)
+
+export const selectParameters = createSelector(
+  [selectPage],
+  (p) => p.parameters
 )

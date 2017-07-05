@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {
-  selectParemeters,
+  selectParameters,
   selectIsSettingsChanged,
 } from './selectors'
 import {
@@ -12,10 +12,15 @@ import {
   saveSettingsAction,
   loadSettings,
 } from './actions'
+import {
+  openDialogAction
+} from './EditTeamcityDialog/actions'
 
 import {List, ListSubHeader} from 'react-toolbox/lib/list'
 import {Snackbar} from 'react-toolbox/lib/snackbar'
 import styles from './styles.css'
+
+import EditTeamcityDialog from './EditTeamcityDialog'
 
 import BrightnessList from './components/BrightnessList'
 import SoundSlider from './components/SoundSlider'
@@ -40,6 +45,7 @@ export class Settings extends PureComponent {
             onChange={this.props.onSoundChangeAction}
           />
           <ListSubHeader caption='Teamcity'/>
+          <div onClick={this.props.openEditTeamcityDialogAction}>Add</div>
         </List>
         <Snackbar
           active={this.props.settingsChanged}
@@ -48,6 +54,7 @@ export class Settings extends PureComponent {
           label='Settings have been changed'
           onClick={this.props.saveSettingsAction}
         />
+        <EditTeamcityDialog/>
       </div>
     )
   }
@@ -64,13 +71,14 @@ Settings.propTypes = {
   onSoundChangeAction: PropTypes.func,
   saveSettingsAction: PropTypes.func,
   loadSettingsAction: PropTypes.func,
+  openEditTeamcityDialogAction: PropTypes.func,
 }
 
 export default connect(
   (state) => {
     return {
       settingsChanged: selectIsSettingsChanged(state),
-      parameters: selectParemeters(state),
+      parameters: selectParameters(state),
     }
   },
   (dispatch) => {
@@ -79,6 +87,7 @@ export default connect(
       onSoundChangeAction: bindActionCreators(onSoundChangeAction, dispatch),
       saveSettingsAction: bindActionCreators(saveSettingsAction, dispatch),
       loadSettingsAction: bindActionCreators(loadSettings, dispatch),
+      openEditTeamcityDialogAction: bindActionCreators(openDialogAction, dispatch),
     }
   }
 )(Settings)
