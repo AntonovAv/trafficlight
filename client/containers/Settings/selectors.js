@@ -18,3 +18,8 @@ export const selectParameters = createSelector(
   [selectPage],
   (p) => p.parameters
 )
+
+export const selectTeamcityList = createSelector(
+  [selectPage],
+  (p) => p.teamcityList
+)

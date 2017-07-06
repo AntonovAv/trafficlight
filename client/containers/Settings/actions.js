@@ -7,6 +7,7 @@ import {
   LOAD_SETTINGS,
   LOAD_SETTINGS_SUCCESS,
   LOAD_SETTINGS_FAILURE,
+  ADD_TEAMCITY_SERVER,
 } from './constants'
 import {selectParameters} from './selectors'
 
@@ -36,7 +37,7 @@ export function saveSettingsAction() {
       types: [SAVE_SETTINGS, SAVE_SETTINGS_SUCCESS, SAVE_SETTINGS_FAILURE],
       promise: (client) => {
         return client.post(
-          '/api/settings',
+          '/api/settings/params',
           data
         )
       }
@@ -48,7 +49,14 @@ export function loadSettings() {
   return {
     types: [LOAD_SETTINGS, LOAD_SETTINGS_SUCCESS, LOAD_SETTINGS_FAILURE],
     promise: (client) => {
-      return client.get('/api/settings')
+      return client.get('/api/settings/params')
     }
+  }
+}
+
+export function addTeamcityServerAction(data) {
+  return {
+    type: ADD_TEAMCITY_SERVER,
+    data: data,
   }
 }

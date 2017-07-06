@@ -1,5 +1,7 @@
 import {
-  CHANGE_NAME, CHANGE_URL, OPEN_DIALOG, CANCEL_EDIT
+  CHANGE_NAME, CHANGE_URL, OPEN_DIALOG, CANCEL_EDIT,
+  SAVE_DATA_SUCCESS,
+  LOAD_TEAMCITY_DATA_SUCCESS,
 } from './constants'
 
 const initState = {
@@ -38,6 +40,17 @@ export default function reducer(state = initState, {type, data}) {
         ...state,
         active: false
       }
+    case SAVE_DATA_SUCCESS:
+      return initState
+    case LOAD_TEAMCITY_DATA_SUCCESS: {
+      return {
+        ...state,
+        id: data.id,
+        name: data.name,
+        url: data.url,
+        ignoredBuildTypeIds: data.ignoredBuildTypes,
+      }
+    }
     default:
       return state
   }

@@ -1,10 +1,20 @@
 import {
   CHANGE_NAME, CHANGE_URL, OPEN_DIALOG, CANCEL_EDIT,
+  SAVE_DATA, SAVE_DATA_SUCCESS, SAVE_DATA_FAILURE,
+  LOAD_TEAMCITY_DATA, LOAD_TEAMCITY_DATA_SUCCESS, LOAD_TEAMCITY_DATA_FAILURE,
 } from './constants'
+import {selectDialogData} from './selectors'
+import {addTeamcityServerAction} from '../actions'
 
 export function openDialogAction(id) {
-  return {
-    type: OPEN_DIALOG
+  return dispatch => {
+    if (id !== null) {
+      dispatch(loadDialogDataAction(id))
+    }
+    dispatch({
+      type: OPEN_DIALOG,
+      data: id || null,
+    })
   }
 }
 
@@ -14,12 +24,39 @@ export function closeDialogAction() {
   }
 }
 
-export function loadDialogDataAction() {
-  return {}
+export function loadDialogDataAction(id) {
+  return dispatch => {
+    dispatch({
+      types: [LOAD_TEAMCITY_DATA, LOAD_TEAMCITY_DATA_SUCCESS, LOAD_TEAMCITY_DATA_FAILURE],
+      promise: (client) => {
+        return client.get(`/api/settings/teamcity/${id}`)
+      }
+    })
+  }
 }
 
 export function saveDialogDataAction() {
-  return {}
+  return (dispatch, getState) => {
+    const dialogData = selectDialogData(getState())
+
+    dispatch({
+      types: [SAVE_DATA, SAVE_DATA_SUCCESS, SAVE_DATA_FAILURE],
+      promise: (client) => {
+        return client.post(
+          '/api/settings/teamcity',
+          {
+            id: dialogData.id,
+            name: dialogData.name,
+            url: dialogData.url,
+            ignoredBuildTypes: dialogData.ignoredBuildTypeIds
+          }
+        )
+      },
+      successCb: (data, dispatch) => {
+        dispatch(addTeamcityServerAction(data))
+      }
+    })
+  }
 }
 
 export function testTeamcityAction() {

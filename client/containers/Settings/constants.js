@@ -8,3 +8,5 @@ export const SAVE_SETTINGS_FAILURE = 'settings/SAVE_SETTINGS_FAILURE'
 export const LOAD_SETTINGS = 'settings/LOAD_SETTINGS'
 export const LOAD_SETTINGS_SUCCESS = 'settings/LOAD_SETTINGS_SUCCESS'
 export const LOAD_SETTINGS_FAILURE = 'settings/LOAD_SETTINGS_FAILURE'
+
+export const ADD_TEAMCITY_SERVER = 'settings/ADD_TEAMCITY_SERVER'

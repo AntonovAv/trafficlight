@@ -7,7 +7,9 @@ import {
   SAVE_SETTINGS_SUCCESS,
   SAVE_SETTINGS_FAILURE,
   LOAD_SETTINGS_SUCCESS,
+  ADD_TEAMCITY_SERVER,
 } from './constants'
+import R from 'ramda'
 
 const initState = {
   parameters: {
@@ -71,6 +73,25 @@ function reducer(state = initState, {type, data}) {
           brightness: data.brightness,
           volume: data.volume,
         }
+      }
+    }
+    case ADD_TEAMCITY_SERVER: {
+      let exists = false
+      const teamcities = R.map((teamcity) => {
+        if (teamcity.id === data.id) {
+          exists = true
+          return data
+        } else {
+          return teamcity
+        }
+      }, state.teamcityList)
+      if (!exists) {
+        teamcities.push(data)
+      }
+
+      return {
+        ...state,
+        teamcityList: teamcities
       }
     }
     default:

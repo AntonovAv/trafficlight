@@ -5,6 +5,7 @@ import {bindActionCreators} from 'redux'
 import {
   selectParameters,
   selectIsSettingsChanged,
+  selectTeamcityList,
 } from './selectors'
 import {
   onBrightnessChangeAction,
@@ -16,7 +17,7 @@ import {
   openDialogAction
 } from './EditTeamcityDialog/actions'
 
-import {List, ListSubHeader} from 'react-toolbox/lib/list'
+import {List, ListSubHeader, ListItem} from 'react-toolbox/lib/list'
 import {Snackbar} from 'react-toolbox/lib/snackbar'
 import styles from './styles.css'
 
@@ -28,6 +29,10 @@ import SoundSlider from './components/SoundSlider'
 export class Settings extends PureComponent {
   componentWillMount() {
     this.props.loadSettingsAction()
+  }
+
+  onAddNewTeamcityCb = () => {
+    this.props.openEditTeamcityDialogAction(null)
   }
 
   render() {
@@ -45,7 +50,13 @@ export class Settings extends PureComponent {
             onChange={this.props.onSoundChangeAction}
           />
           <ListSubHeader caption='Teamcity'/>
-          <div onClick={this.props.openEditTeamcityDialogAction}>Add</div>
+          <div onClick={this.onAddNewTeamcityCb}>Add</div>
+          {this.props.teamcityList.map((ts, i) => {
+            const cb = () => {
+              this.props.openEditTeamcityDialogAction(ts.id)
+            }
+            return <ListItem caption={ts.name} key={i} onClick={cb}/>
+          })}
         </List>
         <Snackbar
           active={this.props.settingsChanged}
@@ -66,6 +77,7 @@ Settings.propTypes = {
     brightness: PropTypes.object,
     volume: PropTypes.number,
   }),
+  teamcityList: PropTypes.array,
 
   onBrightnessChangeAction: PropTypes.func,
   onSoundChangeAction: PropTypes.func,
@@ -79,6 +91,7 @@ export default connect(
     return {
       settingsChanged: selectIsSettingsChanged(state),
       parameters: selectParameters(state),
+      teamcityList: selectTeamcityList(state),
     }
   },
   (dispatch) => {

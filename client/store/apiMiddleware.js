@@ -23,7 +23,7 @@ export default function apiMiddleware() {
           next({...rest, data: response.data, type: SUCCESS})
 
           if (successCb !== undefined) {
-            dispatch(successCb)
+            successCb(response.data, dispatch, getState)
           }
         },
         (error) => {
