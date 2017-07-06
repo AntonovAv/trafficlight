@@ -4,13 +4,13 @@ const Schema = mongoose.Schema
 const TeamcityServerSchema = new Schema({
   name: {
     type: String,
-    required: function() {
-      return this.url.length > 0
+    validate: function() {
+      return this.name.length > 0
     }
   },
   url: {
     type: String,
-    required: function() {
+    validate: function() {
       return this.url.length > 0
     }
   },

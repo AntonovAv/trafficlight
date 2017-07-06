@@ -49,7 +49,7 @@ export function loadSettings() {
   return {
     types: [LOAD_SETTINGS, LOAD_SETTINGS_SUCCESS, LOAD_SETTINGS_FAILURE],
     promise: (client) => {
-      return client.get('/api/settings/params')
+      return client.get('/api/settings')
     }
   }
 }

@@ -11,11 +11,22 @@ module.exports.saveSettings = async function(data) {
 }
 
 module.exports.saveTeamcityServer = function(data) {
-  return new TeamcityServer(data).save()
+  return TeamcityServer.findOneAndUpdate(
+    {_id: data.id},
+    data,
+    {
+      // Return the document after updates are applied
+      new: true,
+      // Create a document if one isn't found. Required
+      // for `setDefaultsOnInsert`
+      upsert: true,
+      setDefaultsOnInsert: true
+    }
+  )
 }
 
-module.exports.isTeamcityServerExists = async function(name, url) {
-  let res = await TeamcityServer.find({name, url})
+module.exports.isTeamcityParametersExists = async function(id, name, url) {
+  let res = await TeamcityServer.find({name, url}).nor({_id: id})
   return res.length !== 0
 }
 

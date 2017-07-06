@@ -3,6 +3,15 @@ const resource = require('./resource')
 const pmRegistry = require('../audio/PlayerManagerRegistry')
 const R = require('ramda')
 
+route.get('/', async (req, resp) => {
+  try {
+    const data = await prepareSettings()
+    resp.send(data).end()
+  } catch (e) {
+    resp.status(500).send(e).end()
+  }
+})
+
 route.get('/params', async function(request, response) {
   try {
     let settings = await resource.getSettings()
@@ -28,8 +37,8 @@ route.post('/params', async function(req, resp) {
 
 route.post('/teamcity', async (req, resp) => {
   try {
-    const {name, url} = req.body
-    const isExists = await resource.isTeamcityServerExists(name, url)
+    const {id, name, url} = req.body
+    const isExists = await resource.isTeamcityParametersExists(id, name, url)
     if (isExists) {
       resp.status(400).end()
     } else {
@@ -43,9 +52,8 @@ route.post('/teamcity', async (req, resp) => {
 
 route.get('/teamcity', async (req, resp) => {
   try {
-    const res = await resource.getAllTeamcityServers()
-    const forClient = R.map((model) => teamcityForClient(model), res)
-    resp.status(200).send(forClient).end()
+    const data = await loadTeamcityList()
+    resp.status(200).send(data).end()
   } catch (e) {
     resp.status(500).send(e).end()
   }
@@ -73,12 +81,30 @@ route.delete('/teamcity/:id', async (req, resp) => {
   }
 })
 
+route.get('/teamcity/test', async (req, resp) => {
+
+})
+
+const loadTeamcityList = async () => {
+  const res = await resource.getAllTeamcityServers()
+  return R.map((model) => teamcityForClient(model), res)
+}
+
 const teamcityForClient = (model) => {
   return {
     id: model.id.toString(),
     name: model.name,
     url: model.url,
     ignoredBuildTypes: model.ignoredBuildTypes
+  }
+}
+
+const prepareSettings = async () => {
+  const parameters = await resource.getSettings()
+  const teamcityList = await loadTeamcityList()
+  return {
+    parameters,
+    teamcityList,
   }
 }
 

@@ -36,10 +36,6 @@ export default function reducer(state = initState, {type, data}) {
         active: true,
       }
     case CANCEL_EDIT:
-      return {
-        ...state,
-        active: false
-      }
     case SAVE_DATA_SUCCESS:
       return initState
     case LOAD_TEAMCITY_DATA_SUCCESS: {

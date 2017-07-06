@@ -70,9 +70,10 @@ function reducer(state = initState, {type, data}) {
         ...state,
         changed: false,
         parameters: {
-          brightness: data.brightness,
-          volume: data.volume,
-        }
+          brightness: data.parameters.brightness,
+          volume: data.parameters.volume,
+        },
+        teamcityList: data.teamcityList,
       }
     }
     case ADD_TEAMCITY_SERVER: {
