@@ -14,7 +14,12 @@ export class Inputs extends PureComponent {
             value={this.props.url}
             onChange={this.props.onChangeUrl}
           />
-          <div>test connection</div>
+          <div>
+            {this.props.connectionTesting
+              ? 'testing...'
+              : <span onClick={this.props.onTestConnection}>test</span>
+            }
+          </div>
         </div>
         <Input
           type={'text'}

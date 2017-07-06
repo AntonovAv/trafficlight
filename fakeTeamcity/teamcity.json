@@ -148,5 +148,40 @@
         "webUrl": "https://teamcity.jetbrains.com/viewLog.html?buildId=994117&buildTypeId=Epigenome_Cmeth"
       }
     ]
+  },
+  "server": {
+    "version": "2017.1.3 EAP (build 46869)",
+    "versionMajor": 2017,
+    "versionMinor": 1,
+    "startTime": "20170628T162010+0000",
+    "currentTime": "20170706T230647+0000",
+    "buildNumber": "46869",
+    "buildDate": "20170624T000000+0000",
+    "internalId": "JetBrains-teamcity.jetbrains.com-42e5180b-64e4-4b46-ab8b-84c8c9e1891a",
+    "webUrl": "https://teamcity.jetbrains.com",
+    "projects": {
+      "href": "/guestAuth/app/rest/projects"
+    },
+    "vcsRoots": {
+      "href": "/guestAuth/app/rest/vcs-roots"
+    },
+    "builds": {
+      "href": "/guestAuth/app/rest/builds"
+    },
+    "users": {
+      "href": "/guestAuth/app/rest/users"
+    },
+    "userGroups": {
+      "href": "/guestAuth/app/rest/userGroups"
+    },
+    "agents": {
+      "href": "/guestAuth/app/rest/agents"
+    },
+    "buildQueue": {
+      "href": "/guestAuth/app/rest/buildQueue"
+    },
+    "agentPools": {
+      "href": "/guestAuth/app/rest/agentPools"
+    }
   }
 }

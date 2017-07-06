@@ -2,6 +2,7 @@ import {
   CHANGE_NAME, CHANGE_URL, OPEN_DIALOG, CANCEL_EDIT,
   SAVE_DATA, SAVE_DATA_SUCCESS, SAVE_DATA_FAILURE,
   LOAD_TEAMCITY_DATA, LOAD_TEAMCITY_DATA_SUCCESS, LOAD_TEAMCITY_DATA_FAILURE,
+  TEST_TEAMCITY, TEST_TEAMCITY_SUCCESS, TEST_TEAMCITY_FAILURE,
 } from './constants'
 import {selectDialogData} from './selectors'
 import {addTeamcityServerAction} from '../actions'
@@ -60,7 +61,15 @@ export function saveDialogDataAction() {
 }
 
 export function testTeamcityAction() {
-  return {}
+  return (dispatch, getState) => {
+    const url = selectDialogData(getState()).url
+    dispatch({
+      types: [TEST_TEAMCITY, TEST_TEAMCITY_SUCCESS, TEST_TEAMCITY_FAILURE],
+      promise: (client) => {
+        return client.get(`api/settings/teamcity/test/${encodeURIComponent(url)}`)
+      }
+    })
+  }
 }
 
 export function loadBuildTypesAction() {

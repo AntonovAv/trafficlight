@@ -1,6 +1,7 @@
 const route = require('express').Router()
 const resource = require('./resource')
 const pmRegistry = require('../audio/PlayerManagerRegistry')
+const teamcityRest = require('../teamcity/httpResource')
 const R = require('ramda')
 
 route.get('/', async (req, resp) => {
@@ -81,8 +82,13 @@ route.delete('/teamcity/:id', async (req, resp) => {
   }
 })
 
-route.get('/teamcity/test', async (req, resp) => {
-
+route.get('/teamcity/test/:host', async (req, resp) => {
+  try {
+    const data = await teamcityRest.getServerInfo(req.params.host)
+    resp.send(data).end()
+  } catch (e) {
+    resp.status(500).send(e).end()
+  }
 })
 
 const loadTeamcityList = async () => {

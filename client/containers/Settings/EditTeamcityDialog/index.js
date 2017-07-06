@@ -30,6 +30,8 @@ export class EditTeamcityDialog extends PureComponent {
           url={this.props.url}
           onChangeName={this.props.dialogActions.nameChangeAction}
           onChangeUrl={this.props.dialogActions.urlChangeAction}
+          onTestConnection={this.props.dialogActions.testTeamcityAction}
+          connectionTesting={this.props.connectionTesting}
         />
       </Dialog>
     )
@@ -49,6 +51,7 @@ EditTeamcityDialog.propTypes = {
     urlChangeAction: PropTypes.func.isRequired,
     saveDialogDataAction: PropTypes.func.isRequired,
     closeDialogAction: PropTypes.func.isRequired,
+    testTeamcityAction: PropTypes.func.isRequired,
   }).isRequired,
 }
 
@@ -60,6 +63,7 @@ export default connect(
       url: dialogData.url,
       isNew: dialogData.id === null,
       active: dialogData.active,
+      connectionTesting: dialogData.teamcityChecking,
     }
   },
   (dispatch) => {

@@ -3,32 +3,24 @@ const R = require('ramda')
 const Build = require('../models/Build')
 const BuildType = require('../models/BuildType')
 
-const BUILD_TYPES_URL = '/guestAuth/app/rest/buildTypes'
+const REST_URL = '/guestAuth/app/rest'
+const BUILD_TYPES_URL = `${REST_URL}/buildTypes`
 
 /**
  * Retrieve build type ids grouped by project ids
  *
  * @param host teamcity host
  */
-module.exports.getBuildTypes = (host) => {
-  return new Promise((resolve, reject) => {
-    axios
-      .get(host + BUILD_TYPES_URL, {
-        headers: {
-          'Accept': 'application/json'
-        }
-      })
-      .then(({data}) => {
-        const result = R.map((buildType) => {
-          const {id, projectId} = buildType
-          return new BuildType(id, projectId)
-        }, data.buildType)
-        resolve(result)
-      })
-      .catch((error) => {
-        reject(error)
-      })
+module.exports.getBuildTypes = async (host) => {
+  const {data} = await axios.get(host + BUILD_TYPES_URL, {
+    headers: {
+      'Accept': 'application/json'
+    }
   })
+  return R.map((buildType) => {
+    const {id, projectId} = buildType
+    return new BuildType(id, projectId)
+  }, data.buildType)
 }
 
 /**
@@ -61,4 +53,17 @@ module.exports.getBuildStatus = (host, buildTypeId, count = 2) => {
         reject(error)
       })
   })
+}
+
+module.exports.getServerInfo = async (host) => {
+  const {data} = await axios.get(
+    `${host}${REST_URL}/server`,
+    {
+      headers: {
+        'Accept': 'application/json'
+      }
+    }
+  )
+
+  return data
 }

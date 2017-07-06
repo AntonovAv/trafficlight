@@ -2,6 +2,7 @@ import {
   CHANGE_NAME, CHANGE_URL, OPEN_DIALOG, CANCEL_EDIT,
   SAVE_DATA_SUCCESS,
   LOAD_TEAMCITY_DATA_SUCCESS,
+  TEST_TEAMCITY, TEST_TEAMCITY_SUCCESS, TEST_TEAMCITY_FAILURE,
 } from './constants'
 
 const initState = {
@@ -47,6 +48,12 @@ export default function reducer(state = initState, {type, data}) {
         ignoredBuildTypeIds: data.ignoredBuildTypes,
       }
     }
+    case TEST_TEAMCITY:
+      return {...state, teamcityChecking: true}
+    case TEST_TEAMCITY_SUCCESS:
+      return {...state, serverStatus: true, teamcityChecking: false}
+    case TEST_TEAMCITY_FAILURE:
+      return {...state, teamcityChecking: false}
     default:
       return state
   }

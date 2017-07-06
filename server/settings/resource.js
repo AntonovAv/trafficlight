@@ -10,19 +10,13 @@ module.exports.saveSettings = async function(data) {
   return new Settings(data).save()
 }
 
-module.exports.saveTeamcityServer = function(data) {
-  return TeamcityServer.findOneAndUpdate(
-    {_id: data.id},
-    data,
-    {
-      // Return the document after updates are applied
-      new: true,
-      // Create a document if one isn't found. Required
-      // for `setDefaultsOnInsert`
-      upsert: true,
-      setDefaultsOnInsert: true
-    }
-  )
+module.exports.saveTeamcityServer = async function(data) {
+  const exists = data.id !== null && await module.exports.getTeamcityServer(data.id)
+  if (exists) {
+    return TeamcityServer.findByIdAndUpdate(data.id, data, {new: true})
+  } else {
+    return new TeamcityServer(data).save()
+  }
 }
 
 module.exports.isTeamcityParametersExists = async function(id, name, url) {
