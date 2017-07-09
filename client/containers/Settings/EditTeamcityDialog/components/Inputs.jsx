@@ -2,6 +2,8 @@ import React, {PureComponent} from 'react'
 import PropTypes from 'prop-types'
 import styles from './Inputs.css'
 import {Input} from 'react-toolbox/lib/input'
+import {ProgressBar} from 'react-toolbox/lib/progress_bar'
+import TeamcityStatus from 'components/TeamcityStatus'
 
 export class Inputs extends PureComponent {
   render() {
@@ -13,10 +15,19 @@ export class Inputs extends PureComponent {
             hint={'Enter teamcity url'}
             value={this.props.url}
             onChange={this.props.onChangeUrl}
+            className={styles.urlInput}
           />
-          <div>
-            {this.props.connectionTesting
-              ? 'testing...'
+          <div className={styles.statusContainer}>
+            {this.props.teamcityStatus.status !== null && (
+              <div className={styles.status}><TeamcityStatus ok={true}/></div>
+            )}
+            {this.props.teamcityStatus.checking
+              ? (
+                <ProgressBar
+                  type='circular'
+                  className={styles.progress}
+                />
+              )
               : <span onClick={this.props.onTestConnection}>test</span>
             }
           </div>
@@ -35,7 +46,11 @@ export class Inputs extends PureComponent {
 Inputs.propTypes = {
   name: PropTypes.string,
   url: PropTypes.string,
-  connectionTesting: PropTypes.bool,
+  teamcityStatus: PropTypes.shape({
+    checking: PropTypes.bool,
+    status: PropTypes.bool,
+  }),
+
   onChangeName: PropTypes.func,
   onChangeUrl: PropTypes.func,
   onTestConnection: PropTypes.func,

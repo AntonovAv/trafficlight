@@ -24,6 +24,7 @@ export class EditTeamcityDialog extends PureComponent {
         active={this.props.active}
         className={styles.dialog}
         actions={dialogActions}
+        onEscKeyDown={this.props.dialogActions.closeDialogAction}
       >
         <Inputs
           name={this.props.name}
@@ -31,7 +32,7 @@ export class EditTeamcityDialog extends PureComponent {
           onChangeName={this.props.dialogActions.nameChangeAction}
           onChangeUrl={this.props.dialogActions.urlChangeAction}
           onTestConnection={this.props.dialogActions.testTeamcityAction}
-          connectionTesting={this.props.connectionTesting}
+          teamcityStatus={this.props.teamcityStatus}
         />
       </Dialog>
     )
@@ -45,6 +46,7 @@ EditTeamcityDialog.propTypes = {
   url: PropTypes.string,
   connectionTesting: PropTypes.bool,
   buildTypes: PropTypes.array,
+  teamcityStatus: PropTypes.object,
 
   dialogActions: PropTypes.shape({
     nameChangeAction: PropTypes.func.isRequired,
@@ -63,7 +65,7 @@ export default connect(
       url: dialogData.url,
       isNew: dialogData.id === null,
       active: dialogData.active,
-      connectionTesting: dialogData.teamcityChecking,
+      teamcityStatus: dialogData.teamcityStatus,
     }
   },
   (dispatch) => {

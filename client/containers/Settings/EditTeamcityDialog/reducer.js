@@ -1,6 +1,6 @@
 import {
-  CHANGE_NAME, CHANGE_URL, OPEN_DIALOG, CANCEL_EDIT,
-  SAVE_DATA_SUCCESS,
+  CHANGE_NAME, CHANGE_URL, OPEN_DIALOG, CLOSE_DIALOG,
+  SAVE_DATA, SAVE_DATA_SUCCESS, SAVE_DATA_FAILURE,
   LOAD_TEAMCITY_DATA_SUCCESS,
   TEST_TEAMCITY, TEST_TEAMCITY_SUCCESS, TEST_TEAMCITY_FAILURE,
 } from './constants'
@@ -12,8 +12,10 @@ const initState = {
   ignoredBuildTypeIds: [],
   soundRules: [],
   buildTypes: [],
-  serverStatus: null,
-  teamcityChecking: false,
+  teamcityStatus: {
+    checking: false,
+    status: null,
+  },
   buildTypesLoading: false,
   saving: false,
   active: false,
@@ -36,8 +38,7 @@ export default function reducer(state = initState, {type, data}) {
         ...state,
         active: true,
       }
-    case CANCEL_EDIT:
-    case SAVE_DATA_SUCCESS:
+    case CLOSE_DIALOG:
       return initState
     case LOAD_TEAMCITY_DATA_SUCCESS: {
       return {
@@ -49,11 +50,47 @@ export default function reducer(state = initState, {type, data}) {
       }
     }
     case TEST_TEAMCITY:
-      return {...state, teamcityChecking: true}
+      return {
+        ...state,
+        teamcityStatus: {
+          ...state.teamcityStatus,
+          checking: true,
+        },
+      }
     case TEST_TEAMCITY_SUCCESS:
-      return {...state, serverStatus: true, teamcityChecking: false}
+      return {
+        ...state,
+        teamcityStatus: {
+          ...state.teamcityStatus,
+          checking: false,
+          status: data
+        }
+      }
     case TEST_TEAMCITY_FAILURE:
-      return {...state, teamcityChecking: false}
+      return {
+        ...state,
+        teamcityStatus: {
+          ...state.teamcityStatus,
+          checking: false,
+        }
+      }
+
+    case SAVE_DATA:
+      return {
+        ...state,
+        saving: true,
+      }
+    case SAVE_DATA_SUCCESS:
+      return {
+        ...state,
+        saving: false,
+      }
+    case SAVE_DATA_FAILURE: {
+      return {
+        ...state,
+        saving: false,
+      }
+    }
     default:
       return state
   }

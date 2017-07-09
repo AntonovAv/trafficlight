@@ -1,5 +1,5 @@
 import {
-  CHANGE_NAME, CHANGE_URL, OPEN_DIALOG, CANCEL_EDIT,
+  CHANGE_NAME, CHANGE_URL, OPEN_DIALOG, CLOSE_DIALOG,
   SAVE_DATA, SAVE_DATA_SUCCESS, SAVE_DATA_FAILURE,
   LOAD_TEAMCITY_DATA, LOAD_TEAMCITY_DATA_SUCCESS, LOAD_TEAMCITY_DATA_FAILURE,
   TEST_TEAMCITY, TEST_TEAMCITY_SUCCESS, TEST_TEAMCITY_FAILURE,
@@ -21,7 +21,7 @@ export function openDialogAction(id) {
 
 export function closeDialogAction() {
   return {
-    type: CANCEL_EDIT
+    type: CLOSE_DIALOG
   }
 }
 
@@ -55,6 +55,7 @@ export function saveDialogDataAction() {
       },
       successCb: (data, dispatch) => {
         dispatch(addTeamcityServerAction(data))
+        dispatch(closeDialogAction())
       }
     })
   }

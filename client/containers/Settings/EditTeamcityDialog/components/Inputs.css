@@ -4,3 +4,25 @@
   justify-content: space-between;
   align-items: center;
 }
+
+.progress {
+  width: 25px !important;
+  height: 25px !important;
+}
+
+.urlInput {
+  width: calc(100% - 100px);
+}
+
+.statusContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  width: 80px;
+  padding-left: 10px;
+}
+
+.status {
+  margin-right: 10px;
+}
