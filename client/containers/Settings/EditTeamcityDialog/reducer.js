@@ -27,6 +27,10 @@ export default function reducer(state = initState, {type, data}) {
       return {
         ...state,
         url: data,
+        teamcityStatus: {
+          ...state.teamcityStatus,
+          status: null,
+        }
       }
     case CHANGE_NAME:
       return {
@@ -55,6 +59,7 @@ export default function reducer(state = initState, {type, data}) {
         teamcityStatus: {
           ...state.teamcityStatus,
           checking: true,
+          status: null,
         },
       }
     case TEST_TEAMCITY_SUCCESS:

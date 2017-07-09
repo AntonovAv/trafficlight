@@ -65,9 +65,15 @@ export function testTeamcityAction() {
   return (dispatch, getState) => {
     const url = selectDialogData(getState()).url
     dispatch({
-      types: [TEST_TEAMCITY, TEST_TEAMCITY_SUCCESS, TEST_TEAMCITY_FAILURE],
+      types: [TEST_TEAMCITY, null, TEST_TEAMCITY_FAILURE],
       promise: (client) => {
         return client.get(`api/settings/teamcity/test/${encodeURIComponent(url)}`)
+      },
+      successCb: (data, dispatch) => {
+        dispatch({
+          type: TEST_TEAMCITY_SUCCESS,
+          data: data.data !== null,
+        })
       }
     })
   }

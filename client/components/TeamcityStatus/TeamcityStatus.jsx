@@ -7,7 +7,7 @@ export class TeamcityStatus extends PureComponent {
   render() {
     return (
       <Icon
-        name='checkCircle'
+        name={this.props.ok ? 'checkCircle' : 'chainBroken'}
         className={this.props.ok ? styles.ok : styles.notOk}
       />
     )

@@ -83,12 +83,13 @@ route.delete('/teamcity/:id', async (req, resp) => {
 })
 
 route.get('/teamcity/test/:host', async (req, resp) => {
+  let data = null
   try {
-    const data = await teamcityRest.getServerInfo(req.params.host)
-    resp.send(data).end()
-  } catch (e) {
-    resp.status(500).send(e).end()
+    data = await teamcityRest.getServerInfo(req.params.host)
+  } catch (ignore) {
+    // ignore
   }
+  resp.send({data}).end()
 })
 
 const loadTeamcityList = async () => {

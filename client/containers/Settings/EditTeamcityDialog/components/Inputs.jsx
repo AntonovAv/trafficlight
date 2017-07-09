@@ -19,7 +19,7 @@ export class Inputs extends PureComponent {
           />
           <div className={styles.statusContainer}>
             {this.props.teamcityStatus.status !== null && (
-              <div className={styles.status}><TeamcityStatus ok={true}/></div>
+              <div className={styles.status}><TeamcityStatus ok={this.props.teamcityStatus.status}/></div>
             )}
             {this.props.teamcityStatus.checking
               ? (

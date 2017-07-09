@@ -21,3 +21,7 @@
 .checkCircle {
   composes: fa fa-check-circle-o from 'font-awesome/css/font-awesome.css';
 }
+
+.chainBroken {
+  composes: fa fa-chain-broken from 'font-awesome/css/font-awesome.css';
+}
