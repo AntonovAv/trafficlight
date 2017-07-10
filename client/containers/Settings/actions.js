@@ -60,3 +60,9 @@ export function addTeamcityServerAction(data) {
     data: data,
   }
 }
+
+export function deleteTeamcityServerAction(id) {
+  return {
+
+  }
+}

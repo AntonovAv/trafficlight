@@ -12,12 +12,13 @@ import {
   onSoundChangeAction,
   saveSettingsAction,
   loadSettings,
+  deleteTeamcityServerAction,
 } from './actions'
 import {
   openDialogAction
 } from './EditTeamcityDialog/actions'
 
-import {List, ListSubHeader, ListItem} from 'react-toolbox/lib/list'
+import {List, ListSubHeader} from 'react-toolbox/lib/list'
 import {Snackbar} from 'react-toolbox/lib/snackbar'
 import styles from './styles.css'
 
@@ -26,6 +27,7 @@ import EditTeamcityDialog from './EditTeamcityDialog'
 import BrightnessList from './components/BrightnessList'
 import SoundSlider from './components/SoundSlider'
 import TeamcityList from './components/TeamcityList'
+import TeamcityMenu from './components/TeamcityMenu'
 
 export class Settings extends PureComponent {
   componentWillMount() {
@@ -54,7 +56,11 @@ export class Settings extends PureComponent {
           <div onClick={this.onAddNewTeamcityCb}>Add</div>
           <TeamcityList
             list={this.props.teamcityList}
-            menu={<div>...</div>}
+            menu={
+              <TeamcityMenu
+                onEdit={this.props.openEditTeamcityDialogAction}
+                onDelete={this.props.deleteTeamcityAction}
+              />}
           />
         </List>
         <Snackbar
@@ -83,6 +89,7 @@ Settings.propTypes = {
   saveSettingsAction: PropTypes.func,
   loadSettingsAction: PropTypes.func,
   openEditTeamcityDialogAction: PropTypes.func,
+  deleteTeamcityAction: PropTypes.func,
 }
 
 export default connect(
@@ -100,6 +107,7 @@ export default connect(
       saveSettingsAction: bindActionCreators(saveSettingsAction, dispatch),
       loadSettingsAction: bindActionCreators(loadSettings, dispatch),
       openEditTeamcityDialogAction: bindActionCreators(openDialogAction, dispatch),
+      deleteTeamcityAction: bindActionCreators(deleteTeamcityServerAction, dispatch),
     }
   }
 )(Settings)

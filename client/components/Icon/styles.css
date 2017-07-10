@@ -25,3 +25,19 @@
 .chainBroken {
   composes: fa fa-chain-broken from 'font-awesome/css/font-awesome.css';
 }
+
+.ellipsisV {
+  composes: fa fa-ellipsis-v from 'font-awesome/css/font-awesome.css';
+}
+
+.pencil {
+  composes: fa fa-pencil from 'font-awesome/css/font-awesome.css';
+}
+
+.trashO {
+  composes: fa fa-trash-o from 'font-awesome/css/font-awesome.css';
+}
+
+.trash {
+  composes: fa fa-trash from 'font-awesome/css/font-awesome.css';
+}

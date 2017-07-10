@@ -11,7 +11,7 @@ export class TeamcityList extends PureComponent {
           return (
             <ListItem
               key={i}
-              rightIcon={this.props.menu}
+              rightIcon={React.cloneElement(this.props.menu, {id: ts.id})}
             >
               <TeamcityRow name={ts.name} url={ts.url}/>
             </ListItem>

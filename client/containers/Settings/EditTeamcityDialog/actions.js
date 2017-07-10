@@ -72,7 +72,7 @@ export function testTeamcityAction() {
       successCb: (data, dispatch) => {
         dispatch({
           type: TEST_TEAMCITY_SUCCESS,
-          data: data.data !== null,
+          data: data.data && !!data.data.version,
         })
       }
     })
