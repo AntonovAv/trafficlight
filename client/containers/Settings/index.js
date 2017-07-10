@@ -18,7 +18,7 @@ import {
   openDialogAction
 } from './EditTeamcityDialog/actions'
 
-import {List, ListSubHeader} from 'react-toolbox/lib/list'
+import {List, ListSubHeader, ListItem} from 'react-toolbox/lib/list'
 import {Snackbar} from 'react-toolbox/lib/snackbar'
 import styles from './styles.css'
 
@@ -28,6 +28,7 @@ import BrightnessList from './components/BrightnessList'
 import SoundSlider from './components/SoundSlider'
 import TeamcityList from './components/TeamcityList'
 import TeamcityMenu from './components/TeamcityMenu'
+import AddTeamcityButton from './components/AddTeamcityButton'
 
 export class Settings extends PureComponent {
   componentWillMount() {
@@ -53,7 +54,9 @@ export class Settings extends PureComponent {
             onChange={this.props.onSoundChangeAction}
           />
           <ListSubHeader caption='Teamcity'/>
-          <div onClick={this.onAddNewTeamcityCb}>Add</div>
+          <ListItem selectable={false} ripple={false}>
+            <AddTeamcityButton onClick={this.onAddNewTeamcityCb}/>
+          </ListItem>
           <TeamcityList
             list={this.props.teamcityList}
             menu={

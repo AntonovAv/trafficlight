@@ -6,6 +6,7 @@ import {
 } from './constants'
 import {selectDialogData} from './selectors'
 import {addTeamcityServerAction} from '../actions'
+import {addhttp} from '../utils'
 
 export function openDialogAction(id) {
   return dispatch => {
@@ -72,7 +73,7 @@ export function testTeamcityAction() {
       successCb: (data, dispatch) => {
         dispatch({
           type: TEST_TEAMCITY_SUCCESS,
-          data: data.data && !!data.data.version,
+          data: !!data.data && !!data.data.version,
         })
       }
     })
@@ -86,7 +87,7 @@ export function loadBuildTypesAction() {
 export function urlChangeAction(newUrl) {
   return {
     type: CHANGE_URL,
-    data: newUrl,
+    data: addhttp(newUrl),
   }
 }
 

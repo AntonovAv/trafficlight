@@ -7,6 +7,42 @@ import {Button} from 'react-toolbox/lib/button'
 import TeamcityStatus from 'components/TeamcityStatus'
 
 export class Inputs extends PureComponent {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      name: props.name || '',
+      url: props.url || ''
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      name: nextProps.name,
+      url: nextProps.url
+    })
+  }
+
+  onChangeURL = (val) => {
+    this.setState({
+      url: val
+    })
+  }
+
+  onBlurURL = () => {
+    this.props.onChangeUrl(this.state.url.trim())
+  }
+
+  onChangeName = (val) => {
+    this.setState({
+      name: val
+    })
+  }
+
+  onBlurName = () => {
+    this.props.onChangeName(this.state.name.trim())
+  }
+
   render() {
     return (
       <div>
@@ -14,8 +50,9 @@ export class Inputs extends PureComponent {
           <Input
             type={'text'}
             hint={'Enter teamcity url'}
-            value={this.props.url}
-            onChange={this.props.onChangeUrl}
+            value={this.state.url}
+            onBlur={this.onBlurURL}
+            onChange={this.onChangeURL}
             className={styles.urlInput}
           />
           <div className={styles.statusContainer}>
@@ -43,8 +80,9 @@ export class Inputs extends PureComponent {
         <Input
           type={'text'}
           hint={'Enter name'}
-          value={this.props.name}
-          onChange={this.props.onChangeName}
+          value={this.state.name}
+          onChange={this.onChangeName}
+          onBlur={this.onBlurName}
         />
       </div>
     )

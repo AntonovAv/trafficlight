@@ -6,12 +6,13 @@ import TeamcityRow from './TeamcityRow'
 export class TeamcityList extends PureComponent {
   render() {
     return (
-      <List>
+      <List selectable={false} ripple={false}>
         {this.props.list.map((ts, i) => {
           return (
             <ListItem
               key={i}
               rightIcon={React.cloneElement(this.props.menu, {id: ts.id})}
+              ripple={false}
             >
               <TeamcityRow name={ts.name} url={ts.url}/>
             </ListItem>

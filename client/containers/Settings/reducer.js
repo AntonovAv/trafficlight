@@ -8,6 +8,7 @@ import {
   SAVE_SETTINGS_FAILURE,
   LOAD_SETTINGS_SUCCESS,
   ADD_TEAMCITY_SERVER,
+  DELETE_TEAMCITY_SUCCESS,
 } from './constants'
 import R from 'ramda'
 
@@ -93,6 +94,12 @@ function reducer(state = initState, {type, data}) {
       return {
         ...state,
         teamcityList: teamcities
+      }
+    }
+    case DELETE_TEAMCITY_SUCCESS: {
+      return {
+        ...state,
+        teamcityList: R.filter(({id}) => id !== data, state.teamcityList)
       }
     }
     default:

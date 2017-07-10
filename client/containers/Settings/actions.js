@@ -8,6 +8,9 @@ import {
   LOAD_SETTINGS_SUCCESS,
   LOAD_SETTINGS_FAILURE,
   ADD_TEAMCITY_SERVER,
+  DELETE_TEAMCITY,
+  DELETE_TEAMCITY_SUCCESS,
+  DELETE_TEAMCITY_FAILURE,
 } from './constants'
 import {selectParameters} from './selectors'
 
@@ -63,6 +66,15 @@ export function addTeamcityServerAction(data) {
 
 export function deleteTeamcityServerAction(id) {
   return {
-
+    types: [DELETE_TEAMCITY, null, DELETE_TEAMCITY_FAILURE],
+    promise: (c) => {
+      return c.delete(`/api/settings/teamcity/${id}`)
+    },
+    successCb: (r, dispatch) => {
+      dispatch({
+        type: DELETE_TEAMCITY_SUCCESS,
+        data: id,
+      })
+    }
   }
 }
