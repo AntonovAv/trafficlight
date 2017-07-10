@@ -11,7 +11,7 @@
 }
 
 .urlInput {
-  width: calc(100% - 100px);
+  width: calc(100% - 120px);
 }
 
 .statusContainer {
@@ -19,10 +19,18 @@
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-  width: 80px;
-  padding-left: 10px;
+  width: 120px;
+  padding-left: 20px;
 }
 
 .status {
   margin-right: 10px;
+}
+
+.button {
+  min-width: 70px;
+  width: 70px;
+  font-size: 12px;
+  height: 30px;
+  line-height: 30px;
 }

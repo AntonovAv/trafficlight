@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import styles from './Inputs.css'
 import {Input} from 'react-toolbox/lib/input'
 import {ProgressBar} from 'react-toolbox/lib/progress_bar'
+import {Button} from 'react-toolbox/lib/button'
 import TeamcityStatus from 'components/TeamcityStatus'
 
 export class Inputs extends PureComponent {
@@ -28,7 +29,14 @@ export class Inputs extends PureComponent {
                   className={styles.progress}
                 />
               )
-              : <span onClick={this.props.onTestConnection}>test</span>
+              : (
+                <Button
+                  className={styles.button}
+                  onClick={this.props.onTestConnection}
+                  label='test'
+                  neutral={true}
+                  mini={true}
+                />)
             }
           </div>
         </div>
