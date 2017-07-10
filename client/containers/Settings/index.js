@@ -25,6 +25,7 @@ import EditTeamcityDialog from './EditTeamcityDialog'
 
 import BrightnessList from './components/BrightnessList'
 import SoundSlider from './components/SoundSlider'
+import TeamcityList from './components/TeamcityList'
 
 export class Settings extends PureComponent {
   componentWillMount() {
@@ -51,12 +52,10 @@ export class Settings extends PureComponent {
           />
           <ListSubHeader caption='Teamcity'/>
           <div onClick={this.onAddNewTeamcityCb}>Add</div>
-          {this.props.teamcityList.map((ts, i) => {
-            const cb = () => {
-              this.props.openEditTeamcityDialogAction(ts.id)
-            }
-            return <ListItem caption={ts.name} key={i} onClick={cb}/>
-          })}
+          <TeamcityList
+            list={this.props.teamcityList}
+            menu={<div>...</div>}
+          />
         </List>
         <Snackbar
           active={this.props.settingsChanged}
