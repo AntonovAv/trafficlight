@@ -9,6 +9,7 @@ import * as dialogActions from './actions'
 import {Dialog} from 'react-toolbox/lib/dialog'
 
 import Inputs from './components/Inputs'
+import BuildTypes from './components/BuildTypes'
 
 export class EditTeamcityDialog extends PureComponent {
   render() {
@@ -34,6 +35,10 @@ export class EditTeamcityDialog extends PureComponent {
           onTestConnection={this.props.dialogActions.testTeamcityAction}
           teamcityStatus={this.props.teamcityStatus}
         />
+        <div onClick={this.props.dialogActions.loadBuildTypesAction}>Load BT</div>
+        {this.props.buildTypes !== null && (
+          <BuildTypes list={this.props.buildTypes} ignored={this.props.ignoredBuildTypeIds}/>
+        )}
       </Dialog>
     )
   }
@@ -46,6 +51,7 @@ EditTeamcityDialog.propTypes = {
   url: PropTypes.string,
   connectionTesting: PropTypes.bool,
   buildTypes: PropTypes.array,
+  ignoredBuildTypeIds: PropTypes.array,
   teamcityStatus: PropTypes.object,
 
   dialogActions: PropTypes.shape({
@@ -54,6 +60,7 @@ EditTeamcityDialog.propTypes = {
     saveDialogDataAction: PropTypes.func.isRequired,
     closeDialogAction: PropTypes.func.isRequired,
     testTeamcityAction: PropTypes.func.isRequired,
+    loadBuildTypesAction: PropTypes.func.isRequired,
   }).isRequired,
 }
 
@@ -66,6 +73,8 @@ export default connect(
       isNew: dialogData.id === null,
       active: dialogData.active,
       teamcityStatus: dialogData.teamcityStatus,
+      buildTypes: dialogData.buildTypes,
+      ignoredBuildTypeIds: dialogData.ignoredBuildTypeIds,
     }
   },
   (dispatch) => {

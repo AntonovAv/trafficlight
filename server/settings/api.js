@@ -1,7 +1,7 @@
 const route = require('express').Router()
 const resource = require('./resource')
 const pmRegistry = require('../audio/PlayerManagerRegistry')
-const teamcityRest = require('../teamcity/httpResource')
+const teamcityHttpResource = require('../teamcity/httpResource')
 const R = require('ramda')
 
 route.get('/', async (req, resp) => {
@@ -85,11 +85,21 @@ route.delete('/teamcity/:id', async (req, resp) => {
 route.get('/teamcity/test/:host', async (req, resp) => {
   let data = null
   try {
-    data = await teamcityRest.getServerInfo(req.params.host)
+    data = await teamcityHttpResource.getServerInfo(req.params.host)
   } catch (ignore) {
     // ignore
   }
   resp.send({data}).end()
+})
+
+route.get('/teamcity/build-types/:host', async (req, resp) => {
+  try {
+    const host = req.params.host
+    const buildTypes = await teamcityHttpResource.getBuildTypes(host)
+    resp.status(200).send(R.map((bt) => bt.toJSON(), buildTypes)).end()
+  } catch (err) {
+    resp.status(404).end()
+  }
 })
 
 const loadTeamcityList = async () => {

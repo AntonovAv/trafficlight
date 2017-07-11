@@ -3,6 +3,7 @@ import {
   SAVE_DATA, SAVE_DATA_SUCCESS, SAVE_DATA_FAILURE,
   LOAD_TEAMCITY_DATA_SUCCESS,
   TEST_TEAMCITY, TEST_TEAMCITY_SUCCESS, TEST_TEAMCITY_FAILURE,
+  LOAD_BUILD_TYPES, LOAD_BUILD_TYPES_SUCCESS, LOAD_BUILD_TYPES_FAILURE,
 } from './constants'
 
 const initState = {
@@ -11,12 +12,15 @@ const initState = {
   url: '',
   ignoredBuildTypeIds: [],
   soundRules: [],
-  buildTypes: [],
+
   teamcityStatus: {
     checking: false,
     status: null,
   },
+
+  buildTypes: null,
   buildTypesLoading: false,
+
   saving: false,
   active: false,
 }
@@ -94,6 +98,27 @@ export default function reducer(state = initState, {type, data}) {
       return {
         ...state,
         saving: false,
+      }
+    }
+
+    case LOAD_BUILD_TYPES: {
+      return {
+        ...state,
+        buildTypesLoading: true,
+      }
+    }
+    case LOAD_BUILD_TYPES_SUCCESS: {
+      return {
+        ...state,
+        buildTypesLoading: false,
+        buildTypes: data
+      }
+    }
+    case LOAD_BUILD_TYPES_FAILURE: {
+      return {
+        ...state,
+        buildTypesLoading: false,
+        buildTypes: null,
       }
     }
     default:

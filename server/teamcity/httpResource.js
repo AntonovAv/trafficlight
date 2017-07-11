@@ -18,8 +18,7 @@ module.exports.getBuildTypes = async (host) => {
     }
   })
   return R.map((buildType) => {
-    const {id, projectId} = buildType
-    return new BuildType(id, projectId)
+    return BuildType.createFromTCModel(buildType)
   }, data.buildType)
 }
 
