@@ -1,0 +1,12 @@
+.scrollArea {
+  height: 300px;
+  max-height: 300px;
+}
+
+.checkbox {
+  min-height: 40px;
+}
+
+.item {
+  min-height: 40px;
+}

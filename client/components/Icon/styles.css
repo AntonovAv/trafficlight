@@ -45,3 +45,11 @@
 .trash {
   composes: fa fa-trash from 'font-awesome/css/font-awesome.css';
 }
+
+.caretDown {
+  composes: fa fa-caret-down from 'font-awesome/css/font-awesome.css';
+}
+
+.caretUp {
+  composes: fa fa-caret-up from 'font-awesome/css/font-awesome.css';
+}

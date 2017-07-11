@@ -14,6 +14,7 @@ export const LOAD_TEAMCITY_DATA_FAILURE = 'edit-teamcity/LOAD_TEAMCITY_DATA_FAIL
 export const LOAD_BUILD_TYPES = 'edit-teamcity/LOAD_BUILD_TYPES'
 export const LOAD_BUILD_TYPES_SUCCESS = 'edit-teamcity/LOAD_BUILD_TYPES_SUCCESS'
 export const LOAD_BUILD_TYPES_FAILURE = 'edit-teamcity/LOAD_BUILD_TYPES_FAILURE'
+export const HIDE_BUILD_TYPES = 'edit-teamcity/HIDE_BUILD_TYPES'
 
 export const TEST_TEAMCITY = 'edit-teamcity/TEST_TEAMCITY'
 export const TEST_TEAMCITY_SUCCESS = 'edit-teamcity/TEST_TEAMCITY_SUCCESS'

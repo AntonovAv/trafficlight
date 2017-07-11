@@ -6,10 +6,13 @@ import {bindActionCreators} from 'redux'
 import {selectDialogData} from './selectors'
 import * as dialogActions from './actions'
 
+import ScrollArea from 'react-scrollbar'
 import {Dialog} from 'react-toolbox/lib/dialog'
 
 import Inputs from './components/Inputs'
 import BuildTypes from './components/BuildTypes'
+import ToggleBuildTypesBtn from './components/ToggleBuildTypesBtn'
+import BuildTypesProgress from './components/BuildTypesProgress'
 
 export class EditTeamcityDialog extends PureComponent {
   render() {
@@ -27,18 +30,27 @@ export class EditTeamcityDialog extends PureComponent {
         actions={dialogActions}
         onEscKeyDown={this.props.dialogActions.closeDialogAction}
       >
-        <Inputs
-          name={this.props.name}
-          url={this.props.url}
-          onChangeName={this.props.dialogActions.nameChangeAction}
-          onChangeUrl={this.props.dialogActions.urlChangeAction}
-          onTestConnection={this.props.dialogActions.testTeamcityAction}
-          teamcityStatus={this.props.teamcityStatus}
-        />
-        <div onClick={this.props.dialogActions.loadBuildTypesAction}>Load BT</div>
-        {this.props.buildTypes !== null && (
-          <BuildTypes list={this.props.buildTypes} ignored={this.props.ignoredBuildTypeIds}/>
-        )}
+        <ScrollArea className={styles.scrollArea} contentClassName={styles.content}>
+          <Inputs
+            name={this.props.name}
+            url={this.props.url}
+            onChangeName={this.props.dialogActions.nameChangeAction}
+            onChangeUrl={this.props.dialogActions.urlChangeAction}
+            onTestConnection={this.props.dialogActions.testTeamcityAction}
+            teamcityStatus={this.props.teamcityStatus}
+          />
+          <ToggleBuildTypesBtn
+            showed={this.props.showBuildTypes}
+            onShow={this.props.dialogActions.loadBuildTypesAction}
+            onHide={this.props.dialogActions.hideBuildTypesAction}
+          />
+          {this.props.showBuildTypes && this.props.buildTypes !== null && (
+            <BuildTypes list={this.props.buildTypes} ignored={this.props.ignoredBuildTypeIds}/>
+          )}
+          {this.props.showBuildTypes && this.props.buildTypesLoading && (
+            <BuildTypesProgress/>
+          )}
+        </ScrollArea>
       </Dialog>
     )
   }
@@ -50,7 +62,11 @@ EditTeamcityDialog.propTypes = {
   name: PropTypes.string,
   url: PropTypes.string,
   connectionTesting: PropTypes.bool,
+
   buildTypes: PropTypes.array,
+  buildTypesLoading: PropTypes.bool,
+  showBuildTypes: PropTypes.bool,
+
   ignoredBuildTypeIds: PropTypes.array,
   teamcityStatus: PropTypes.object,
 
@@ -61,6 +77,7 @@ EditTeamcityDialog.propTypes = {
     closeDialogAction: PropTypes.func.isRequired,
     testTeamcityAction: PropTypes.func.isRequired,
     loadBuildTypesAction: PropTypes.func.isRequired,
+    hideBuildTypesAction: PropTypes.func.isRequired,
   }).isRequired,
 }
 
@@ -74,6 +91,8 @@ export default connect(
       active: dialogData.active,
       teamcityStatus: dialogData.teamcityStatus,
       buildTypes: dialogData.buildTypes,
+      buildTypesLoading: dialogData.buildTypesLoading,
+      showBuildTypes: dialogData.showBuildTypes,
       ignoredBuildTypeIds: dialogData.ignoredBuildTypeIds,
     }
   },

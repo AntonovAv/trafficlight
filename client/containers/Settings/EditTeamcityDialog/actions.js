@@ -3,7 +3,7 @@ import {
   SAVE_DATA, SAVE_DATA_SUCCESS, SAVE_DATA_FAILURE,
   LOAD_TEAMCITY_DATA, LOAD_TEAMCITY_DATA_SUCCESS, LOAD_TEAMCITY_DATA_FAILURE,
   TEST_TEAMCITY, TEST_TEAMCITY_SUCCESS, TEST_TEAMCITY_FAILURE,
-  LOAD_BUILD_TYPES, LOAD_BUILD_TYPES_SUCCESS, LOAD_BUILD_TYPES_FAILURE,
+  LOAD_BUILD_TYPES, LOAD_BUILD_TYPES_SUCCESS, LOAD_BUILD_TYPES_FAILURE, HIDE_BUILD_TYPES,
 } from './constants'
 import {selectDialogData} from './selectors'
 import {addTeamcityServerAction} from '../actions'
@@ -90,6 +90,12 @@ export function loadBuildTypesAction() {
         return c.get(`/api/settings/teamcity/build-types/${encodeURIComponent(url)}`)
       }
     })
+  }
+}
+
+export function hideBuildTypesAction() {
+  return {
+    type: HIDE_BUILD_TYPES
   }
 }
 
