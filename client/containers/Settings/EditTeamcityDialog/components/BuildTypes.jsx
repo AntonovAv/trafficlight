@@ -5,7 +5,17 @@ import styles from './BuildTypes.css'
 import R from 'ramda'
 
 export class BuildTypes extends PureComponent {
+  createOnChangeIgnored = (id) => {
+    return (checked) => {
+      this.props.onChangeIgnored(id, checked)
+    }
+  }
+
   render() {
+    const checkedHash = Object.create(null)
+    R.forEach((id) => {
+      checkedHash[id] = true
+    }, this.props.ignored)
     return (
       <List>
         {this.props.list.map((item, ind) => {
@@ -15,7 +25,8 @@ export class BuildTypes extends PureComponent {
               key={ind}
               caption={item.name}
               theme={styles}
-              checked={R.contains(item.id, this.props.ignored)}
+              checked={checkedHash[item.id] === true}
+              onChange={this.createOnChangeIgnored(item.id)}
             />
           )
         })}
@@ -30,6 +41,7 @@ BuildTypes.propTypes = {
     name: PropTypes.string,
   })),
   ignored: PropTypes.arrayOf(PropTypes.string),
+  onChangeIgnored: PropTypes.func,
 }
 
 export default BuildTypes

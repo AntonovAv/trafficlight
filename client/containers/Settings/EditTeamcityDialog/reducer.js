@@ -4,7 +4,9 @@ import {
   LOAD_TEAMCITY_DATA_SUCCESS,
   TEST_TEAMCITY, TEST_TEAMCITY_SUCCESS, TEST_TEAMCITY_FAILURE,
   LOAD_BUILD_TYPES, LOAD_BUILD_TYPES_SUCCESS, LOAD_BUILD_TYPES_FAILURE, HIDE_BUILD_TYPES,
+  IGNORED_BUILD_TYPES_CHANGED,
 } from './constants'
+import R from 'ramda'
 
 const initState = {
   id: null,
@@ -18,9 +20,12 @@ const initState = {
     status: null,
   },
 
-  buildTypes: null,
-  buildTypesLoading: false,
-  showBuildTypes: false,
+  buildTypes: {
+    list: null,
+    loading: false,
+    show: false,
+    error: true,
+  },
 
   saving: false,
   active: false,
@@ -105,28 +110,53 @@ export default function reducer(state = initState, {type, data}) {
     case LOAD_BUILD_TYPES: {
       return {
         ...state,
-        buildTypesLoading: true,
-        showBuildTypes: true,
+        buildTypes: {
+          ...state.buildTypes,
+          loading: true,
+          show: true,
+          error: false,
+        }
       }
     }
     case LOAD_BUILD_TYPES_SUCCESS: {
       return {
         ...state,
-        buildTypesLoading: false,
-        buildTypes: data
+        buildTypes: {
+          ...state.buildTypes,
+          loading: false,
+          list: data,
+        }
       }
     }
     case LOAD_BUILD_TYPES_FAILURE: {
       return {
         ...state,
-        buildTypesLoading: false,
-        buildTypes: null,
+        buildTypes: {
+          ...state.buildTypes,
+          loading: false,
+          list: null,
+          error: true,
+        }
       }
     }
     case HIDE_BUILD_TYPES: {
       return {
         ...state,
-        showBuildTypes: false,
+        buildTypes: {
+          ...state.buildTypes,
+          show: false,
+        }
+      }
+    }
+
+    case IGNORED_BUILD_TYPES_CHANGED: {
+      const newIds = R.filter((id) => data.id !== id, state.ignoredBuildTypeIds)
+      if (data.ignored) {
+        newIds.push(data.id)
+      }
+      return {
+        ...state,
+        ignoredBuildTypeIds: newIds
       }
     }
     default:

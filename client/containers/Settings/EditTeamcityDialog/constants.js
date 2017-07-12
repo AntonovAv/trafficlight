@@ -19,3 +19,5 @@ export const HIDE_BUILD_TYPES = 'edit-teamcity/HIDE_BUILD_TYPES'
 export const TEST_TEAMCITY = 'edit-teamcity/TEST_TEAMCITY'
 export const TEST_TEAMCITY_SUCCESS = 'edit-teamcity/TEST_TEAMCITY_SUCCESS'
 export const TEST_TEAMCITY_FAILURE = 'edit-teamcity/TEST_TEAMCITY_FAILURE'
+
+export const IGNORED_BUILD_TYPES_CHANGED = 'edit-teamcity/IGNORED_BUILD_TYPES_CHANGED'

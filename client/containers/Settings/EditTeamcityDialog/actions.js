@@ -4,6 +4,7 @@ import {
   LOAD_TEAMCITY_DATA, LOAD_TEAMCITY_DATA_SUCCESS, LOAD_TEAMCITY_DATA_FAILURE,
   TEST_TEAMCITY, TEST_TEAMCITY_SUCCESS, TEST_TEAMCITY_FAILURE,
   LOAD_BUILD_TYPES, LOAD_BUILD_TYPES_SUCCESS, LOAD_BUILD_TYPES_FAILURE, HIDE_BUILD_TYPES,
+  IGNORED_BUILD_TYPES_CHANGED,
 } from './constants'
 import {selectDialogData} from './selectors'
 import {addTeamcityServerAction} from '../actions'
@@ -110,5 +111,15 @@ export function nameChangeAction(name) {
   return {
     type: CHANGE_NAME,
     data: name,
+  }
+}
+
+export function ignoredBuildTypeChangeAction(id, ignored) {
+  return {
+    type: IGNORED_BUILD_TYPES_CHANGED,
+    data: {
+      id: id,
+      ignored: ignored
+    }
   }
 }

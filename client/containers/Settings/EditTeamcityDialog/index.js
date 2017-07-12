@@ -40,14 +40,18 @@ export class EditTeamcityDialog extends PureComponent {
             teamcityStatus={this.props.teamcityStatus}
           />
           <ToggleBuildTypesBtn
-            showed={this.props.showBuildTypes}
+            showed={this.props.buildTypes.show}
             onShow={this.props.dialogActions.loadBuildTypesAction}
             onHide={this.props.dialogActions.hideBuildTypesAction}
           />
-          {this.props.showBuildTypes && this.props.buildTypes !== null && (
-            <BuildTypes list={this.props.buildTypes} ignored={this.props.ignoredBuildTypeIds}/>
+          {this.props.buildTypes.show && this.props.buildTypes.list !== null && (
+            <BuildTypes
+              list={this.props.buildTypes.list}
+              ignored={this.props.ignoredBuildTypeIds}
+              onChangeIgnored={this.props.dialogActions.ignoredBuildTypeChangeAction}
+            />
           )}
-          {this.props.showBuildTypes && this.props.buildTypesLoading && (
+          {this.props.buildTypes.show && this.props.buildTypes.loading && (
             <BuildTypesProgress/>
           )}
         </ScrollArea>
@@ -63,9 +67,12 @@ EditTeamcityDialog.propTypes = {
   url: PropTypes.string,
   connectionTesting: PropTypes.bool,
 
-  buildTypes: PropTypes.array,
-  buildTypesLoading: PropTypes.bool,
-  showBuildTypes: PropTypes.bool,
+  buildTypes: PropTypes.shape(PropTypes.shape({
+    loading: PropTypes.bool,
+    list: PropTypes.array,
+    show: PropTypes.bool,
+    error: PropTypes.bool,
+  })),
 
   ignoredBuildTypeIds: PropTypes.array,
   teamcityStatus: PropTypes.object,
@@ -78,6 +85,7 @@ EditTeamcityDialog.propTypes = {
     testTeamcityAction: PropTypes.func.isRequired,
     loadBuildTypesAction: PropTypes.func.isRequired,
     hideBuildTypesAction: PropTypes.func.isRequired,
+    ignoredBuildTypeChangeAction: PropTypes.func.isRequired,
   }).isRequired,
 }
 

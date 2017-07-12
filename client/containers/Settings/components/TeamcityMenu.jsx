@@ -15,7 +15,10 @@ export class TeamcityMenu extends PureComponent {
 
   render() {
     return (
-      <IconMenu icon={<Icon name={'ellipsisV'} className={styles.ellipsisIcon}/>}>
+      <IconMenu
+        icon={<Icon name={'ellipsisV'} className={styles.ellipsisIcon}/>}
+        position={'topRight'}
+      >
         <MenuItem
           icon={<Icon name={'pencil'}/>}
           caption='Edit'
