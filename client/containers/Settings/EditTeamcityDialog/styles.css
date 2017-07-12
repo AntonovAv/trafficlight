@@ -10,4 +10,5 @@
 .scrollArea {
   height: 400px;
   max-height: 400px;
+  padding-right: 15px;
 }

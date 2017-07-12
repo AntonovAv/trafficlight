@@ -13,6 +13,7 @@ import Inputs from './components/Inputs'
 import BuildTypes from './components/BuildTypes'
 import ToggleBuildTypesBtn from './components/ToggleBuildTypesBtn'
 import BuildTypesProgress from './components/BuildTypesProgress'
+import ErrorLoadingBuildTypes from './components/ErrorLoadBuildTypes'
 
 export class EditTeamcityDialog extends PureComponent {
   render() {
@@ -53,6 +54,9 @@ export class EditTeamcityDialog extends PureComponent {
           )}
           {this.props.buildTypes.show && this.props.buildTypes.loading && (
             <BuildTypesProgress/>
+          )}
+          {this.props.buildTypes.show && this.props.buildTypes.error && (
+            <ErrorLoadingBuildTypes/>
           )}
         </ScrollArea>
       </Dialog>
