@@ -1,10 +1,11 @@
-const resource = require('./httpResource')
+const httpResource = require('./httpResource')
 const BUILD_TYPE_STATUS = require('../models/BuildTypeStatus').STATUS_TYPE
 const BuildTypeStatus = require('../models/BuildTypeStatus')
 const TEAMCITY_STATUS = require('../constants').TEAM_CITY_STATUS
 const R = require('ramda')
+const BuildType = require('../models/BuildType')
 
-class BuildsStatusManager {
+class TeamcityManager {
   constructor() {
     // TODO: temporary. Need to take from settings
     this._teamcityURL = 'http://localhost:3001'
@@ -19,10 +20,10 @@ class BuildsStatusManager {
    */
   getBuildStatuses() {
     // TODO take build types ids from cache
-    return resource.getBuildTypes(this._teamcityURL)
+    return httpResource.getBuildTypes(this._teamcityURL)
       .then((buildTypes) => {
         const promises = R.map((buildType) => {
-          return resource.getBuildStatus(this._teamcityURL, buildType.id)
+          return httpResource.getBuildStatus(this._teamcityURL, buildType.id)
             .then((builds) => {
               return new BuildTypeStatus(buildType.id, this._getBuildTypeStatus(builds))
             })
@@ -67,6 +68,25 @@ class BuildsStatusManager {
     }
   }
 
-}
+  updateAllBuildTypes() {
+    // take all teamcity servers from db
+    // for each call update with saving it into database
+  }
 
-module.exports = BuildsStatusManager
+  updateBuildTypes(host) {
+    // update build types for one host
+  }
+
+  async loadBuildTypes(host) {
+    const resp = await httpResource.getBuildTypes(host)
+    return R.map((buildType) => {
+      return BuildType.createFromTCModel(buildType)
+    }, resp)
+  }
+
+  async loadTeamcityInfo(host) {
+    return await httpResource.getServerInfo(host)
+  }
+}
+const instance = new TeamcityManager()
+module.exports = instance

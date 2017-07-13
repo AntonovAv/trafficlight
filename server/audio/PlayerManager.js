@@ -3,6 +3,7 @@ const PlayerEvents = require('./Player').Events
 const State = require('../State')
 const PlayerState = require('../models/PlayerState')
 const streamifier = require('streamifier')
+const SettingsManager = require('../settings/SettingsManager')
 
 class PlayerManager {
 
@@ -15,9 +16,10 @@ class PlayerManager {
   }
 
   play(sound) {
-    const play = () => {
+    const play = async () => {
       State.get().playerState = new PlayerState(true, false, sound.id)
-      return this.player.play(streamifier.createReadStream(sound.content))
+      const vol = await SettingsManager.getSoundVolume()
+      return this.player.play(streamifier.createReadStream(sound.content), vol)
     }
 
     if (this.player.isPlaying()) {

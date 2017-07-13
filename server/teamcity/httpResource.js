@@ -1,7 +1,6 @@
 const axios = require('axios')
 const R = require('ramda')
 const Build = require('../models/Build')
-const BuildType = require('../models/BuildType')
 
 const REST_URL = '/guestAuth/app/rest'
 const BUILD_TYPES_URL = `${REST_URL}/buildTypes`
@@ -17,9 +16,7 @@ module.exports.getBuildTypes = async (host) => {
       'Accept': 'application/json'
     }
   })
-  return R.map((buildType) => {
-    return BuildType.createFromTCModel(buildType)
-  }, data.buildType)
+  return data.buildType
 }
 
 /**

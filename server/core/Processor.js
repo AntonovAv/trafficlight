@@ -1,5 +1,5 @@
 const LightManager = require('../light/LightManager')
-const BuildsManager = require('../teamcity/BuildsManager')
+const BuildsManager = require('../teamcity/TeamcityManager')
 const BUILD_TYPE_STATUS = require('../models/BuildTypeStatus').STATUS_TYPE
 const TEAMCITY_STATUS = require('../constants').TEAM_CITY_STATUS
 // const State = require('../state')
@@ -12,7 +12,6 @@ const BuildState = require('../models/BuildsState')
 class Processor {
   constructor() {
     this._lightManager = new LightManager()
-    this._buildsManager = new BuildsManager()
 
     this._prevBuildStatuses = null
   }
@@ -23,7 +22,7 @@ class Processor {
   }
 
   updateBuildStatuses() {
-    this._buildsManager.getBuildStatuses()
+    BuildsManager.getBuildStatuses()
       .then((statuses) => {
         if (R.any((buildTypeStatus) => buildTypeStatus.status === BUILD_TYPE_STATUS.FAILURE, statuses)) {
           this._lightManager.lightOnBuildFailure()

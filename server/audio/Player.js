@@ -24,12 +24,12 @@ class Player extends EventEmitter {
     this._volume = null
   }
 
-  play(soundStream) {
+  play(soundStream, initVolume = 10) {
     if (!this._isPlaying) {
       this._isPlaying = true
       this._soundStream = soundStream
       this._decoder = new lame.Decoder()
-      this._volume = volume(0.1) // TODO init volume, for example
+      this._volume = volume(initVolume / 100)
 
       return new Promise((resolve, reject) => {
         let that = this
