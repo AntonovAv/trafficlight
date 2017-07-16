@@ -40,6 +40,7 @@ audio.get('/sounds/:id', async function(request, response) {
 })
 
 audio.post('/sounds', async (request, response) => {
+  response.setTimeout(60 * 5 * 1000) // 5 mins for sound upload
   const file = request.files.sound
   if (!file) {
     response.status(400).end()
