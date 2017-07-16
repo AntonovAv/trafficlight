@@ -1,4 +1,5 @@
 const httpResource = require('./httpResource')
+const tcResource = require('./resource')
 const BUILD_TYPE_STATUS = require('../models/BuildTypeStatus').STATUS_TYPE
 const BuildTypeStatus = require('../models/BuildTypeStatus')
 const TEAMCITY_STATUS = require('../constants').TEAM_CITY_STATUS
@@ -6,11 +7,6 @@ const R = require('ramda')
 const BuildType = require('../models/BuildType')
 
 class TeamcityManager {
-  constructor() {
-    // TODO: temporary. Need to take from settings
-    this._teamcityURL = 'http://localhost:3001'
-  }
-
   /**
    * Returns builds status in format
    *  {
@@ -18,24 +14,30 @@ class TeamcityManager {
    *    status - one of BUILD_TYPE_STATUS
    *  }
    */
-  getBuildStatuses() {
+  async getBuildStatuses(teamcity) {
     // TODO take build types ids from cache
-    return httpResource.getBuildTypes(this._teamcityURL)
-      .then((buildTypes) => {
-        const promises = R.map((buildType) => {
-          return httpResource.getBuildStatus(this._teamcityURL, buildType.id)
-            .then((builds) => {
-              return new BuildTypeStatus(buildType.id, this._getBuildTypeStatus(builds))
-            })
-        }, buildTypes)
-        return Promise.all(promises)
+    const buildTypes = await this.loadBuildTypes(teamcity.url)
+
+    const promises = R.compose(
+      R.map((buildType) => {
+        return httpResource.getBuildStatus(teamcity.url, buildType.id)
+          .then((builds) => {
+            return new BuildTypeStatus(buildType.id, this._getBuildTypeStatus(builds))
+          })
+      }),
+      R.filter((buildType) => {
+        return !R.contains(buildType.id, teamcity.ignoredBuildTypes)
       })
-      .catch((e) => {
-        if (e.code === 'ENOTFOUND' || e.code === 'ECONNREFUSED') {
-          return Promise.reject(TEAMCITY_STATUS.NOT_AVAILABLE)
-        }
-        return Promise.reject(TEAMCITY_STATUS.INTERNAL_ERROR)
-      })
+    )(buildTypes)
+
+    try {
+      return Promise.all(promises)
+    } catch (e) {
+      if (e.code === 'ENOTFOUND' || e.code === 'ECONNREFUSED') {
+        return Promise.reject(TEAMCITY_STATUS.NOT_AVAILABLE)
+      }
+      return Promise.reject(TEAMCITY_STATUS.INTERNAL_ERROR)
+    }
   }
 
   _getBuildTypeStatus(builds) {
@@ -68,13 +70,10 @@ class TeamcityManager {
     }
   }
 
-  updateAllBuildTypes() {
-    // take all teamcity servers from db
-    // for each call update with saving it into database
-  }
-
-  updateBuildTypes(host) {
+  async updateBuildTypes(teamcity) {
     // update build types for one host
+    const buildTypes = await this.loadBuildTypes(teamcity.url)
+    // TODO implement
   }
 
   async loadBuildTypes(host) {

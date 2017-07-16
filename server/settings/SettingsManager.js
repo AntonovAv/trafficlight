@@ -1,10 +1,9 @@
 const settingsResource = require('./resource')
-const R = require('ramda')
 
 class SettingsManager {
-  async getAllTeamcityUrls() {
+  async getAllTeamcities() {
     const teamcities = await settingsResource.getAllTeamcityServers()
-    return R.map((tc) => tc.url, teamcities)
+    return teamcities
   }
 
   async getSoundVolume() {
