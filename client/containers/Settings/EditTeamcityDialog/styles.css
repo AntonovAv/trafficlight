@@ -1,0 +1,14 @@
+.dialog {
+  width: 600px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+}
+
+.scrollArea {
+  height: 400px;
+  max-height: 400px;
+  padding-right: 15px;
+}

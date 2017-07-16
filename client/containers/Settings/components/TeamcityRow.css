@@ -1,0 +1,18 @@
+@import url('../../../../node_modules/react-toolbox/lib/slider/theme.css');
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.name {
+  color: white;
+  font-size: 18px;
+}
+
+.url {
+  color: var(--palette-blue-400);
+  font-size: 16px;
+}

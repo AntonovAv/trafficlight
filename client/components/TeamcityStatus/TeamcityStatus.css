@@ -1,0 +1,8 @@
+.ok {
+  color: forestgreen;
+  font-size: 20px;
+}
+
+.notOk {
+  color: red;
+}

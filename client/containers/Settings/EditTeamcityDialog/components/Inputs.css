@@ -1,0 +1,36 @@
+.urlContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.progress {
+  width: 25px !important;
+  height: 25px !important;
+}
+
+.urlInput {
+  width: calc(100% - 120px);
+}
+
+.statusContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  width: 120px;
+  padding-left: 20px;
+}
+
+.status {
+  margin-right: 10px;
+}
+
+.button {
+  min-width: 70px;
+  width: 70px;
+  font-size: 12px;
+  height: 30px;
+  line-height: 30px;
+}

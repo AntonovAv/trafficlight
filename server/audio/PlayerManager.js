@@ -3,12 +3,12 @@ const PlayerEvents = require('./Player').Events
 const State = require('../State')
 const PlayerState = require('../models/PlayerState')
 const streamifier = require('streamifier')
+const SettingsManager = require('../settings/SettingsManager')
 
-class SoundManager {
+class PlayerManager {
 
   constructor() {
     this.player = new Player()
-    this.player.setVolume(90)
 
     this.player.on(PlayerEvents.EVENT_STOP, () => {
       State.get().playerState = new PlayerState(false, false, null)
@@ -16,9 +16,10 @@ class SoundManager {
   }
 
   play(sound) {
-    const play = () => {
+    const play = async () => {
       State.get().playerState = new PlayerState(true, false, sound.id)
-      return this.player.play(streamifier.createReadStream(sound.content))
+      const vol = await SettingsManager.getSoundVolume()
+      return this.player.play(streamifier.createReadStream(sound.content), vol)
     }
 
     if (this.player.isPlaying()) {
@@ -47,6 +48,10 @@ class SoundManager {
       return this.player.resume()
     }
   }
+
+  changeVolume(val) {
+    return this.player.setVolume(val)
+  }
 }
 
-module.exports = SoundManager
+module.exports = PlayerManager

@@ -1,0 +1,6 @@
+@import url('../../../../node_modules/react-toolbox/lib/slider/theme.css');
+
+.ellipsisIcon {
+  font-size: 20px;
+  color: var(--palette-grey-500);
+}

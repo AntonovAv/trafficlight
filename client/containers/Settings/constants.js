@@ -1,0 +1,17 @@
+export const BRIGHTNESS_CHANGE = 'settings/BRIGHTNESS_CHANGE'
+export const SOUND_CHANGE = 'settings/SOUND_CHANGE'
+
+export const SAVE_SETTINGS = 'settings/SAVE_SETTINGS'
+export const SAVE_SETTINGS_SUCCESS = 'settings/SAVE_SETTINGS_SUCCESS'
+export const SAVE_SETTINGS_FAILURE = 'settings/SAVE_SETTINGS_FAILURE'
+
+export const LOAD_SETTINGS = 'settings/LOAD_SETTINGS'
+export const LOAD_SETTINGS_SUCCESS = 'settings/LOAD_SETTINGS_SUCCESS'
+export const LOAD_SETTINGS_FAILURE = 'settings/LOAD_SETTINGS_FAILURE'
+
+export const DELETE_TEAMCITY = 'settings/DELETE_TEAMCITY'
+export const DELETE_TEAMCITY_SUCCESS = 'settings/DELETE_TEAMCITY_SUCCESS'
+export const DELETE_TEAMCITY_FAILURE = 'settings/DELETE_TEAMCITY_FAILURE'
+
+
+export const ADD_TEAMCITY_SERVER = 'settings/ADD_TEAMCITY_SERVER'

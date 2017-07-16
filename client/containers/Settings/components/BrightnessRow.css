@@ -1,0 +1,60 @@
+@import url('../../../../node_modules/react-toolbox/lib/slider/theme.css');
+
+.slider {
+  width: 100%;
+}
+
+/* Slider theme classes */
+:root {
+  --red-main-color: var(--palette-red-600);
+  --yellow-main-color: var(--palette-yellow-700);
+  --green-main-color: var(--palette-green-600);
+}
+
+.innerknobRed {
+  background-color: var(--red-main-color);
+
+  &::before {
+    background-color: var(--red-main-color) !important;
+  }
+}
+
+.innerprogressRed {
+  & div {
+    & span {
+      background-color: var(--red-main-color);
+    }
+  }
+}
+
+.innerknobYellow {
+  background-color: var(--yellow-main-color);
+
+  &::before {
+    background-color: var(--yellow-main-color) !important;
+  }
+}
+
+.innerprogressYellow {
+  & div {
+    & span {
+      background-color: var(--yellow-main-color);
+    }
+  }
+}
+
+.innerknobGreen {
+  background-color: var(--green-main-color);
+
+  &::before {
+    background-color: var(--green-main-color) !important;
+  }
+}
+
+.innerprogressGreen {
+  & div {
+    & span {
+      background-color: var(--green-main-color);
+    }
+  }
+}

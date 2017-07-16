@@ -1,5 +1,6 @@
 {
   "/guestAuth/app/rest/": "/",
   "/buildTypes": "/buildTypes",
+  "/server": "/server",
   "/buildTypes/id::buildTypeId/builds": "/:buildTypeId"
 }

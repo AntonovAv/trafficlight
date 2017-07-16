@@ -1,7 +1,7 @@
 const EventEmitter = require('events')
 const lame = require('lame')
 const Speaker = require('speaker')
-const mpg123Util = require('node-mpg123-util')
+const volume = require('pcm-volume')
 
 const EVENT_PLAY = 'play'
 const EVENT_STOP = 'stop'
@@ -19,29 +19,31 @@ class Player extends EventEmitter {
 
     this._decoder = null
     this._soundStream = null
-    this._sreaker = null
+    this._speaker = null
     this._lameFormat = {}
+    this._volume = null
   }
 
-  play(soundStream) {
+  play(soundStream, initVolume = 10) {
     if (!this._isPlaying) {
       this._isPlaying = true
+      this._soundStream = soundStream
+      this._decoder = new lame.Decoder()
+      this._volume = volume(initVolume / 100)
 
       return new Promise((resolve, reject) => {
-        this._soundStream = soundStream
-
         let that = this
         this._soundStream
-          .pipe(new lame.Decoder())
+          .pipe(this._decoder)
           .on('format', function(format) {
             that._lameFormat = format
-            that._decoder = this
             that._speak(this, format)
 
             resolve()
             that.emit(EVENT_PLAY)
           })
           .on('close', () => {
+            // TODO not working
             this.stop()
           })
           .on('error', (e) => {
@@ -54,14 +56,21 @@ class Player extends EventEmitter {
   }
 
   _speak(decoder, format) {
-    this._sreaker = new Speaker(format)
+    this._speaker = new Speaker(format)
+    this._volume
+      .pipe(this._speaker)
+      .on('close', () => {
+        this.stop()
+      })
+
     decoder
-      .pipe(this._sreaker)
-      .on('error', () => {
+      .pipe(this._volume)
+      .on('error', (e) => {
         this.emit(EVENT_ERROR)
         this._cleanUp()
       })
       .on('close', () => {
+        // TODO not working
         this.stop()
       })
   }
@@ -106,14 +115,13 @@ class Player extends EventEmitter {
   }
 
   _cleanUp() {
-    if (this._sreaker) {
-      this._sreaker.close(true)
-      this._sreaker = null
+    if (this._speaker) {
+      this._speaker.close(false)
+      this._speaker = null
     }
-    if (this._soundStream) {
-      this._soundStream.removeAllListeners('close')
-      this._soundStream.removeAllListeners('error')
-      this._soundStream = null
+
+    if (this._volume) {
+      this._volume.unpipe()
     }
 
     if (this._decoder) {
@@ -122,6 +130,13 @@ class Player extends EventEmitter {
       this._decoder.unpipe()
       this._decoder = null
     }
+
+    if (this._soundStream) {
+      this._soundStream.removeAllListeners('close')
+      this._soundStream.removeAllListeners('error')
+      this._soundStream = null
+    }
+
     this._lameFormat = {}
   }
 
@@ -134,16 +149,9 @@ class Player extends EventEmitter {
   }
 
   setVolume(percents) {
-    return new Promise((resolve, reject) => {
-      if (this._isPlaying) {
-        if (this._decoder) {
-          mpg123Util.setVolume(this._decoder.mh, percents / 100)
-          resolve()
-        }
-      } else {
-        reject()
-      }
-    })
+    if (this._volume) {
+      this._volume.setVolume(percents / 100)
+    }
   }
 }
 
