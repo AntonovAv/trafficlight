@@ -6,3 +6,11 @@ const bindings = require('bindings')({
 module.exports.hello = function() {
   console.log(bindings.hello())
 }
+
+module.exports.open = function(dev, addr) {
+  bindings.open(dev, addr)
+}
+
+module.exports.setDuty = function() {
+  bindings.setDuty()
+}
