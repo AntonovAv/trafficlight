@@ -1,6 +1,6 @@
 // hello.cc
 #include <node.h>
-#include <i2c_lib.h>
+#include "i2c_lib.h"
 
 namespace demo {
 
