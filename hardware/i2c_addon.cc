@@ -26,7 +26,7 @@ void Open(const FunctionCallbackInfo<Value>& args) {
   }
 }
 
-void WriteBlockData(onst FunctionCallbackInfo<Value>& args) {
+void WriteBlockData(const FunctionCallbackInfo<Value>& args) {
   Isolate* isolate = Isolate::GetCurrent();
   HandleScope scope(isolate);
 
@@ -35,7 +35,7 @@ void WriteBlockData(onst FunctionCallbackInfo<Value>& args) {
   int   len = node::Buffer::Length(buffer->ToObject());
   char* data = node::Buffer::Data(buffer->ToObject());
 
-  Local<Value> err = New<Value>Null(isolate);
+  Local<Value> err = New<Value>(Null(isolate));
 
   if (i2c_smbus_write_i2c_block_data(fd, cmd, len, (unsigned char*) data) == -1) {
     err = Exception::TypeError(String::NewFromUtf8(isolate, "Cannot write to device"));
@@ -44,9 +44,9 @@ void WriteBlockData(onst FunctionCallbackInfo<Value>& args) {
 // callback
   if (args[2]->IsFunction()) {
     const unsigned argc = 1;
-    Local<Function> callback = Local<Function>::Cast(info[2]);
+    Local<Function> callback = Local<Function>::Cast(args[2]);
     Local<Value> argv[argc] = { err };
-    MakeCallback(isolate, Context::GetCurrent()->Global(), callback, argc, argv);
+    callback->Call(Null(isolate), argc, argv);
   }
 }
 
