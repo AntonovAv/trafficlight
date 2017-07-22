@@ -35,7 +35,7 @@ void WriteBlockData(const FunctionCallbackInfo<Value>& args) {
   int   len = node::Buffer::Length(buffer->ToObject());
   char* data = node::Buffer::Data(buffer->ToObject());
 
-  Local<Value> err = New<Value>(Null(isolate));
+  Local<Value> err = Null(isolate);
 
   if (i2c_smbus_write_i2c_block_data(fd, cmd, len, (unsigned char*) data) == -1) {
     err = Exception::TypeError(String::NewFromUtf8(isolate, "Cannot write to device"));
