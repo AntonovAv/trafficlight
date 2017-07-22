@@ -69,25 +69,35 @@ void ReadBlockData(const FunctionCallbackInfo<Value>& args) {
 
     memcpy(node::Buffer::Data(buffer), data, len);
 
-    if (info[3]->IsFunction()) {
+    if (args[3]->IsFunction()) {
       const unsigned argc = 2;
-      Local<Function> callback = Local<Function>::Cast(info[3]);
+      Local<Function> callback = Local<Function>::Cast(args[3]);
       Local<Value> argv[argc] = { err, buffer };
       callback->Call(Null(isolate), argc, argv);
     }
  
-    if (info[2]->IsNumber()) {
-      int32_t delay = info[2]->Int32Value();
+    if (args[2]->IsNumber()) {
+      int32_t delay = args[2]->Int32Value();
       usleep(delay * 1000);
     } else {
       break;
     }
 }
 
+void Close(const FunctionCallbackInfo<Value>& args) {
+  Isolate* isolate = Isolate::GetCurrent();
+  HandleScope scope(isolate);
+
+  if (fd > 0) {
+    close(fd);
+  }
+}
+
 void init(Local<Object> exports) {
   NODE_SET_METHOD(exports, "writeBlockData", WriteBlockData);
   NODE_SET_METHOD(exports, "readBlockData", ReadBlockData);
   NODE_SET_METHOD(exports, "open", Open);
+  NODE_SET_METHOD(exports, "close", Close)
 }
 
 NODE_MODULE(i2c_addon, init)
