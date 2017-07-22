@@ -1,16 +1,28 @@
-const bindings = require('bindings')({
-  bindings: 'addon.node',
-  module_root: __dirname
+const pwmDriver = require('./pwmDriver')({
+  device: '/dev/i2c-0',
+  address: 0x40,
 })
+const sleep = require('./sleep').sleep
 
-module.exports.hello = function() {
-  console.log(bindings.hello())
+// Configure min and max servo pulse lengths
+const servoMin = 150 // Min pulse length out of 4096
+const servoMax = 600 // Max pulse length out of 4096
+
+pwmDriver.setPWMFreq(50)
+
+const loop = function() {
+  return sleep(1)
+    .then(function() {
+      return pwmDriver.setPWM(0, 0, servoMin)
+    })
+    .then(function() {
+      return sleep(1)
+    })
+    .then(function() {
+      return pwmDriver.setPWM(0, 0, servoMax)
+    })
+    .then(loop)
 }
 
-module.exports.open = function(dev, addr) {
-  bindings.open(dev, addr)
-}
-
-module.exports.setDuty = function() {
-  bindings.setDuty()
-}
+sleep(5)
+  .then(loop)
