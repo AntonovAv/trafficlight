@@ -1,6 +1,7 @@
 // hello.cc
 #include <node.h>
 #include <node_buffer.h>
+#include <unistd.h>
 #include "lib/i2c-dev.h"
 #include "lib/i2c_lib.h"
 
@@ -50,8 +51,42 @@ void WriteBlockData(const FunctionCallbackInfo<Value>& args) {
   }
 }
 
+void ReadBlockData(const FunctionCallbackInfo<Value>& args) {
+  Isolate* isolate = Isolate::GetCurrent();
+  HandleScope scope(isolate);
+
+  int8_t cmd = args[0]->Int32Value();
+  int32_t len = args[1]->Int32Value();
+  uint8_t data[len]; 
+  Local<Value> err = Null(isolate);
+  
+  Local<Object> buffer = node::Buffer::New(len);
+
+  while (fd > 0) {
+    if (i2c_smbus_read_i2c_block_data(fd, cmd, len, data) != len) {
+      err = Exception::TypeError(String::NewFromUtf8("Error reading length of bytes"));
+    }
+
+    memcpy(node::Buffer::Data(buffer), data, len);
+
+    if (info[3]->IsFunction()) {
+      const unsigned argc = 2;
+      Local<Function> callback = Local<Function>::Cast(info[3]);
+      Local<Value> argv[argc] = { err, buffer };
+      callback->Call(Null(isolate), argc, argv);
+    }
+ 
+    if (info[2]->IsNumber()) {
+      int32_t delay = info[2]->Int32Value();
+      usleep(delay * 1000);
+    } else {
+      break;
+    }
+}
+
 void init(Local<Object> exports) {
   NODE_SET_METHOD(exports, "writeBlockData", WriteBlockData);
+  NODE_SET_METHOD(exports, "readBlockData", ReadBlockData);
   NODE_SET_METHOD(exports, "open", Open);
 }
 

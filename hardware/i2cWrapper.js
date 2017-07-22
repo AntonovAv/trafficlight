@@ -7,14 +7,12 @@ const I2C = require('bindings')({
  this wrappers wraps the i2c readBytes, writeBytes functions and returns promises
  */
 function makeI2CWrapper(address, {device, debug}) {
-  const i2c = I2C.open(device, address)
+  I2C.open(device, address)
 
   const readBytes = (cmd, length) => {
     return new Promise(
       function(resolve, reject) {
-        // TODO didn't work
-        return resolve(0x10)
-        i2c.readBytes(cmd, length, function(error, data) {
+        I2C.readBlockData(cmd, length, null, function(error, data) {
           if (error) {
             return reject(error)
           }
@@ -36,7 +34,7 @@ function makeI2CWrapper(address, {device, debug}) {
     }
     return new Promise(
       function(resolve, reject) {
-        i2c.writeBlockData(cmd, buf, function(error, data) {
+        I2C.writeBlockData(cmd, buf, function(error, data) {
           if (error) {
             return reject(error)
           }
