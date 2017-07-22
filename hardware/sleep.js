@@ -1,6 +1,6 @@
 const NanoTimer = require('nanotimer')
 
-module.exports = function sleep(seconds) {
+module.exports.sleep = function(seconds) {
   return new Promise(
     function(resolve, reject) {
       const timer = new NanoTimer()
@@ -9,7 +9,7 @@ module.exports = function sleep(seconds) {
     })
 }
 
-module.exports = function usleep(micros) {
+module.exports.usleep = function(micros) {
   return new Promise(
     function(resolve, reject) {
       const timer = new NanoTimer()
