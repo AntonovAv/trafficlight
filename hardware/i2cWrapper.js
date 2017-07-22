@@ -13,7 +13,7 @@ function makeI2CWrapper(address, {device, debug}) {
     return new Promise(
       function(resolve, reject) {
         // TODO didn't work
-        return resolve(data)
+        return resolve(0x10)
         i2c.readBytes(cmd, length, function(error, data) {
           if (error) {
             return reject(error)
