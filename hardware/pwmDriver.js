@@ -1,5 +1,5 @@
 const I2C = require('./i2cWrapper')
-import {sleep, usleep} from './sleep'
+const usleep = require('./sleep').usleep
 
 // ============================================================================
 // Adafruit PCA9685 16-Channel PWM Servo Driver
