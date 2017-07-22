@@ -3,6 +3,7 @@
 #include <node_buffer.h>
 #include <unistd.h>
 #include <stdio.h>
+#include <string.h>
 #include "lib/i2c-dev.h"
 #include "lib/i2c_lib.h"
 
@@ -99,7 +100,7 @@ void init(Local<Object> exports) {
   NODE_SET_METHOD(exports, "writeBlockData", WriteBlockData);
   NODE_SET_METHOD(exports, "readBlockData", ReadBlockData);
   NODE_SET_METHOD(exports, "open", Open);
-  NODE_SET_METHOD(exports, "close", Close)
+  NODE_SET_METHOD(exports, "close", Close);
 }
 
 NODE_MODULE(i2c_addon, init)
