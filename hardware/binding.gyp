@@ -2,7 +2,7 @@
   "targets": [
     {
       "target_name": "addon",
-      "sources": [ "hello.cc", "i2c_lib.cc" ]
+      "sources": [ "i2c_addon.cc", "lib/i2c_lib.cc" ]
     }
   ]
 }
