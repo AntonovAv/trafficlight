@@ -2,6 +2,7 @@
 #include <node.h>
 #include <node_buffer.h>
 #include <unistd.h>
+#include <stdio.h>
 #include "lib/i2c-dev.h"
 #include "lib/i2c_lib.h"
 
@@ -64,7 +65,7 @@ void ReadBlockData(const FunctionCallbackInfo<Value>& args) {
 
   while (fd > 0) {
     if (i2c_smbus_read_i2c_block_data(fd, cmd, len, data) != len) {
-      err = Exception::TypeError(String::NewFromUtf8("Error reading length of bytes"));
+      err = Exception::TypeError(String::NewFromUtf8(isolate, "Error reading length of bytes"));
     }
 
     memcpy(node::Buffer::Data(buffer), data, len);
@@ -82,6 +83,7 @@ void ReadBlockData(const FunctionCallbackInfo<Value>& args) {
     } else {
       break;
     }
+  }
 }
 
 void Close(const FunctionCallbackInfo<Value>& args) {
