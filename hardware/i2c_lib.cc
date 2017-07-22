@@ -32,6 +32,7 @@
 
 #include <linux/i2c.h>
 #include <linux/i2c-dev.h>
+#include "i2c_lib.h"
 
 int i2c_open(char *device, uint8_t address) {
     int fd;

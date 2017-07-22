@@ -2,10 +2,7 @@
   "targets": [
     {
       "target_name": "addon",
-      "sources": [ "hello.cc" ],
-      "ldflags": [
-        "-Wl,-z,defs"
-      ]
+      "sources": [ "hello.cc", "i2c_lib.cc" ]
     }
   ]
 }

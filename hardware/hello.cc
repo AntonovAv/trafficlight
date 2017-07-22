@@ -1,6 +1,6 @@
 // hello.cc
 #include <node.h>
-//#include "i2c_lib.h"
+#include "i2c_lib.h"
 
 using namespace v8;
 
@@ -14,7 +14,7 @@ void Open(const FunctionCallbackInfo<Value>& args) {
   String::Utf8Value dev(args[0]);
   uint8_t addr = args[1]->NumberValue();
   
-  // fd = i2c_open(*dev, addr);
+  fd = i2c_open(*dev, addr);
 }
 
 void SetDuty(const FunctionCallbackInfo<Value>& args) {
@@ -22,7 +22,7 @@ void SetDuty(const FunctionCallbackInfo<Value>& args) {
   args.GetReturnValue().Set(String::NewFromUtf8(isolate, "world"));
 
   uint8_t data[] = {1, 2, 3, 4};
-   //i2c_send(fd, data, 4);
+  i2c_send(fd, data, 4);
 }
 
 void SetFrequncy(const FunctionCallbackInfo<Value>& args) {
