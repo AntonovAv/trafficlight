@@ -1,4 +1,5 @@
 const State = require('../State')
+const Trafficlight = require('../../hardware/trafficlight')
 
 class TrafficlightManager {
   constructor() {
@@ -7,6 +8,8 @@ class TrafficlightManager {
       y: 0,
       g: 0,
     }
+    this._lights = {}
+    this._tr = new Trafficlight('/dev/i2c-0', 0x40)
   }
 
   init(brightness) {
@@ -17,17 +20,25 @@ class TrafficlightManager {
   }
 
   _setLights(val) {
-    // TODO set 0 or value from brightness (1)
-    console.log(`red ${val.red}`)
-    console.log(`yellow ${val.yellow}`)
-    console.log(`green ${val.green}`)
+    this._lights = val
+    this._updateTrafficlight()
   }
 
   setBrightness({r, y, g}) {
     this._brightness = {
       r, y, g
     }
-    console.log(r, y, g)
+    this._updateTrafficlight()
+  }
+
+  _updateTrafficlight() {
+    const {red, yellow, green} = this._lights
+    const {r, y, g} = this._brightness
+    this._tr.setBrightness({
+      r: red ? r : 0,
+      y: yellow ? y : 0,
+      g: green ? g : 0
+    })
   }
 }
 
