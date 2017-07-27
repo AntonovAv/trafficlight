@@ -33,7 +33,7 @@ class I2C {
     )
   }
 
-  writeBytes = (cmd, buf) => {
+  writeBytes(cmd, buf) {
     if (!(buf instanceof Array)) {
       buf = [buf]
     }

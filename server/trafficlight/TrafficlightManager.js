@@ -1,5 +1,13 @@
 const State = require('../State')
-const Trafficlight = require('../../hardware/trafficlight')
+
+class FakeTrafficlight {
+  setBrightness({r, y, g}) {
+    console.log(`red ${r}, yellow ${y}, green ${g}`)
+  }
+}
+
+const isProd = process.env.NODE_ENV === 'production'
+const Trafficlight = isProd ? require('../../hardware/trafficlight') : FakeTrafficlight
 
 class TrafficlightManager {
   constructor() {
