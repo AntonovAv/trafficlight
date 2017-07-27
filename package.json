@@ -27,6 +27,7 @@
     "lame": "^1.2.4",
     "method-override": "^2.3.8",
     "mongoose": "^4.9.9",
+    "nanotimer": "^0.3.14",
     "pcm-volume": "^1.0.0",
     "ramda": "^0.23.0",
     "react": "^15.4.2",
