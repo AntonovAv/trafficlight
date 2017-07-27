@@ -42,7 +42,7 @@ class I2C {
     }
     return new Promise(
       function(resolve, reject) {
-        I2C.writeBlockData(cmd, buf, function(error, data) {
+        i2cBinding.writeBlockData(cmd, buf, function(error, data) {
           if (error) {
             return reject(error)
           }
