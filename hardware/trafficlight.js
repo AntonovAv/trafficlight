@@ -30,7 +30,7 @@ class Trafficlight {
   }
 
   _setPWM(light, percents) {
-    return this._driver.setPWMFreq(LIGHT_TO_CHANEL_MAP[light], 0, this._percentsToValue(percents))
+    return this._driver.setPWM(LIGHT_TO_CHANEL_MAP[light], 0, this._percentsToValue(percents))
   }
 }
 
