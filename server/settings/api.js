@@ -2,6 +2,7 @@ const route = require('express').Router()
 const resource = require('./resource')
 const pmRegistry = require('../audio/PlayerManagerRegistry')
 const TeamcityManager = require('../teamcity/TeamcityManager')
+const TrafficlightManager = require('../trafficlight/TrafficlightManager')
 const R = require('ramda')
 
 route.get('/', async (req, resp) => {
@@ -27,9 +28,12 @@ route.get('/params', async function(request, response) {
 route.post('/params', async function(req, resp) {
   try {
     const saved = await resource.saveSettings(req.body)
+    // set new volume
     for (let pm of pmRegistry.getRegistry()) {
       await pm.changeVolume(saved.volume)
     }
+    // set new brightness
+    TrafficlightManager.setBrightness(saved.brightness)
     resp.end()
   } catch (e) {
     resp.status(500).send(e).end()

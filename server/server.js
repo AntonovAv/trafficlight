@@ -13,7 +13,9 @@ require('./database/db')
 
 const State = require('./State')
 const Processor = require('./core/Processor')
+const TrafficlightManager = require('./trafficlight/TrafficlightManager')
 State.init({}, {}, {})
+TrafficlightManager.init({r: 0, y: 0, g: 0}) // TODO load settings?
 new Processor().run()
 
 const port = argv.port || process.env.PORT || 3000
