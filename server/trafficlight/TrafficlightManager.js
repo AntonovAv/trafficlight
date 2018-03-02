@@ -4,6 +4,10 @@ class FakeTrafficlight {
   setBrightness({r, y, g}) {
     console.log(`red ${r}, yellow ${y}, green ${g}`)
   }
+
+  setPWMFreq(val) {
+    console.log(`freq ${val}`)
+  }
 }
 
 const isProd = process.env.NODE_ENV === 'production'
@@ -37,6 +41,10 @@ class TrafficlightManager {
       r, y, g
     }
     this._updateTrafficlight()
+  }
+
+  setPWMFrequency(val) {
+    this._tr.setPWMFreq(val)
   }
 
   _updateTrafficlight() {

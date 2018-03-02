@@ -26,9 +26,11 @@ import EditTeamcityDialog from './EditTeamcityDialog'
 
 import BrightnessList from './components/BrightnessList'
 import SoundSlider from './components/SoundSlider'
+import PWMFrequenctSlider from './components/PWMFrequencySlider'
 import TeamcityList from './components/TeamcityList'
 import TeamcityMenu from './components/TeamcityMenu'
 import AddTeamcityButton from './components/AddTeamcityButton'
+import {onPWMFrequencyChange} from "containers/Settings/actions";
 
 export class Settings extends PureComponent {
   componentWillMount() {
@@ -47,6 +49,10 @@ export class Settings extends PureComponent {
           <BrightnessList
             brightness={this.props.parameters.brightness}
             onChange={this.props.onBrightnessChangeAction}
+          />
+          <PWMFrequenctSlider
+            frequency={this.props.parameters.pwmFrequency}
+            onChange={this.props.onPWMFrequencyChange}
           />
           <ListSubHeader caption='Sound'/>
           <SoundSlider
@@ -84,11 +90,13 @@ Settings.propTypes = {
   parameters: PropTypes.shape({
     brightness: PropTypes.object,
     volume: PropTypes.number,
+    pwmFrequency: PropTypes.number,
   }),
   teamcityList: PropTypes.array,
 
   onBrightnessChangeAction: PropTypes.func,
   onSoundChangeAction: PropTypes.func,
+  onPWMFrequencyChange: PropTypes.func,
   saveSettingsAction: PropTypes.func,
   loadSettingsAction: PropTypes.func,
   openEditTeamcityDialogAction: PropTypes.func,
@@ -107,6 +115,7 @@ export default connect(
     return {
       onBrightnessChangeAction: bindActionCreators(onBrightnessChangeAction, dispatch),
       onSoundChangeAction: bindActionCreators(onSoundChangeAction, dispatch),
+      onPWMFrequencyChange: bindActionCreators(onPWMFrequencyChange, dispatch),
       saveSettingsAction: bindActionCreators(saveSettingsAction, dispatch),
       loadSettingsAction: bindActionCreators(loadSettings, dispatch),
       openEditTeamcityDialogAction: bindActionCreators(openDialogAction, dispatch),

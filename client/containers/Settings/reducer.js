@@ -3,6 +3,7 @@ import editDialog from './EditTeamcityDialog/reducer'
 import {
   BRIGHTNESS_CHANGE,
   SOUND_CHANGE,
+  PWM_FREUQENCY_CHANGE,
   SAVE_SETTINGS,
   SAVE_SETTINGS_SUCCESS,
   SAVE_SETTINGS_FAILURE,
@@ -20,6 +21,7 @@ const initState = {
       g: 0,
     },
     volume: 0,
+    pwmFrequency: 0,
   },
   teamcityList: [],
   changed: false,
@@ -43,6 +45,16 @@ function reducer(state = initState, {type, data}) {
         parameters: {
           ...state.parameters,
           volume: data,
+        },
+        changed: true,
+      }
+    }
+    case PWM_FREUQENCY_CHANGE: {
+      return {
+        ...state,
+        parameters: {
+          ...state.parameters,
+          pwmFrequency: data,
         },
         changed: true,
       }
@@ -73,6 +85,7 @@ function reducer(state = initState, {type, data}) {
         parameters: {
           brightness: data.parameters.brightness,
           volume: data.parameters.volume,
+          pwmFrequency: data.parameters.pwmFrequency,
         },
         teamcityList: data.teamcityList,
       }
