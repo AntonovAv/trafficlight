@@ -32,6 +32,10 @@ class Trafficlight {
   _setPWM(light, percents) {
     return this._driver.setPWM(LIGHT_TO_CHANEL_MAP[light], 0, this._percentsToValue(percents))
   }
+
+  setPWMFreq(freq = 0) {
+    this._driver.setPWMFreq(freq)
+  }
 }
 
 module.exports = Trafficlight

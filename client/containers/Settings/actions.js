@@ -1,6 +1,7 @@
 import {
   BRIGHTNESS_CHANGE,
   SOUND_CHANGE,
+  PWM_FREUQENCY_CHANGE,
   SAVE_SETTINGS,
   SAVE_SETTINGS_SUCCESS,
   SAVE_SETTINGS_FAILURE,
@@ -28,12 +29,20 @@ export function onSoundChangeAction(newVal) {
   }
 }
 
+export function onPWMFrequencyChange(newVal) {
+  return {
+    type: PWM_FREUQENCY_CHANGE,
+    data: newVal,
+  }
+}
+
 export function saveSettingsAction() {
   return (dispatch, getState) => {
     const parameters = selectParameters(getState())
     const data = {
       brightness: parameters.brightness,
       volume: parameters.volume,
+      pwmFrequency: parameters.pwmFrequency,
       hosts: [],
     }
     dispatch({

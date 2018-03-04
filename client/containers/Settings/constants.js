@@ -1,5 +1,6 @@
 export const BRIGHTNESS_CHANGE = 'settings/BRIGHTNESS_CHANGE'
 export const SOUND_CHANGE = 'settings/SOUND_CHANGE'
+export const PWM_FREUQENCY_CHANGE = 'settings/PWM_FREUQENCY_CHANGE'
 
 export const SAVE_SETTINGS = 'settings/SAVE_SETTINGS'
 export const SAVE_SETTINGS_SUCCESS = 'settings/SAVE_SETTINGS_SUCCESS'

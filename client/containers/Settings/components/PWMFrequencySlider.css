@@ -1,0 +1,23 @@
+@import url('../../../../node_modules/react-toolbox/lib/slider/theme.css');
+
+.slider {
+  width: 100%;
+}
+
+.innerknob {
+  background-color: var(--palette-purple-600);
+
+  &::before {
+    background-color: var(--palette-purple-600) !important;
+  }
+
+}
+
+.innerprogress {
+  & div {
+    & span {
+      background-color: var(--palette-purple-600);
+    }
+
+  }
+}

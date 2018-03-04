@@ -33,6 +33,7 @@ route.post('/params', async function(req, resp) {
       await pm.changeVolume(saved.volume)
     }
     // set new brightness
+    TrafficlightManager.setPWMFrequency(saved.pwmFrequency)
     TrafficlightManager.setBrightness(saved.brightness)
     resp.end()
   } catch (e) {

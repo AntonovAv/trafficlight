@@ -16,6 +16,7 @@ const soundSchema = new Schema({
       default: 0,
     },
   },
+  pwmFrequency: 0,
   volume: {
     type: Number,
     default: 0,
