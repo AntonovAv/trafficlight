@@ -1,16 +1,18 @@
 const State = require('../State')
+const TrafficlightInterface = require('../../hardware/TrafficlightInterface')
 
-class FakeTrafficlight {
-  setBrightness({r, y, g}) {
+class FakeTrafficlight extends TrafficlightInterface {
+  async setBrightness({r, y, g}) {
     console.log(`red ${r}, yellow ${y}, green ${g}`)
   }
 
-  setPWMFreq(val) {
+  async setPWMFreq(val) {
     console.log(`freq ${val}`)
   }
 }
 
 const isProd = process.env.NODE_ENV === 'production'
+
 const Trafficlight = isProd ? require('../../hardware/trafficlight') : FakeTrafficlight
 
 class TrafficlightManager {
@@ -24,33 +26,37 @@ class TrafficlightManager {
     this._tr = new Trafficlight('/dev/i2c-0', 0x40)
   }
 
-  init(brightness) {
+  async init({
+               brightness = {},
+               pwmFrequency = 0,
+             }) {
     State.get().on(State.LIGHT_CHANGED_EVENT, (val) => {
-      this._setLights(val)
+      this._setLights(val).then()
     })
-    this.setBrightness(brightness)
+    await this.setPWMFrequency(pwmFrequency)
+    await this.setBrightness(brightness)
   }
 
-  _setLights(val) {
+  async _setLights(val) {
     this._lights = val
-    this._updateTrafficlight()
+    await this._updateTrafficlight()
   }
 
-  setBrightness({r, y, g}) {
+  async setBrightness({r, y, g}) {
     this._brightness = {
       r, y, g
     }
-    this._updateTrafficlight()
+    await this._updateTrafficlight()
   }
 
-  setPWMFrequency(val) {
-    this._tr.setPWMFreq(val)
+  async setPWMFrequency(val) {
+    await this._tr.setPWMFreq(val)
   }
 
-  _updateTrafficlight() {
+  async _updateTrafficlight() {
     const {red, yellow, green} = this._lights
     const {r, y, g} = this._brightness
-    this._tr.setBrightness({
+    await this._tr.setBrightness({
       r: red ? r : 0,
       y: yellow ? y : 0,
       g: green ? g : 0

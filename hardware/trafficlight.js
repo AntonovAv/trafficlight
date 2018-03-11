@@ -1,4 +1,6 @@
 const pwmDriver = require('./pwmDriver')
+const TrafficlightInterface = require('./TrafficlightInterface')
+
 const LIGHTS = {
   red: 'red',
   yellow: 'yellow',
@@ -13,10 +15,10 @@ const LIGHT_TO_CHANEL_MAP = {
 
 const MAX_PWM_VALUE = 4095
 
-class Trafficlight {
-  constructor(device, address, mainFreq = 800) {
+class Trafficlight extends TrafficlightInterface {
+  constructor(device, address) {
+    super()
     this._driver = pwmDriver({device, address})
-    this._driver.setPWMFreq(mainFreq)
   }
 
   async setBrightness({r, y, g}) {
@@ -29,11 +31,11 @@ class Trafficlight {
     return MAX_PWM_VALUE * percents / 100
   }
 
-  _setPWM(light, percents) {
+  async _setPWM(light, percents) {
     return this._driver.setPWM(LIGHT_TO_CHANEL_MAP[light], 0, this._percentsToValue(percents))
   }
 
-  setPWMFreq(freq = 0) {
+  async setPWMFreq(freq = 0) {
     this._driver.setPWMFreq(freq)
   }
 }

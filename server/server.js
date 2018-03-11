@@ -5,6 +5,7 @@ const fileUpload = require('express-fileupload')
 const useFrontendMiddleware = require('./middleware/frontendMiddleware')
 const clientApi = require('./api/clientApi')
 const audioApi = require('./audio/api')
+const settingsResource = require('./settings/resource')
 const settingsApi = require('./settings/api')
 const resolve = require('path').resolve
 const argv = require('minimist')(process.argv.slice(2))
@@ -15,7 +16,13 @@ const State = require('./State')
 const Processor = require('./core/Processor')
 const TrafficlightManager = require('./trafficlight/TrafficlightManager')
 State.init({}, {}, {})
-TrafficlightManager.init({r: 0, y: 0, g: 0}) // TODO load settings?
+
+settingsResource.getSettings().then(settings => {
+  TrafficlightManager.init(settings).then(() => {
+    console.log('trafficlight initialized')
+  })
+})
+
 new Processor().run()
 
 const port = argv.port || process.env.PORT || 3000
